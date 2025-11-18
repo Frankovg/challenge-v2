@@ -1,3 +1,5 @@
+'use client'
+
 import React, { ReactNode, type FC } from 'react'
 
 import { Header, Main } from './Layout.styles'
