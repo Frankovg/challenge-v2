@@ -1,0 +1,27 @@
+{
+  "name": "@shiphero/ui-challenge-api",
+  "version": "1.0.0",
+  "description": "UI challenge - API",
+  "author": "ShipHero",
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "keywords": [],
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "babel-watch index.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
+    "babel-watch": "^7.4.1"
+  },
+  "dependencies": {
+    "apollo-server": "^3.13.0",
+    "graphql": "^16.8.1"
+  }
+}

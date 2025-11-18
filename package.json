@@ -1,0 +1,24 @@
+{
+  "name": "@shiphero/ui-challenge",
+  "version": "1.0.0",
+  "description": "UI challenge",
+  "author": "ShipHero",
+  "license": "UNLICENSED",
+  "keywords": [],
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "run-all": "yarn run wsrun",
+    "dev": "yarn run-all dev",
+    "test": "yarn run-all --exclude-missing test",
+    "lint": "yarn run-all --exclude-missing lint"
+  },
+  "devDependencies": {
+    "wsrun": "^5.2.4"
+  }
+}
