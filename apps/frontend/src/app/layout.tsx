@@ -1,7 +1,10 @@
 import React, { type ReactNode } from 'react'
-import type { Metadata } from 'next'
-import { ApolloWrapper } from './ApolloWrapper'
+
 import { Layout } from 'components/Layout'
+
+import { ApolloWrapper } from './ApolloWrapper'
+
+import type { Metadata } from 'next'
 import 'assets/globals/styles.css'
 
 const IS_DEV = process.env.NODE_ENV !== 'production'

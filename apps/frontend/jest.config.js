@@ -9,6 +9,11 @@ const customJestConfig = {
   coverageDirectory: 'coverage',
   moduleDirectories: ['node_modules', 'src'],
   testEnvironment: 'jsdom',
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/.next/',
+    '<rootDir>/dist/',
+  ],
 }
 
 module.exports = createJestConfig(customJestConfig)

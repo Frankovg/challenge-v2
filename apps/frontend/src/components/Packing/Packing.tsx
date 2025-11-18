@@ -2,10 +2,10 @@
 
 import React, { useEffect, type FC } from 'react'
 
+import { PackageContent } from './PackageContent'
+import { PackageTab } from './PackageTab'
 import { DashboardWrapper, PackingSection } from './Packing.styles'
 import { useLineItemsQuery } from './useLineItemsQuery'
-import { PackageTab } from './PackageTab'
-import { PackageContent } from './PackageContent'
 
 export const Packing: FC = () => {
   const { lineItems } = useLineItemsQuery()
