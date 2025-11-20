@@ -1,14 +1,14 @@
 'use client'
 
-import React, { ReactNode, type FC } from 'react'
+import { FC, ReactNode } from 'react'
 
 import { Header, Main } from './Layout.styles'
 
 type LayoutProps = {
-  children: ReactNode
+  children: React.ReactNode
 }
 
-export const Layout: FC<LayoutProps> = ({ children }) => {
+export const Layout: FC<LayoutProps> = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Header>
