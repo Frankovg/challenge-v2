@@ -2,7 +2,9 @@
 
 import { FC, ReactNode } from 'react'
 
-import { Header, Main } from './Layout.styles'
+import { ThemeToggle } from 'components/ThemeToggle'
+
+import { Header, HeaderTitle, Main } from './Layout.styles'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -12,7 +14,8 @@ export const Layout: FC<LayoutProps> = ({ children }: { children: ReactNode }) =
   return (
     <>
       <Header>
-        <p>UI challenge</p>
+        <HeaderTitle>UI challenge</HeaderTitle>
+        <ThemeToggle />
       </Header>
 
       <Main>{children}</Main>
