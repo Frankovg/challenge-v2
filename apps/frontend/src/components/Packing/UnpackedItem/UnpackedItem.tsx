@@ -5,6 +5,8 @@ import { Card } from "components/ui/Card"
 import { CardButton } from "components/ui/CardButton"
 import { LineItemType } from "types"
 
+import { ItemName } from "../ItemName"
+
 import { UnpackedItemContainer } from "./UnpackedItem.styles"
 
 type Props = {
@@ -17,10 +19,12 @@ export const UnpackedItem: FC<Props> = (props) => {
     <Card
       content={
         <UnpackedItemContainer>
-          <div className='item-name-container'>
-            <p>{item.sku}</p>
-            <span>{item.location}</span>
-          </div>
+          <ItemName
+            item={{
+              sku: item.sku,
+              location: item.location
+            }}
+          />
           <div className="actions-container">
             <div className="quantity-container">
               {item.quantity}

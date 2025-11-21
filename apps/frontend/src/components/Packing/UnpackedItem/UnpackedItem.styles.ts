@@ -6,17 +6,6 @@ export const UnpackedItemContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  .item-name-container {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2rem;
-    
-    span {
-      color: var(--status-info-text);
-      font-size: var(--font-size-sm);
-    }
-  }
-
   .actions-container {
     display: flex;
     flex-direction: row;

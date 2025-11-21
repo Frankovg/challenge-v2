@@ -7,6 +7,20 @@ import { PackageContent } from "../PackageContent"
 
 import { PackedSectionContainer } from "./PackedSection.styles"
 
+export const mockedItemInPackage = [
+  {
+    id: 0,
+    line_items: [
+      {
+        id: 2,
+        location: "a2",
+        quantity: 6,
+        sku: "red-ball"
+      }
+    ]
+  }
+]
+
 export const PackedSection = () => {
   const [selectedPackage, setSelectedPackage] = useState<number>(0)
 
@@ -23,17 +37,7 @@ export const PackedSection = () => {
     // { value: 9, label: "Package 10" },
   ]);
 
-  const mockedItemInPackage = {
-    id: 0,
-    line_items: [
-      {
-        id: 2,
-        location: "a2",
-        quantity: 6,
-        sku: "red-ball"
-      }
-    ]
-  }
+
 
   return (
     <PackedSectionContainer>
