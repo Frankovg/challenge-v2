@@ -2,6 +2,9 @@ import React, { type FC } from 'react'
 
 import { ScrollArea } from 'components/ui/ScrollArea'
 
+import { PackedItem } from '../PackedItem'
+import { mockedItemInPackage } from '../PackedSection/PackedSection'
+
 import { HEADER_COLUMNS } from './const'
 import { HeaderCell, HeaderGrid } from './PackageContent.styles'
 
@@ -26,7 +29,9 @@ export const PackageContent: FC<Props> = (props) => {
         ))}
       </HeaderGrid>
       <ScrollArea>
-        <span>{packageId}</span>
+        {mockedItemInPackage && mockedItemInPackage[packageId]?.line_items.map((item) => (
+          <PackedItem key={item.id} item={item} />
+        ))}
       </ScrollArea>
     </>
   )
