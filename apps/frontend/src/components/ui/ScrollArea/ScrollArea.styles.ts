@@ -1,17 +1,23 @@
 import { styled } from 'styled-components'
 
-export const ScrollAreaContainer = styled.div`
+interface ScrollAreaContainerProps {
+  $direction: 'horizontal' | 'vertical'
+}
+
+export const ScrollAreaContainer = styled.div<ScrollAreaContainerProps>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ $direction }) => $direction === 'horizontal' ? 'row' : 'column'};
   gap: 0.5rem;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow-y: ${({ $direction }) => $direction === 'vertical' ? 'auto' : 'hidden'};
+  overflow-x: ${({ $direction }) => $direction === 'horizontal' ? 'auto' : 'hidden'};
   flex: 1;
-  padding-right: 0.5rem;
+  padding-right: ${({ $direction }) => $direction === 'vertical' ? '0.5rem' : '0'};
+  padding-bottom: ${({ $direction }) => $direction === 'horizontal' ? '0.5rem' : '0'};
 
   /* Scrollbar styling */
   &::-webkit-scrollbar {
-    width: 8px;
+    width: ${({ $direction }) => $direction === 'vertical' ? '8px' : 'auto'};
+    height: ${({ $direction }) => $direction === 'horizontal' ? '8px' : 'auto'};
   }
 
   &::-webkit-scrollbar-track {
