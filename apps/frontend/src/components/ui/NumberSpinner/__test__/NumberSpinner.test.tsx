@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 
-import { NumberSpinner } from './NumberSpinner'
+import { NumberSpinner } from '../NumberSpinner'
+
 
 describe('NumberSpinner', () => {
   it('renders with default value', () => {
