@@ -8,11 +8,11 @@ import { PackageContent } from "../PackageContent"
 import { PackedSectionContainer } from "./PackedSection.styles"
 
 export const PackedSection = () => {
-  const [value, setValue] = useState<string | number>(0)
+  const [selectedPackage, setSelectedPackage] = useState<number>(0)
 
   const [packages, setPackages] = useState<TabItem[]>([
     { value: 0, label: "Package 1", icon: <BoxIcon size={14} /> },
-    // { value: 1, label: "Package 2" },
+    { value: 1, label: "Package 2" },
     // { value: 2, label: "Package 3" },
     // { value: 3, label: "Package 4" },
     // { value: 4, label: "Package 5" },
@@ -23,17 +23,29 @@ export const PackedSection = () => {
     // { value: 9, label: "Package 10" },
   ]);
 
+  const mockedItemInPackage = {
+    id: 0,
+    line_items: [
+      {
+        id: 2,
+        location: "a2",
+        quantity: 6,
+        sku: "red-ball"
+      }
+    ]
+  }
+
   return (
     <PackedSectionContainer>
       <h3>Packed Products</h3>
       <Tabs
         tabs={packages}
-        value={value}
-        onChange={setValue}
+        value={selectedPackage}
+        onChange={setSelectedPackage}
         aria-label="Scrollable tabs"
         variant="scrollable"
       />
-      <PackageContent />
+      <PackageContent packageId={selectedPackage} />
     </PackedSectionContainer>
   )
 }

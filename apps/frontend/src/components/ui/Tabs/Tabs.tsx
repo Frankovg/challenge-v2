@@ -14,7 +14,7 @@ export type TabItem = {
 type Props = {
   tabs: TabItem[]
   value: string | number
-  onChange: (value: string | number) => void
+  onChange: (value: number) => void
   'aria-label'?: string
   orientation?: 'horizontal' | 'vertical'
   centered?: boolean
@@ -34,7 +34,7 @@ export const Tabs: FC<Props> = ({
   indicatorColor = 'primary',
   textColor = 'primary',
 }) => {
-  const handleChange = (_event: SyntheticEvent, newValue: string | number): void => {
+  const handleChange = (_event: SyntheticEvent, newValue: number): void => {
     onChange(newValue)
   }
 
