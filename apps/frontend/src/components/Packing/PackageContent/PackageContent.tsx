@@ -1,30 +1,33 @@
 import React, { type FC } from 'react'
 
-import { Wrapper, Table } from './PackageContent.styles'
+import { ScrollArea } from 'components/ui/ScrollArea'
 
-export const PackageContent: FC = () => {
+import { HEADER_COLUMNS } from './const'
+import { HeaderCell, HeaderGrid } from './PackageContent.styles'
+
+type Props = {
+  packageId: number
+}
+
+export const PackageContent: FC<Props> = (props) => {
+  const { packageId } = props
+
   return (
-    <Wrapper>
-      <Table>
-        <thead>
-          <tr>
-            <th>name</th>
-            <th>quantity</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Green Ball</td>
-            <td>2</td>
-          </tr>
-
-          <tr>
-            <td>Blue Ball</td>
-            <td>2</td>
-          </tr>
-        </tbody>
-      </Table>
-    </Wrapper>
+    <>
+      <HeaderGrid>
+        {HEADER_COLUMNS.map((column) => (
+          <HeaderCell
+            key={column.label}
+            $colSpan={column.colSpan}
+            $align={column.align}
+          >
+            {column.label}
+          </HeaderCell>
+        ))}
+      </HeaderGrid>
+      <ScrollArea>
+        <span>{packageId}</span>
+      </ScrollArea>
+    </>
   )
 }
