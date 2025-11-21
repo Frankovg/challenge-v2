@@ -2,3 +2,5 @@
 .jest/
 .swc/
 coverage/
+# TypeScript
+*.tsbuildinfo
