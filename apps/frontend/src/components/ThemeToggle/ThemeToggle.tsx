@@ -4,8 +4,9 @@ import { MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { FC, useEffect, useState } from 'react'
 
+import { IconButton } from 'components/ui/IconButton'
+
 import { DARK, LIGHT, MOON_ICON, SUN_ICON } from './const'
-import { ToggleButton } from './ThemeToggle.styles'
 
 export const ThemeToggle: FC = () => {
   const [mounted, setMounted] = useState(false)
@@ -27,7 +28,7 @@ export const ThemeToggle: FC = () => {
   }
 
   return (
-    <ToggleButton
+    <IconButton
       onClick={toggleTheme}
       aria-label={`Switch to ${newTheme} mode`}
       title={`Switch to ${newTheme} mode`}
@@ -37,6 +38,6 @@ export const ThemeToggle: FC = () => {
       ) : (
         <SunIcon aria-label={SUN_ICON} />
       )}
-    </ToggleButton>
+    </IconButton>
   )
 }

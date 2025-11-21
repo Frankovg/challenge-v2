@@ -118,7 +118,7 @@
 
   /* === Layout === */
   --header-height: 60px;
-  --max-content-width: 1400px;
+  --max-content-width: 1600px;
   --container-padding: var(--spacing-lg);
 }
 
