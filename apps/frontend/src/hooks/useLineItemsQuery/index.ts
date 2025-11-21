@@ -1,1 +1,1 @@
-export { useLineItemsQuery } from './useLineItemsQuery'
+export { LINE_ITEMS_QUERY, useLineItemsQuery } from './useLineItemsQuery'

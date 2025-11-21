@@ -1,26 +1,28 @@
-import { useEffect } from "react"
+import { useEffect, type FC } from 'react'
 
-import { ScrollArea } from "components/ui/ScrollArea"
-import { useLineItemsQuery } from "hooks/useLineItemsQuery"
+import { ScrollArea } from 'components/ui/ScrollArea'
+import { LineItemType } from 'types'
 
-import { UnpackedItem } from "../UnpackedItem"
+import { UnpackedItem } from '../UnpackedItem'
 
-import { UnpackedSectionContainer } from "./UnpackedSection.styles"
+import { UnpackedSectionContainer } from './UnpackedSection.styles'
 
-export const UnpackedSection = () => {
-  const { lineItems } = useLineItemsQuery()
+type UnpackedSectionProps = {
+  initialLineItems: LineItemType[]
+}
 
+export const UnpackedSection: FC<UnpackedSectionProps> = ({ initialLineItems }) => {
   useEffect(() => {
-    if (lineItems.length > 0) {
-      console.log('Line items ready to pack:', lineItems)
+    if (initialLineItems.length > 0) {
+      console.log('Line items ready to pack:', initialLineItems)
     }
-  }, [lineItems])
+  }, [initialLineItems])
 
   return (
     <UnpackedSectionContainer>
       Unpacked products
       <ScrollArea>
-        {lineItems && lineItems?.map((item) => (
+        {initialLineItems?.map((item) => (
           <UnpackedItem key={item.id} item={item} />
         ))}
       </ScrollArea>

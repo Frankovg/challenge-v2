@@ -2,14 +2,20 @@
 
 import React, { type FC } from 'react'
 
+import { LineItemType } from 'types'
+
 import { PackedSection } from './PackedSection'
 import { PackingWrapper } from './Packing.styles'
 import { UnpackedSection } from './UnpackedSection'
 
-export const Packing: FC = () => {
+type PackingProps = {
+  initialLineItems: LineItemType[]
+}
+
+export const Packing: FC<PackingProps> = ({ initialLineItems }) => {
   return (
     <PackingWrapper>
-      <UnpackedSection />
+      <UnpackedSection initialLineItems={initialLineItems} />
       <PackedSection />
     </PackingWrapper>
   )
