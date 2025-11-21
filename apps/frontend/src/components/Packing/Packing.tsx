@@ -16,10 +16,16 @@ export const Packing: FC = () => {
       console.log('Line items ready to pack:', lineItems)
     }
   }, [lineItems])
+  console.log(lineItems);
 
   return (
     <DashboardWrapper>
-      <PackingSection>Unpacked products</PackingSection>
+      <PackingSection>
+        Unpacked products
+        {lineItems && lineItems?.map((item) => (
+          <span key={item.id}>{item.sku}</span>
+        ))}
+      </PackingSection>
 
       <PackingSection>
         <h3>Packed Products</h3>
