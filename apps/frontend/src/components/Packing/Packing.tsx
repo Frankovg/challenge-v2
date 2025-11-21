@@ -1,21 +1,15 @@
 'use client'
 
-import React, { type FC } from 'react'
-
-import { LineItemType } from 'types'
+import React, { type ReactNode } from 'react'
 
 import { PackedSection } from './PackedSection'
 import { PackingWrapper } from './Packing.styles'
 import { UnpackedSection } from './UnpackedSection'
 
-type PackingProps = {
-  initialLineItems: LineItemType[]
-}
-
-export const Packing: FC<PackingProps> = ({ initialLineItems }) => {
+export const Packing = (): ReactNode => {
   return (
     <PackingWrapper>
-      <UnpackedSection initialLineItems={initialLineItems} />
+      <UnpackedSection />
       <PackedSection />
     </PackingWrapper>
   )

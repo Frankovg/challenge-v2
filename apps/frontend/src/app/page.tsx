@@ -1,6 +1,7 @@
 import { ReactNode, Suspense } from 'react'
 
 import { Packing } from 'components/Packing'
+import { LineItemsProvider } from 'contexts'
 import { LINE_ITEMS_QUERY } from 'hooks/useLineItemsQuery'
 import { APOLLO_CLIENT } from 'lib/apolloClient'
 import { LineItemsQueryType } from 'types'
@@ -17,7 +18,9 @@ export default async function HomePage(): Promise<ReactNode> {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Packing initialLineItems={lineItems} />
+      <LineItemsProvider initialLineItems={lineItems}>
+        <Packing />
+      </LineItemsProvider>
     </Suspense>
   )
 }
