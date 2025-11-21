@@ -8,6 +8,7 @@ export const HeaderGrid = styled.div`
   grid-template-columns: repeat(12, 1fr);
   gap: 1rem;
   padding: 0 1rem;
+  margin-right: 0.5rem;
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--text-muted);
