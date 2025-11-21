@@ -3,14 +3,14 @@
 import React, { type FC } from 'react'
 
 import { PackedSection } from './PackedSection'
-import { DashboardWrapper } from './Packing.styles'
+import { PackingWrapper } from './Packing.styles'
 import { UnpackedSection } from './UnpackedSection'
 
 export const Packing: FC = () => {
   return (
-    <DashboardWrapper>
+    <PackingWrapper>
       <UnpackedSection />
       <PackedSection />
-    </DashboardWrapper>
+    </PackingWrapper>
   )
 }

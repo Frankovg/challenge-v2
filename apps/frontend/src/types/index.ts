@@ -1,6 +1,6 @@
 import { type ApolloError } from '@apollo/client'
 
-type LineItemsType = {
+export type LineItemType = {
   id: number
   quantity: number
   sku: string
@@ -8,11 +8,11 @@ type LineItemsType = {
 }
 
 export type LineItemsQueryType = {
-  line_items: LineItemsType[]
+  line_items: LineItemType[]
 }
 
 export type UseLineItemsQueryType = {
-  lineItems: LineItemsType[]
+  lineItems: LineItemType[]
   error: ApolloError | undefined
   loading: boolean
 }

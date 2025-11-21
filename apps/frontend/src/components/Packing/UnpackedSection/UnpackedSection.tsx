@@ -2,7 +2,10 @@
 
 import { useEffect } from "react"
 
+import { ScrollArea } from "components/ui/ScrollArea"
 import { useLineItemsQuery } from "hooks/useLineItemsQuery"
+
+import { UnpackedItem } from "../UnpackedItem"
 
 import { UnpackedSectionContainer } from "./UnpackedSection.styles"
 
@@ -18,9 +21,11 @@ export const UnpackedSection = () => {
   return (
     <UnpackedSectionContainer>
       Unpacked products
-      {lineItems && lineItems?.map((item) => (
-        <span key={item.id}>{item.sku}</span>
-      ))}
+      <ScrollArea>
+        {lineItems && lineItems?.map((item) => (
+          <UnpackedItem key={item.id} item={item} />
+        ))}
+      </ScrollArea>
     </UnpackedSectionContainer>
   )
 }
