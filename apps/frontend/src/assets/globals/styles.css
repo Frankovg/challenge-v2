@@ -127,7 +127,7 @@
    ============================================ */
 
 :root,
-[data-theme='light'] {
+.light {
   /* Background Colors */
   --bg-primary: var(--color-white);
   --bg-secondary: var(--color-gray-50);
@@ -198,77 +198,77 @@
 }
 
 /* ============================================
-   Theme: Dark Mode
+   Theme: Dark Mode - Blue Tones (Worker-friendly)
    ============================================ */
 
-[data-theme='dark'] {
-  /* Background Colors */
-  --bg-primary: #0f0f0f;
-  --bg-secondary: #1a1a1a;
-  --bg-tertiary: #252525;
-  --bg-hover: #2f2f2f;
-  --bg-active: #3a3a3a;
-  --bg-disabled: #1a1a1a;
+.dark {
+  /* Background Colors - Deep blue tones for reduced eye strain */
+  --bg-primary: #0a1929;
+  --bg-secondary: #0d2138;
+  --bg-tertiary: #132f4c;
+  --bg-hover: #1a3e5f;
+  --bg-active: #204d6f;
+  --bg-disabled: #0d2138;
 
-  /* Text Colors */
-  --text-primary: #ffffff;
-  --text-secondary: #e0e0e0;
-  --text-tertiary: #b0b0b0;
-  --text-disabled: #6b6b6b;
-  --text-inverse: #0f0f0f;
-  --text-link: var(--color-blue-400);
-  --text-link-hover: var(--color-blue-300);
+  /* Text Colors - High contrast for readability */
+  --text-primary: #e3f2fd;
+  --text-secondary: #b3d7f5;
+  --text-tertiary: #90caf9;
+  --text-disabled: #5a7a8f;
+  --text-inverse: #0a1929;
+  --text-link: #64b5f6;
+  --text-link-hover: #90caf9;
 
-  /* Border Colors */
-  --border-primary: #3a3a3a;
-  --border-secondary: #2f2f2f;
-  --border-focus: var(--color-blue-500);
+  /* Border Colors - Subtle blue borders */
+  --border-primary: #1e4976;
+  --border-secondary: #173a5e;
+  --border-focus: #42a5f5;
   --border-error: var(--color-red-500);
   --border-success: var(--color-green-500);
   --border-warning: var(--color-orange-500);
 
   /* Component Colors */
-  --button-primary-bg: var(--color-blue-600);
-  --button-primary-bg-hover: var(--color-blue-500);
-  --button-primary-bg-active: var(--color-blue-700);
-  --button-primary-text: var(--color-white);
+  --button-primary-bg: #1976d2;
+  --button-primary-bg-hover: #2196f3;
+  --button-primary-bg-active: #1565c0;
+  --button-primary-text: #ffffff;
 
-  --button-secondary-bg: #2f2f2f;
-  --button-secondary-bg-hover: #3a3a3a;
-  --button-secondary-bg-active: #454545;
-  --button-secondary-text: #ffffff;
+  --button-secondary-bg: #1a3e5f;
+  --button-secondary-bg-hover: #204d6f;
+  --button-secondary-bg-active: #265c82;
+  --button-secondary-text: #e3f2fd;
 
-  --input-bg: #1a1a1a;
-  --input-border: #3a3a3a;
-  --input-border-hover: #4a4a4a;
-  --input-border-focus: var(--color-blue-500);
-  --input-text: #ffffff;
-  --input-placeholder: #6b6b6b;
+  --input-bg: #0d2138;
+  --input-border: #1e4976;
+  --input-border-hover: #265c82;
+  --input-border-focus: #42a5f5;
+  --input-text: #e3f2fd;
+  --input-placeholder: #5a7a8f;
 
-  /* Status Colors */
-  --status-success-bg: rgba(76, 175, 80, 0.15);
-  --status-success-text: var(--color-green-100);
+  /* Status Colors - Softer backgrounds for comfort */
+  --status-success-bg: rgba(76, 175, 80, 0.12);
+  --status-success-text: #81c784;
   --status-success-border: var(--color-green-700);
 
-  --status-warning-bg: rgba(255, 152, 0, 0.15);
-  --status-warning-text: var(--color-orange-100);
+  --status-warning-bg: rgba(255, 152, 0, 0.12);
+  --status-warning-text: #ffb74d;
   --status-warning-border: var(--color-orange-700);
 
-  --status-error-bg: rgba(244, 67, 54, 0.15);
-  --status-error-text: var(--color-red-100);
+  --status-error-bg: rgba(244, 67, 54, 0.12);
+  --status-error-text: #e57373;
   --status-error-border: var(--color-red-700);
 
-  --status-info-bg: rgba(33, 150, 243, 0.15);
-  --status-info-text: var(--color-blue-100);
-  --status-info-border: var(--color-blue-700);
+  --status-info-bg: rgba(33, 150, 243, 0.12);
+  --status-info-text: #64b5f6;
+  --status-info-border: #1976d2;
 
-  /* Shadow Colors */
-  --shadow-color: rgba(0, 0, 0, 0.5);
+  /* Shadow Colors - Soft blue shadows */
+  --shadow-color: rgba(13, 33, 56, 0.6);
 
-  /* Scrollbar */
-  --scrollbar-track: #1a1a1a;
-  --scrollbar-thumb: #4a4a4a;
-  --scrollbar-thumb-hover: #5a5a5a;
+  /* Scrollbar - Blue tinted */
+  --scrollbar-track: #0d2138;
+  --scrollbar-thumb: #2d5a7a;
+  --scrollbar-thumb-hover: #3a6e94;
 }
 
 /* ============================================
@@ -379,7 +379,7 @@ a:focus-visible {
   color: var(--color-gray-900);
 }
 
-[data-theme='dark'] ::selection {
+.dark ::selection {
   background-color: var(--color-blue-800);
   color: var(--color-white);
 }

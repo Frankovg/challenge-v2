@@ -1,4 +1,5 @@
 import { Readex_Pro as FontSans } from "next/font/google";
+import { ThemeProvider } from 'next-themes'
 import React, { type ReactNode } from 'react'
 
 import { Layout } from 'components/Layout'
@@ -23,11 +24,13 @@ export default function RootLayout({ children }: { children: ReactNode }): React
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={fontSans.variable}>
-        <StyledComponentsRegistry>
-          <ApolloWrapper>
-            <Layout>{children}</Layout>
-          </ApolloWrapper>
-        </StyledComponentsRegistry>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <StyledComponentsRegistry>
+            <ApolloWrapper>
+              <Layout>{children}</Layout>
+            </ApolloWrapper>
+          </StyledComponentsRegistry>
+        </ThemeProvider>
       </body>
     </html>
   )
