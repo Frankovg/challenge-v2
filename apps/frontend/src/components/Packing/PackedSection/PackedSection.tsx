@@ -1,10 +1,15 @@
+'use client'
+
 import { Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
 import { IconButton } from 'components/ui/IconButton';
+import { Modal } from 'components/ui/Modal';
 import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
 import { useLineItems } from "hooks/useLineItems";
 
+import { ConfirmationModal } from '../ConfirmationModal';
 import { PackageContent } from "../PackageContent"
 import { PackedItem } from '../PackedItem';
 
@@ -17,8 +22,11 @@ export const PackedSection = () => {
     setSelectedPackageIndex,
     selectedPackageData,
     addPackage,
-    removePackage
+    removePackage,
   } = useLineItems()
+
+  const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
+  const [pendingPackageIdToRemove, setPendingPackageIdToRemove] = useState<number | null>(null)
 
   const handleAddPackage = (): void => {
     addPackage()
@@ -29,7 +37,27 @@ export const PackedSection = () => {
     if (packages.length === 0) return
 
     const packageId = selectedPackageData.id
-    removePackage(packageId)
+    const packageToRemove = packages.find(pkg => pkg.data.id === packageId)
+    const hasItems = packageToRemove && packageToRemove.data.line_items.length > 0
+
+    if (hasItems) {
+      setPendingPackageIdToRemove(packageId)
+      setOpenConfirmationModal(true)
+    } else {
+      removePackage(packageId)
+    }
+  }
+
+  const handleCloseModal = (): void => {
+    setOpenConfirmationModal(false)
+    setPendingPackageIdToRemove(null)
+  }
+
+  const handleConfirmRemove = (): void => {
+    if (pendingPackageIdToRemove !== null) {
+      removePackage(pendingPackageIdToRemove, true)
+    }
+    handleCloseModal()
   }
 
   if (!selectedPackageData) return null
@@ -73,6 +101,18 @@ export const PackedSection = () => {
           ))}
         </ScrollArea>
       </PackageContent>
+
+      <Modal
+        open={openConfirmationModal}
+        onClose={handleCloseModal}
+        ariaLabelledBy="confirm-delete-modal-title"
+        ariaDescribedBy="confirm-delete-modal-description"
+      >
+        <ConfirmationModal
+          close={handleCloseModal}
+          confirm={handleConfirmRemove}
+        />
+      </Modal>
     </PackedSectionContainer>
   )
 }

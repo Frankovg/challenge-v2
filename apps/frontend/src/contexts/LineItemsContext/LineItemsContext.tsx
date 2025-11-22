@@ -116,7 +116,7 @@ export const LineItemsProvider = ({
   }, [])
 
 
-  const removePackage = useCallback((packageId: number): void => {
+  const removePackage = useCallback((packageId: number, force = false): void => {
     const packageToRemove = packages.find(pkg => pkg.data.id === packageId)
     if (!packageToRemove) return
 
@@ -124,24 +124,25 @@ export const LineItemsProvider = ({
     const hasItems = itemsToReturn.length > 0
     const isSinglePackage = packages.length === 1
 
-    if (isSinglePackage && !hasItems) return
+    if (isSinglePackage && !hasItems || hasItems && !force) return
 
-    if (isSinglePackage && hasItems) {
+    if (isSinglePackage) {
       setPackages(INITIAL_PACKAGE)
       setSelectedPackageIndex(0)
-      setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
-      return
-    }
+      if (hasItems) {
+        setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
+      }
+    } else {
+      const removedPackageIndex = packages.findIndex(pkg => pkg.data.id === packageId)
 
-    const removedPackageIndex = packages.findIndex(pkg => pkg.data.id === packageId)
+      setPackages(prev => rebuildPackageTabs(prev, packageId))
+      setSelectedPackageIndex(prevIndex =>
+        selectPackage(removedPackageIndex, prevIndex, packages.length)
+      )
 
-    setPackages(prev => rebuildPackageTabs(prev, packageId))
-    setSelectedPackageIndex(prevIndex =>
-      selectPackage(removedPackageIndex, prevIndex, packages.length)
-    )
-
-    if (hasItems) {
-      setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
+      if (hasItems) {
+        setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
+      }
     }
   }, [packages])
 

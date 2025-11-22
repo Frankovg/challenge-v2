@@ -39,7 +39,7 @@ export type LineItemsContextType = {
   packItem: (item: LineItemType, packageId: number, quantity: number) => void
   unpackItem: (itemId: number, packageId: number, quantity: number) => void
   addPackage: () => void
-  removePackage: (packageId: number) => void
+  removePackage: (packageId: number, force?: boolean) => void
   updateItemQuantity: (packageId: number, itemId: number, newQuantity: number) => void
 }
 
