@@ -1,20 +1,9 @@
-import React, { type FC } from 'react'
-
-import { ScrollArea } from 'components/ui/ScrollArea'
-
-import { PackedItem } from '../PackedItem'
-import { mockedItemInPackage } from '../PackedSection/PackedSection'
+import React, { type ReactNode } from 'react'
 
 import { HEADER_COLUMNS } from './const'
 import { HeaderCell, HeaderGrid } from './PackageContent.styles'
 
-type Props = {
-  packageId: number
-}
-
-export const PackageContent: FC<Props> = (props) => {
-  const { packageId } = props
-
+export const PackageContent = ({ children }: { children: ReactNode }): ReactNode => {
   return (
     <>
       <HeaderGrid>
@@ -28,11 +17,7 @@ export const PackageContent: FC<Props> = (props) => {
           </HeaderCell>
         ))}
       </HeaderGrid>
-      <ScrollArea>
-        {mockedItemInPackage && mockedItemInPackage[packageId]?.line_items.map((item) => (
-          <PackedItem key={item.id} item={item} />
-        ))}
-      </ScrollArea>
+      {children}
     </>
   )
 }

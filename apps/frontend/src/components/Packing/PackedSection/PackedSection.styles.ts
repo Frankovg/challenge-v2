@@ -7,3 +7,15 @@ export const PackedSectionContainer = styled.section`
   flex-direction: column;
   border-left: 1px solid var(--border-primary);
 `
+
+export const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+`
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`

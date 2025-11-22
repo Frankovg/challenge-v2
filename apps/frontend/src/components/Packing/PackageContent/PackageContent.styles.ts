@@ -1,8 +1,5 @@
 import { styled } from 'styled-components'
 
-export const Wrapper = styled.div`
-`
-
 export const HeaderGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);

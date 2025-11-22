@@ -1,8 +1,9 @@
 import { render, screen, renderHook, act } from '@testing-library/react'
 
+import { useLineItems } from 'hooks/useLineItems'
 import { LineItemType } from 'types'
 
-import { LineItemsProvider, useLineItems } from '..'
+import { LineItemsProvider } from '..'
 
 const mockLineItems: LineItemType[] = [
   { id: 1, quantity: 2, sku: 'SKU-001', location: 'A1' },

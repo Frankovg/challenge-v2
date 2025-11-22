@@ -14,12 +14,14 @@ type Props = {
 
 export const PackedItem: FC<Props> = (props) => {
   const { item } = props
+
   const [quantity, setQuantity] = useState(item.quantity)
 
   const handleQuantityChange = (newQuantity: number): void => {
     setQuantity(newQuantity)
     // TODO: Update the packed item quantity in the parent component
   }
+  console.log("packed ", item);
 
   return (
     <Card
@@ -29,15 +31,16 @@ export const PackedItem: FC<Props> = (props) => {
             {item.sku}
           </div>
           <div className="location-column">
-            {item.location}
+            {item.location.toUpperCase()}
           </div>
           <div className="quantity-column">
             <NumberSpinner
               value={quantity}
-              min={1}
+              min={0}
               max={item.quantity}
               size="small"
               onChange={handleQuantityChange}
+              label='Item quantity'
             />
           </div>
           <div className="actions-column">

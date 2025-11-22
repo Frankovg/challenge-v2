@@ -70,7 +70,6 @@ export const NumberSpinner: FC<NumberSpinnerProps> = ({
 
   return (
     <NumberSpinnerContainer $size={size} $error={error} $disabled={disabled}>
-      {label && <label className="number-spinner-label">{label}</label>}
       <div className="number-spinner-wrapper">
         <input
           type="number"

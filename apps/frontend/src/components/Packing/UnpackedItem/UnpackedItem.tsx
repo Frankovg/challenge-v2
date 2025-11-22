@@ -3,34 +3,33 @@ import { FC } from "react"
 
 import { Card } from "components/ui/Card"
 import { CardButton } from "components/ui/CardButton"
-import { LineItemType } from "types"
 
-import { ItemName } from "../ItemName"
+import { ItemNameContainer, UnpackedItemContainer } from "./UnpackedItem.styles"
 
-import { UnpackedItemContainer } from "./UnpackedItem.styles"
+import type { AddToPackageButton, LineItemType } from "types"
 
 type Props = {
   item: LineItemType
+  handleClick: (q: AddToPackageButton) => void
 }
 
 export const UnpackedItem: FC<Props> = (props) => {
-  const { item } = props
+  const { item, handleClick } = props
+
   return (
     <Card
       content={
         <UnpackedItemContainer>
-          <ItemName
-            item={{
-              sku: item.sku,
-              location: item.location
-            }}
-          />
+          <ItemNameContainer >
+            <p>{item.sku}</p>
+            <span>{item.location.toUpperCase()}</span>
+          </ItemNameContainer>
           <div className="actions-container">
             <div className="quantity-container">
               {item.quantity}
             </div>
-            <CardButton >+1</CardButton>
-            <CardButton >All</CardButton>
+            <CardButton onClick={() => handleClick('one')}>+1</CardButton>
+            <CardButton onClick={() => handleClick('all')}>All</CardButton>
           </div>
         </UnpackedItemContainer>
       }
