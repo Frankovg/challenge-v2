@@ -28,9 +28,7 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     box-shadow: var(--shadow-sm);
 
     &:hover:not(:disabled) {
-      background-color: var(--button-primary-bg-hover);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
 
     &:active:not(:disabled) {
@@ -40,10 +38,9 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     }
 
     &.Mui-disabled {
-      background-color: var(--bg-disabled);
-      color: var(--text-disabled);
+      background-color: var(--bg-disabled) !important;
+      color: var(--text-disabled) !important;
       cursor: not-allowed;
-      opacity: 0.6;
     }
   `}
 
@@ -59,7 +56,6 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
       background-color: var(--button-secondary-bg-hover);
       border-color: var(--border-focus);
       box-shadow: var(--shadow-md);
-      transform: translateY(-1px);
     }
 
     &:active:not(:disabled) {

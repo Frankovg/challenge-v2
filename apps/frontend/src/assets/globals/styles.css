@@ -125,7 +125,7 @@
   --bg-tertiary: var(--color-gray-100);
   --bg-hover: var(--color-gray-200);
   --bg-active: var(--color-gray-300);
-  --bg-disabled: var(--color-gray-100);
+  --bg-disabled: var(--color-gray-300);
 
   /* Text Colors */
   --text-primary: var(--color-gray-900);
@@ -206,7 +206,7 @@
   --bg-tertiary: #132f4c;
   --bg-hover: #1a3e5f;
   --bg-active: #204d6f;
-  --bg-disabled: #0d2138;
+  --bg-disabled: #2e3842;
 
   /* Text Colors - High contrast for readability */
   --text-primary: #e3f2fd;

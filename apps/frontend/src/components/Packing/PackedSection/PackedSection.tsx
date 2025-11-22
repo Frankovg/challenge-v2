@@ -3,6 +3,7 @@
 import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
+import { Button } from 'components/ui/Button';
 import { IconButton } from 'components/ui/IconButton';
 import { Modal } from 'components/ui/Modal';
 import { ScrollArea } from 'components/ui/ScrollArea';
@@ -23,6 +24,7 @@ export const PackedSection = () => {
     selectedPackageData,
     addPackage,
     removePackage,
+    allItemsPacked
   } = useLineItems()
 
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
@@ -67,6 +69,18 @@ export const PackedSection = () => {
       <HeaderContainer>
         <div className='top-header'>
           <h3>Packed Products</h3>
+          <Button
+            variant='primary'
+            color='success'
+            disabled={!allItemsPacked}
+          >
+            Ship Package(s)
+          </Button>
+        </div>
+        <div className='bottom-header'>
+          <div>
+            {/* //TODO: barcode */}
+          </div>
           <ButtonGroup>
             <IconButton
               onClick={handleAddPackage}
@@ -84,9 +98,6 @@ export const PackedSection = () => {
               <Trash2 size={20} />
             </IconButton>
           </ButtonGroup>
-        </div>
-        <div className='bottom-header'>
-          {/* //TODO: barcode */}
         </div>
       </HeaderContainer>
 

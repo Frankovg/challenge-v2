@@ -44,9 +44,6 @@ export const LineItemsProvider = ({
       return total + pkg.data.line_items.reduce((sum, item) => sum + item.quantity, 0)
     }, 0)
   }, [packages])
-  const canShip = useMemo(() => {
-    return allItemsPacked && packages.length > 0 && totalPackedItems > 0
-  }, [allItemsPacked, packages.length, totalPackedItems])
 
 
   const packItem = useCallback((item: LineItemType, packageId: number, quantity: number): void => {
@@ -188,7 +185,6 @@ export const LineItemsProvider = ({
         selectedPackageData,
         allItemsPacked,
         totalPackedItems,
-        canShip,
         packItem,
         unpackItem,
         addPackage,

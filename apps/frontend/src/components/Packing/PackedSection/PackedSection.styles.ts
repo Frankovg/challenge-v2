@@ -18,6 +18,12 @@ export const HeaderContainer = styled.div`
     justify-content: space-between;
     margin-bottom: 1rem;
   }
+
+  .bottom-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `
 
 export const ButtonGroup = styled.div`
