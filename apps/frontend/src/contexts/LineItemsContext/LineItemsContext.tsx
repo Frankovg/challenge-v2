@@ -120,18 +120,27 @@ export const LineItemsProvider = ({
     const packageToRemove = packages.find(pkg => pkg.data.id === packageId)
     if (!packageToRemove) return
 
-    const removedPackageIndex = packages.findIndex(pkg => pkg.data.id === packageId)
     const itemsToReturn = [...packageToRemove.data.line_items]
+    const hasItems = itemsToReturn.length > 0
+    const isSinglePackage = packages.length === 1
 
-    setPackages(prev => rebuildPackageTabs(prev, packageId))
+    if (isSinglePackage && !hasItems) return
 
-    if (removedPackageIndex !== -1) {
-      setSelectedPackageIndex(prevIndex =>
-        selectPackage(removedPackageIndex, prevIndex, packages.length)
-      )
+    if (isSinglePackage && hasItems) {
+      setPackages(INITIAL_PACKAGE)
+      setSelectedPackageIndex(0)
+      setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
+      return
     }
 
-    if (itemsToReturn.length > 0) {
+    const removedPackageIndex = packages.findIndex(pkg => pkg.data.id === packageId)
+
+    setPackages(prev => rebuildPackageTabs(prev, packageId))
+    setSelectedPackageIndex(prevIndex =>
+      selectPackage(removedPackageIndex, prevIndex, packages.length)
+    )
+
+    if (hasItems) {
       setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
     }
   }, [packages])

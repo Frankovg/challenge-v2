@@ -26,14 +26,10 @@ export const PackedSection = () => {
   }
 
   const handleRemovePackage = (): void => {
-    if (packages.length <= 1) return
+    if (packages.length === 0) return
 
     const packageId = selectedPackageData.id
     removePackage(packageId)
-
-    if (selectedPackageIndex >= packages.length - 1) {
-      setSelectedPackageIndex(Math.max(0, packages.length - 2))
-    }
   }
 
   if (!selectedPackageData) return null
@@ -54,7 +50,7 @@ export const PackedSection = () => {
             onClick={handleRemovePackage}
             aria-label="Remove package"
             title="Remove package"
-            disabled={packages.length <= 1}
+            disabled={packages.length === 1 && selectedPackageData.line_items.length === 0}
           >
             <Trash2 size={20} />
           </IconButton>
