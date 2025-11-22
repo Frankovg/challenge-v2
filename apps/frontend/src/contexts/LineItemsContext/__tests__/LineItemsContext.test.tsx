@@ -36,7 +36,7 @@ describe('LineItemsContext', () => {
       expect(screen.getByTestId('item-2')).toHaveTextContent('SKU-002')
     })
 
-    it('allows updating line items via setLineItems', () => {
+    it('allows packing items', () => {
       const wrapper = ({ children }: { children: React.ReactNode }) => (
         <LineItemsProvider initialLineItems={mockLineItems}>
           {children}
@@ -46,17 +46,15 @@ describe('LineItemsContext', () => {
       const { result } = renderHook(() => useLineItems(), { wrapper })
 
       expect(result.current.lineItems).toHaveLength(2)
-
-      const newLineItems: LineItemType[] = [
-        { id: 3, quantity: 1, sku: 'SKU-003', location: 'C3' },
-      ]
+      expect(result.current.packages[0].data.line_items).toHaveLength(0)
 
       act(() => {
-        result.current.setLineItems(newLineItems)
+        result.current.packItem(mockLineItems[0], 0, 2)
       })
 
       expect(result.current.lineItems).toHaveLength(1)
-      expect(result.current.lineItems[0].sku).toBe('SKU-003')
+      expect(result.current.packages[0].data.line_items).toHaveLength(1)
+      expect(result.current.packages[0].data.line_items[0].quantity).toBe(2)
     })
   })
 
@@ -83,7 +81,9 @@ describe('LineItemsContext', () => {
       const { result } = renderHook(() => useLineItems(), { wrapper })
 
       expect(result.current.lineItems).toEqual(mockLineItems)
-      expect(typeof result.current.setLineItems).toBe('function')
+      expect(typeof result.current.packItem).toBe('function')
+      expect(typeof result.current.unpackItem).toBe('function')
+      expect(typeof result.current.updateItemQuantity).toBe('function')
     })
   })
 })

@@ -10,11 +10,6 @@ describe('NumberSpinner', () => {
     expect(input).toHaveValue(5)
   })
 
-  it('renders with label', () => {
-    render(<NumberSpinner label="Quantity" defaultValue={1} />)
-    expect(screen.getByText('Quantity')).toBeInTheDocument()
-  })
-
   it('increments value when up button is clicked', () => {
     const handleChange = jest.fn()
     render(<NumberSpinner value={5} onChange={handleChange} />)

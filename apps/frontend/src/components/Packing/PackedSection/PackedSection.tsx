@@ -1,6 +1,3 @@
-import { Plus, Trash2 } from 'lucide-react'
-
-import { IconButton } from 'components/ui/IconButton'
 import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
 import { useLineItems } from "hooks/useLineItems";
@@ -8,15 +5,13 @@ import { useLineItems } from "hooks/useLineItems";
 import { PackageContent } from "../PackageContent"
 import { PackedItem } from '../PackedItem';
 
-import { ButtonGroup, HeaderContainer, PackedSectionContainer } from "./PackedSection.styles"
+import { PackedSectionContainer } from "./PackedSection.styles"
 
 export const PackedSection = () => {
   const {
     packages,
     selectedPackageIndex,
     setSelectedPackageIndex,
-    addPackage,
-    removePackage,
     selectedPackageData
   } = useLineItems()
 

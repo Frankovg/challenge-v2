@@ -9,6 +9,10 @@ import React, {
 } from 'react'
 
 import { reduceLineItemQuantity, updatePackagesWithItem } from 'utils/packageOperations'
+import {
+  adjustLineItemsAfterUpdate,
+  updatePackageItemQuantity,
+} from 'utils/updateQuantityOperations'
 
 import { INITIAL_PACKAGE } from './const'
 
@@ -160,62 +164,32 @@ export const LineItemsProvider = ({
   const updateItemQuantity = useCallback((packageId: number, itemId: number, newQuantity: number): void => {
     if (newQuantity < 0) return
 
-    setPackages(prev => prev.map(pkg => {
-      if (pkg.data.id !== packageId) return pkg
+    let itemToUpdate: LineItemType | null = null
+    let quantityDiff = 0
+
+    setPackages(prev => {
+      const pkg = prev.find(p => p.data.id === packageId)
+      if (!pkg) return prev
 
       const item = pkg.data.line_items.find(li => li.id === itemId)
-      if (!item) return pkg
+      if (!item) return prev
 
-      const quantityDiff = item.quantity - newQuantity
+      itemToUpdate = item
+      quantityDiff = item.quantity - newQuantity
 
-      if (newQuantity === 0) {
-        setLineItems(prevItems => {
-          const existingItem = prevItems.find(li => li.id === itemId)
-          if (existingItem) {
-            return prevItems.map(li =>
-              li.id === itemId
-                ? { ...li, quantity: li.quantity + item.quantity }
-                : li
-            )
-          }
-          return [...prevItems, item]
-        })
+      return updatePackageItemQuantity(prev, packageId, itemId, newQuantity)
+    })
 
-        return {
-          ...pkg,
-          data: {
-            ...pkg.data,
-            line_items: pkg.data.line_items.filter(li => li.id !== itemId)
-          }
-        }
-      }
-
-      if (quantityDiff > 0) {
-        setLineItems(prevItems => {
-          const existingItem = prevItems.find(li => li.id === itemId)
-          if (existingItem) {
-            return prevItems.map(li =>
-              li.id === itemId
-                ? { ...li, quantity: li.quantity + quantityDiff }
-                : li
-            )
-          }
-          return [...prevItems, { ...item, quantity: quantityDiff }]
-        })
-      }
-
-      return {
-        ...pkg,
-        data: {
-          ...pkg.data,
-          line_items: pkg.data.line_items.map(li =>
-            li.id === itemId
-              ? { ...li, quantity: newQuantity }
-              : li
-          )
-        }
-      }
-    }))
+    setLineItems(prevItems =>
+      adjustLineItemsAfterUpdate(
+        prevItems,
+        itemToUpdate!,
+        itemId,
+        newQuantity,
+        quantityDiff,
+        reduceLineItemQuantity
+      )
+    )
   }, [])
 
   return (
