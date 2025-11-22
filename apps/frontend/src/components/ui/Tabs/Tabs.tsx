@@ -32,8 +32,9 @@ export const Tabs: FC<Props> = ({
   centered = false,
   variant = 'standard',
   indicatorColor = 'primary',
-  textColor = 'primary',
+  textColor = 'inherit',
 }) => {
+
   const handleChange = (_event: SyntheticEvent, newValue: number): void => {
     onChange(newValue)
   }
@@ -54,9 +55,7 @@ export const Tabs: FC<Props> = ({
           key={tab.value}
           label={tab.label}
           value={tab.value}
-          icon={tab.icon}
           disabled={tab.disabled}
-          iconPosition="start"
         />
       ))}
     </StyledTabs>

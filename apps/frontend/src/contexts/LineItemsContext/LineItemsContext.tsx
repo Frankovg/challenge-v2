@@ -8,6 +8,7 @@ import React, {
   type ReactNode,
 } from 'react'
 
+import { addPackageOperations } from 'utils/addPackageOperations'
 import { reduceLineItemQuantity, updatePackagesWithItem } from 'utils/packageOperations'
 import {
   adjustLineItemsAfterUpdate,
@@ -110,25 +111,7 @@ export const LineItemsProvider = ({
 
 
   const addPackage = useCallback((): void => {
-    setPackages(prev => {
-      //TODO: id and value should be the same
-      const ids = prev.map(p => p.data.id)
-      const values = prev.map(p => p.value)
-      const newId = ids.length > 0 ? Math.max(...ids) + 1 : 0
-      const newValue = values.length > 0 ? Math.max(...values) + 1 : 0
-
-      return [
-        ...prev,
-        {
-          value: newValue,
-          label: `Package ${newValue + 1}`, //TODO: is it okay?
-          data: {
-            id: newId,
-            line_items: []
-          }
-        }
-      ]
-    })
+    setPackages(prev => addPackageOperations(prev))
   }, [])
 
   const removePackage = useCallback((packageId: number): void => {

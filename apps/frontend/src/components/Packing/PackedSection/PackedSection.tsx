@@ -1,3 +1,6 @@
+import { Plus, Trash2 } from 'lucide-react';
+
+import { IconButton } from 'components/ui/IconButton';
 import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
 import { useLineItems } from "hooks/useLineItems";
@@ -5,38 +8,40 @@ import { useLineItems } from "hooks/useLineItems";
 import { PackageContent } from "../PackageContent"
 import { PackedItem } from '../PackedItem';
 
-import { PackedSectionContainer } from "./PackedSection.styles"
+import { ButtonGroup, HeaderContainer, PackedSectionContainer } from "./PackedSection.styles"
 
 export const PackedSection = () => {
   const {
     packages,
     selectedPackageIndex,
     setSelectedPackageIndex,
-    selectedPackageData
+    selectedPackageData,
+    addPackage,
+    removePackage
   } = useLineItems()
 
-  // const handleAddPackage = (): void => {
-  //   addPackage()
-  //   setSelectedPackageIndex(packages.length)
-  // }
+  const handleAddPackage = (): void => {
+    addPackage()
+    setSelectedPackageIndex(packages.length)
+  }
 
-  // const handleRemovePackage = (): void => {
-  //   if (packages.length <= 1) return
+  const handleRemovePackage = (): void => {
+    if (packages.length <= 1) return
 
-  //   //TODO: mismo aca
-  //   const packageId = packages[selectedPackageIndex].data.id
-  //   removePackage(packageId)
+    //TODO: mismo aca
+    const packageId = packages[selectedPackageIndex].data.id
+    removePackage(packageId)
 
-  //   if (selectedPackageIndex >= packages.length - 1) {
-  //     setSelectedPackageIndex(Math.max(0, packages.length - 2))
-  //   }
-  // }
+    if (selectedPackageIndex >= packages.length - 1) {
+      setSelectedPackageIndex(Math.max(0, packages.length - 2))
+    }
+  }
 
   if (!selectedPackageData) return null
 
   return (
     <PackedSectionContainer>
-      {/* <HeaderContainer>
+      <HeaderContainer>
         <h3>Packed Products</h3>
         <ButtonGroup>
           <IconButton
@@ -55,7 +60,7 @@ export const PackedSection = () => {
             <Trash2 size={20} />
           </IconButton>
         </ButtonGroup>
-      </HeaderContainer> */}
+      </HeaderContainer>
       <Tabs
         tabs={packages}
         value={selectedPackageIndex}

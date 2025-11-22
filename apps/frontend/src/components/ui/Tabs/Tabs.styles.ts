@@ -6,7 +6,7 @@ export const StyledTabs = styled(Tabs)`
   min-height: 48px;
 
   & .MuiTabs-indicator {
-    background-color: var(--color-primary);
+    background-color: var(--color-blue-600);
     height: 2px;
     transition: all var(--transition-base);
   }
@@ -26,7 +26,7 @@ export const StyledTabs = styled(Tabs)`
 
 export const StyledTab = styled(Tab)`
   color: var(--text-secondary);
-  font-family: var(--font-family-sans);
+  font-family: var(--font-family-base);
   font-size: 0.875rem;
   font-weight: 500;
   text-transform: none;
@@ -40,17 +40,12 @@ export const StyledTab = styled(Tab)`
   }
 
   &.Mui-selected {
-    color: var(--color-primary);
+    color: var(--color-blue-600);
     font-weight: 600;
   }
 
   &.Mui-disabled {
     color: var(--text-disabled);
     opacity: 0.5;
-  }
-
-  & .MuiTab-iconWrapper {
-    margin-right: var(--spacing-xs);
-    margin-bottom: 0;
   }
 `
