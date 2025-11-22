@@ -9,6 +9,7 @@ import { Modal } from 'components/ui/Modal';
 import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
 import { useLineItems } from "hooks/useLineItems";
+import { PackedPackage } from 'types';
 
 import { ConfirmationModal } from '../ConfirmationModal';
 import { PackageContent } from "../PackageContent"
@@ -24,8 +25,10 @@ export const PackedSection = () => {
     selectedPackageData,
     addPackage,
     removePackage,
-    allItemsPacked
+    allItemsPacked,
+    shipPackages
   } = useLineItems()
+
 
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
   const [pendingPackageIdToRemove, setPendingPackageIdToRemove] = useState<number | null>(null)
@@ -62,6 +65,11 @@ export const PackedSection = () => {
     handleCloseModal()
   }
 
+  const handleShipPackages = async (): Promise<void> => {
+    const items: PackedPackage[] = packages.map((pack) => pack.data)
+    shipPackages(items)
+  }
+
   if (!selectedPackageData) return null
 
   return (
@@ -73,6 +81,7 @@ export const PackedSection = () => {
             variant='primary'
             color='success'
             disabled={!allItemsPacked}
+            onClick={handleShipPackages}
           >
             Ship Package(s)
           </Button>

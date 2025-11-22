@@ -9,6 +9,26 @@ export type LineItemType = {
   location: string
 }
 
+export type PackedPackage = {
+  id: number
+  line_items: LineItemType[]
+}
+
+export type PackedPackages = {
+  packages: PackedPackage[]
+}
+
+export type PackItemsMutationResponse = {
+  pack_items: PackedPackages
+}
+
+export type UsePackItemsMutationType = {
+  packItems: (packages: PackedPackage[]) => Promise<PackedPackages>
+  data: PackItemsMutationResponse | undefined | null
+  loading: boolean
+  error: ApolloError | undefined
+}
+
 export type LineItemsQueryType = {
   line_items: LineItemType[]
 }
@@ -34,12 +54,12 @@ export type LineItemsContextType = {
   setSelectedPackageIndex: (index: number) => void
   selectedPackageData: PackedItem['data']
   allItemsPacked: boolean
-  totalPackedItems: number
+  // totalPackedItems: number
   packItem: (item: LineItemType, packageId: number, quantity: number) => void
-  unpackItem: (itemId: number, packageId: number, quantity: number) => void
   addPackage: () => void
   removePackage: (packageId: number, force?: boolean) => void
   updateItemQuantity: (packageId: number, itemId: number, newQuantity: number) => void
+  shipPackages: (items: PackedPackage[]) => Promise<void>
 }
 
 export type AddToPackageButton = 'one' | 'all'
