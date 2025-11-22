@@ -1,56 +1,28 @@
-import type { LineItemType, PackedItem } from 'types'
+import type { PackedItem } from "types"
 
-export const updatePackagesWithItem = (
-  packages: PackedItem[],
-  item: LineItemType,
-  packageId: number,
-  quantity: number
-): PackedItem[] => {
-  return packages.map(pkg => {
-    if (pkg.data.id !== packageId) return pkg
-
-    const existingItem = pkg.data.line_items.find(li => li.id === item.id)
-
-    if (existingItem) {
-      return {
-        ...pkg,
-        data: {
-          ...pkg.data,
-          line_items: pkg.data.line_items.map(li =>
-            li.id === item.id
-              ? { ...li, quantity: li.quantity + quantity }
-              : li
-          )
-        }
-      }
-    } else {
-      return {
-        ...pkg,
-        data: {
-          ...pkg.data,
-          line_items: [...pkg.data.line_items, { ...item, quantity }]
-        }
-      }
-    }
-  })
+export const rebuildPackageTabs = (packages: PackedItem[], packageId: number) => {
+  return packages
+    .filter(pkg => pkg.data.id !== packageId)
+    .map((pkg, index) => ({
+      ...pkg,
+      value: index,
+      label: `Package ${index + 1}`
+    }))
 }
 
-export const reduceLineItemQuantity = (
-  lineItems: LineItemType[],
-  itemId: number,
-  quantityToRemove: number
-): LineItemType[] => {
-  return lineItems.reduce<LineItemType[]>((acc, item) => {
-    if (item.id !== itemId) {
-      acc.push(item)
-      return acc
+export const selectPackage = (
+  removedPackageIndex: number,
+  prevIndex: number,
+  packagesLength: number
+) => {
+  if (removedPackageIndex < prevIndex) {
+    return prevIndex - 1
+  }
+  if (removedPackageIndex === prevIndex) {
+    if (prevIndex >= packagesLength - 1) {
+      return Math.max(0, packagesLength - 2)
     }
-
-    const remainingQuantity = item.quantity - quantityToRemove
-    if (remainingQuantity > 0) {
-      acc.push({ ...item, quantity: remainingQuantity })
-    }
-
-    return acc
-  }, [])
+    return prevIndex
+  }
+  return prevIndex
 }

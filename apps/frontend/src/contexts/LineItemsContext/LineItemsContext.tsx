@@ -9,7 +9,8 @@ import React, {
 } from 'react'
 
 import { addPackageOperations } from 'utils/addPackageOperations'
-import { reduceLineItemQuantity, updatePackagesWithItem } from 'utils/packageOperations'
+import { rebuildPackageTabs, selectPackage } from 'utils/packageOperations'
+import { reduceLineItemQuantity, updatePackagesWithItem } from 'utils/packingOperations'
 import {
   adjustLineItemsAfterUpdate,
   updatePackageItemQuantity,
@@ -115,34 +116,47 @@ export const LineItemsProvider = ({
   }, [])
 
   const removePackage = useCallback((packageId: number): void => {
+    let itemsToReturn: LineItemType[] = []
+    let removedPackageIndex = -1
+
     setPackages(prev => {
       const packageToRemove = prev.find(pkg => pkg.data.id === packageId)
       if (!packageToRemove) return prev
 
-      if (packageToRemove.data.line_items.length > 0) {
-        setLineItems(prevItems => {
-          const itemsToReturn = packageToRemove.data.line_items
-          const updatedItems = [...prevItems]
+      removedPackageIndex = prev.findIndex(pkg => pkg.data.id === packageId)
+      itemsToReturn = packageToRemove.data.line_items
 
-          itemsToReturn.forEach(item => {
-            const existingItemIndex = updatedItems.findIndex(li => li.id === item.id)
-            if (existingItemIndex >= 0) {
-              updatedItems[existingItemIndex] = {
-                ...updatedItems[existingItemIndex],
-                quantity: updatedItems[existingItemIndex].quantity + item.quantity
-              }
-            } else {
-              updatedItems.push(item)
-            }
-          })
-
-          return updatedItems
-        })
-      }
-
-      return prev.filter(pkg => pkg.data.id !== packageId)
+      return rebuildPackageTabs(prev, packageId)
     })
-  }, [])
+
+    if (removedPackageIndex !== -1) {
+      setSelectedPackageIndex(prevIndex =>
+        selectPackage(removedPackageIndex, prevIndex, packages.length)
+      )
+    }
+
+    if (itemsToReturn.length > 0) {
+      console.log('IM HERE');
+
+      setLineItems(prevItems => {
+        const updatedItems = [...prevItems]
+
+        itemsToReturn.forEach(item => {
+          const existingItemIndex = updatedItems.findIndex(li => li.id === item.id)
+          if (existingItemIndex >= 0) {
+            updatedItems[existingItemIndex] = {
+              ...updatedItems[existingItemIndex],
+              quantity: updatedItems[existingItemIndex].quantity + item.quantity
+            }
+          } else {
+            updatedItems.push(item)
+          }
+        })
+
+        return updatedItems
+      })
+    }
+  }, [packages.length])
 
   const updateItemQuantity = useCallback((packageId: number, itemId: number, newQuantity: number): void => {
     if (newQuantity < 0) return

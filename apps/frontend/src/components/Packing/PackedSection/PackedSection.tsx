@@ -28,8 +28,7 @@ export const PackedSection = () => {
   const handleRemovePackage = (): void => {
     if (packages.length <= 1) return
 
-    //TODO: mismo aca
-    const packageId = packages[selectedPackageIndex].data.id
+    const packageId = selectedPackageData.id
     removePackage(packageId)
 
     if (selectedPackageIndex >= packages.length - 1) {

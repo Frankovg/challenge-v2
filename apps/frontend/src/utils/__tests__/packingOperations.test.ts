@@ -1,10 +1,10 @@
-import { reduceLineItemQuantity, updatePackagesWithItem } from '../packageOperations'
+import { reduceLineItemQuantity, updatePackagesWithItem } from '../packingOperations'
 
 import { mockItem, mockLineItems, mockPackages } from './mocks'
 
 import type { PackedItem } from 'types'
 
-describe('packageOperations', (): void => {
+describe('packingOperations', (): void => {
   describe('updatePackagesWithItem', (): void => {
     it('should add a new item to an empty package', (): void => {
       const result = updatePackagesWithItem(mockPackages, mockItem, 0, 3)
