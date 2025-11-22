@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react'
 
 import { Packing } from 'components/Packing'
-import { LineItemsProvider } from 'contexts'
+import { LineItemsProvider } from 'contexts/LineItemsContext'
 import { LINE_ITEMS_QUERY } from 'hooks/useLineItemsQuery'
 import { APOLLO_CLIENT } from 'lib/apolloClient'
 import { LineItemsQueryType } from 'types'

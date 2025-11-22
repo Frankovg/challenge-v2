@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 
 import { ScrollArea } from 'components/ui/ScrollArea'
-import { useLineItems } from 'contexts'
+import { useLineItems } from 'contexts/LineItemsContext'
 
 import { UnpackedItem } from '../UnpackedItem'
 
