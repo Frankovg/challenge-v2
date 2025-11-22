@@ -1,35 +1,48 @@
 import { type FC } from "react"
 
+import { Button } from "components/ui/Button"
+
 import {
   ButtonContainer,
-  CancelButton,
   ConfirmationModalContainer,
-  DeleteButton,
   ModalDescription,
   ModalTitle,
 } from "./ConfirmationModal.styles"
 
 type Props = {
   close: VoidFunction,
-  confirm: VoidFunction
+  confirm: VoidFunction,
+  title: string,
+  description: string,
+  variant: 'delete' | 'ship',
+  buttonLabel: string
 }
 
-export const ConfirmationModal: FC<Props> = ({ close, confirm }) => {
+export const ConfirmationModal: FC<Props> = ({
+  close,
+  confirm,
+  title,
+  description,
+  variant,
+  buttonLabel = 'Confirm'
+}) => {
+  const buttonColor = variant === 'delete' ? 'warning' : 'success'
+
   return (
     <ConfirmationModalContainer>
       <ModalTitle id="confirm-delete-modal-title">
-        Delete Package with Items?
+        {title}
       </ModalTitle>
       <ModalDescription id="confirm-delete-modal-description">
-        This package contains items. If you delete it, all items will be returned to the unpacked list. Are you sure you want to continue?
+        {description}
       </ModalDescription>
       <ButtonContainer>
-        <CancelButton onClick={close}>
+        <Button onClick={close} >
           Cancel
-        </CancelButton>
-        <DeleteButton onClick={confirm}>
-          Delete Package
-        </DeleteButton>
+        </Button>
+        <Button color={buttonColor} onClick={confirm} >
+          {buttonLabel}
+        </Button>
       </ButtonContainer>
     </ConfirmationModalContainer>
   )

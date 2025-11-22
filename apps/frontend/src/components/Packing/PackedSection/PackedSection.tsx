@@ -15,7 +15,13 @@ import { ConfirmationModal } from '../ConfirmationModal';
 import { PackageContent } from "../PackageContent"
 import { PackedItem } from '../PackedItem';
 
+import { MODAL_DICTIONARY } from './const';
 import { ButtonGroup, HeaderContainer, PackedSectionContainer } from "./PackedSection.styles"
+
+type ModalState = {
+  open: boolean,
+  action: 'delete' | 'ship'
+}
 
 export const PackedSection = () => {
   const {
@@ -29,8 +35,9 @@ export const PackedSection = () => {
     shipPackages
   } = useLineItems()
 
+  const initialModalState: ModalState = { open: false, action: 'ship' }
 
-  const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
+  const [openConfirmationModal, setOpenConfirmationModal] = useState(initialModalState)
   const [pendingPackageIdToRemove, setPendingPackageIdToRemove] = useState<number | null>(null)
 
   const handleAddPackage = (): void => {
@@ -47,27 +54,31 @@ export const PackedSection = () => {
 
     if (hasItems) {
       setPendingPackageIdToRemove(packageId)
-      setOpenConfirmationModal(true)
+      setOpenConfirmationModal({ open: true, action: 'delete' })
     } else {
       removePackage(packageId)
     }
   }
 
   const handleCloseModal = (): void => {
-    setOpenConfirmationModal(false)
+    setOpenConfirmationModal(initialModalState)
     setPendingPackageIdToRemove(null)
   }
 
-  const handleConfirmRemove = (): void => {
-    if (pendingPackageIdToRemove !== null) {
-      removePackage(pendingPackageIdToRemove, true)
-    }
-    handleCloseModal()
+  const handleShipPackages = (): void => {
+    setOpenConfirmationModal({ open: true, action: 'ship' })
   }
 
-  const handleShipPackages = async (): Promise<void> => {
-    const items: PackedPackage[] = packages.map((pack) => pack.data)
-    shipPackages(items)
+  const handleConfirmModal = async (): Promise<void> => {
+    if (openConfirmationModal.action === 'ship') {
+      const items: PackedPackage[] = packages.map((pack) => pack.data)
+      await shipPackages(items)
+    } else {
+      if (pendingPackageIdToRemove !== null) {
+        removePackage(pendingPackageIdToRemove, true)
+      }
+    }
+    handleCloseModal()
   }
 
   if (!selectedPackageData) return null
@@ -130,14 +141,18 @@ export const PackedSection = () => {
       </PackageContent>
 
       <Modal
-        open={openConfirmationModal}
+        open={openConfirmationModal.open}
         onClose={handleCloseModal}
-        ariaLabelledBy="confirm-delete-modal-title"
-        ariaDescribedBy="confirm-delete-modal-description"
+        ariaLabelledBy={`confirm-${openConfirmationModal.action}-modal-title`}
+        ariaDescribedBy={`confirm-${openConfirmationModal.action}-modal-description`}
       >
         <ConfirmationModal
+          variant={openConfirmationModal.action}
           close={handleCloseModal}
-          confirm={handleConfirmRemove}
+          confirm={handleConfirmModal}
+          title={MODAL_DICTIONARY[openConfirmationModal.action].title}
+          buttonLabel={MODAL_DICTIONARY[openConfirmationModal.action].buttonLabel}
+          description={MODAL_DICTIONARY[openConfirmationModal.action].description}
         />
       </Modal>
     </PackedSectionContainer>
