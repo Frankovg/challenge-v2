@@ -1,12 +1,12 @@
-import { addPackageOperations } from '../addPackageOperations'
+import { createPackage } from '../addPackageOperations'
 
 import { mockPackages } from './mocks'
 
 import type { PackedItem } from 'types'
 
-describe('addPackageOperations', (): void => {
+describe('createPackage', (): void => {
   it('should add a new package with incremented id and value', (): void => {
-    const result = addPackageOperations(mockPackages)
+    const result = createPackage(mockPackages)
 
     expect(result).toHaveLength(3)
     expect(result[2]).toEqual({
@@ -20,7 +20,7 @@ describe('addPackageOperations', (): void => {
   })
 
   it('should create first package with id 0 and value 0 when packages array is empty', (): void => {
-    const result = addPackageOperations([])
+    const result = createPackage([])
 
     expect(result).toHaveLength(1)
     expect(result[0]).toEqual({
@@ -34,7 +34,7 @@ describe('addPackageOperations', (): void => {
   })
 
   it('should preserve existing packages in the array', (): void => {
-    const result = addPackageOperations(mockPackages)
+    const result = createPackage(mockPackages)
 
     expect(result[0]).toEqual(mockPackages[0])
     expect(result[1]).toEqual(mockPackages[1])
@@ -60,7 +60,7 @@ describe('addPackageOperations', (): void => {
       }
     ]
 
-    const result = addPackageOperations(nonSequentialPackages)
+    const result = createPackage(nonSequentialPackages)
 
     expect(result).toHaveLength(3)
     expect(result[2].data.id).toBe(11) // Math.max(5, 10) + 1
@@ -87,7 +87,7 @@ describe('addPackageOperations', (): void => {
       }
     ]
 
-    const result = addPackageOperations(nonSequentialValues)
+    const result = createPackage(nonSequentialValues)
 
     expect(result).toHaveLength(3)
     expect(result[2].value).toBe(11) // Math.max(5, 10) + 1
@@ -96,14 +96,14 @@ describe('addPackageOperations', (): void => {
   })
 
   it('should create new package with empty line_items array', (): void => {
-    const result = addPackageOperations(mockPackages)
+    const result = createPackage(mockPackages)
 
     expect(result[2].data.line_items).toEqual([])
     expect(Array.isArray(result[2].data.line_items)).toBe(true)
   })
 
   it('should generate correct label format', (): void => {
-    const result = addPackageOperations(mockPackages)
+    const result = createPackage(mockPackages)
 
     // Label should be "Package {value + 1}"
     expect(result[2].label).toBe(`Package ${result[2].value + 1}`)

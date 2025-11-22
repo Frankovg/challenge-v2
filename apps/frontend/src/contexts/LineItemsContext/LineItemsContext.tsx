@@ -8,8 +8,8 @@ import React, {
   type ReactNode,
 } from 'react'
 
-import { addPackageOperations } from 'utils/addPackageOperations'
-import { rebuildPackageTabs, selectPackage } from 'utils/packageOperations'
+import { createPackage } from 'utils/addPackageOperations'
+import { rebuildPackageTabs, restoreItems, selectPackage } from 'utils/packageOperations'
 import { reduceLineItemQuantity, updatePackagesWithItem } from 'utils/packingOperations'
 import {
   adjustLineItemsAfterUpdate,
@@ -112,22 +112,18 @@ export const LineItemsProvider = ({
 
 
   const addPackage = useCallback((): void => {
-    setPackages(prev => addPackageOperations(prev))
+    setPackages(prev => createPackage(prev))
   }, [])
 
+
   const removePackage = useCallback((packageId: number): void => {
-    let itemsToReturn: LineItemType[] = []
-    let removedPackageIndex = -1
+    const packageToRemove = packages.find(pkg => pkg.data.id === packageId)
+    if (!packageToRemove) return
 
-    setPackages(prev => {
-      const packageToRemove = prev.find(pkg => pkg.data.id === packageId)
-      if (!packageToRemove) return prev
+    const removedPackageIndex = packages.findIndex(pkg => pkg.data.id === packageId)
+    const itemsToReturn = [...packageToRemove.data.line_items]
 
-      removedPackageIndex = prev.findIndex(pkg => pkg.data.id === packageId)
-      itemsToReturn = packageToRemove.data.line_items
-
-      return rebuildPackageTabs(prev, packageId)
-    })
+    setPackages(prev => rebuildPackageTabs(prev, packageId))
 
     if (removedPackageIndex !== -1) {
       setSelectedPackageIndex(prevIndex =>
@@ -136,27 +132,10 @@ export const LineItemsProvider = ({
     }
 
     if (itemsToReturn.length > 0) {
-      console.log('IM HERE');
-
-      setLineItems(prevItems => {
-        const updatedItems = [...prevItems]
-
-        itemsToReturn.forEach(item => {
-          const existingItemIndex = updatedItems.findIndex(li => li.id === item.id)
-          if (existingItemIndex >= 0) {
-            updatedItems[existingItemIndex] = {
-              ...updatedItems[existingItemIndex],
-              quantity: updatedItems[existingItemIndex].quantity + item.quantity
-            }
-          } else {
-            updatedItems.push(item)
-          }
-        })
-
-        return updatedItems
-      })
+      setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
     }
-  }, [packages.length])
+  }, [packages])
+
 
   const updateItemQuantity = useCallback((packageId: number, itemId: number, newQuantity: number): void => {
     if (newQuantity < 0) return

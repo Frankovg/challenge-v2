@@ -1,6 +1,6 @@
 import type { PackedItem } from "types"
 
-export const addPackageOperations = (
+export const createPackage = (
   packages: PackedItem[]
 ) => {
   const ids = packages.map(p => p.data.id)
