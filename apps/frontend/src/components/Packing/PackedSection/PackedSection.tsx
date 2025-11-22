@@ -65,25 +65,31 @@ export const PackedSection = () => {
   return (
     <PackedSectionContainer>
       <HeaderContainer>
-        <h3>Packed Products</h3>
-        <ButtonGroup>
-          <IconButton
-            onClick={handleAddPackage}
-            aria-label="Add package"
-            title="Add package"
-          >
-            <Plus size={20} />
-          </IconButton>
-          <IconButton
-            onClick={handleRemovePackage}
-            aria-label="Remove package"
-            title="Remove package"
-            disabled={packages.length === 1 && selectedPackageData.line_items.length === 0}
-          >
-            <Trash2 size={20} />
-          </IconButton>
-        </ButtonGroup>
+        <div className='top-header'>
+          <h3>Packed Products</h3>
+          <ButtonGroup>
+            <IconButton
+              onClick={handleAddPackage}
+              aria-label="Add package"
+              title="Add package"
+            >
+              <Plus size={20} />
+            </IconButton>
+            <IconButton
+              onClick={handleRemovePackage}
+              aria-label="Remove package"
+              title="Remove package"
+              disabled={packages.length === 1 && selectedPackageData.line_items.length === 0}
+            >
+              <Trash2 size={20} />
+            </IconButton>
+          </ButtonGroup>
+        </div>
+        <div className='bottom-header'>
+          {/* //TODO: barcode */}
+        </div>
       </HeaderContainer>
+
       <Tabs
         tabs={packages}
         value={selectedPackageIndex}
@@ -91,6 +97,7 @@ export const PackedSection = () => {
         aria-label="Scrollable tabs"
         variant="scrollable"
       />
+
       <PackageContent >
         <ScrollArea>
           {selectedPackageData.line_items?.map((item) => (
