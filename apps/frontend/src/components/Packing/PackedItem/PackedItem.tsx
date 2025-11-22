@@ -28,21 +28,17 @@ export const PackedItem: FC<Props> = (props) => {
     updateItemQuantity(selectedPackageData.id, item.id, newQuantity)
   }
 
-  const handleRemove = (): void => {
-    updateItemQuantity(selectedPackageData.id, item.id, 0)
-  }
-
   return (
     <Card
       content={
         <PackedItemContainer>
-          <div className="sku-column">
+          <div className="sku-cell">
             {item.sku}
           </div>
-          <div className="location-column">
+          <div className="location-cell">
             {item.location.toUpperCase()}
           </div>
-          <div className="quantity-column">
+          <div className="quantity-input">
             <NumberSpinner
               value={item.quantity}
               min={0}
@@ -52,14 +48,15 @@ export const PackedItem: FC<Props> = (props) => {
               label='Item quantity'
             />
           </div>
-          <div className="actions-column">
+          <button
+            className="delete-button"
+            onClick={() => handleQuantityChange(0)}
+          >
             <Trash2
               size={16}
               className="trash-icon"
-              onClick={handleRemove}
-              style={{ cursor: 'pointer' }}
             />
-          </div>
+          </button>
         </PackedItemContainer>
       }
     />

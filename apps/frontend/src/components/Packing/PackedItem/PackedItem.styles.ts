@@ -8,22 +8,24 @@ export const PackedItemContainer = styled.div`
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
 
-  .sku-column {
+  .sku-cell {
     grid-column: span 5;
   }
 
-  .location-column {
+  .location-cell {
     grid-column: span 3;
 
   }
 
-  .quantity-column {
+  .quantity-input {
     grid-column: span 3;
     display: flex;
     justify-content: center;
   }
 
-  .actions-column {
+  .delete-button {
+    background-color: transparent;
+    border: none;
     grid-column: span 1;
     display: flex;
     justify-content: center;
