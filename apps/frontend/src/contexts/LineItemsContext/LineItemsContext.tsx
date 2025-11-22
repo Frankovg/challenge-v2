@@ -36,7 +36,7 @@ export const LineItemsProvider = ({
   const [lineItems, setLineItems] = useState<LineItemType[]>(initialLineItems)
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(0)
 
-  const { packItems, error, loading } = usePackItemsMutation()
+  const { packItems, error } = usePackItemsMutation()
 
   const selectedPackageData = packages[selectedPackageIndex]?.data
 
@@ -85,9 +85,7 @@ export const LineItemsProvider = ({
         selectPackage(removedPackageIndex, prevIndex, packages.length)
       )
 
-      if (hasItems) {
-        setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
-      }
+      if (hasItems) setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
     }
   }, [packages])
 
@@ -124,15 +122,18 @@ export const LineItemsProvider = ({
   }, [])
 
 
-  const shipPackages = async (items: PackedPackage[]) => {
+  const shipPackages = useCallback(async (items: PackedPackage[]) => {
     try {
       const result = await packItems(items)
       console.log("result ", result);
+
+      setPackages(INITIAL_PACKAGE)
     } catch {
       console.error(error)
     }
     console.log("Packed: ", packItems)
-  }
+  }, [])
+
 
 
   return (
