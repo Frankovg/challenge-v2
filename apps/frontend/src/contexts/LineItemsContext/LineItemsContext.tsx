@@ -2,21 +2,14 @@
 
 import React, {
   createContext,
-  useContext,
   useState,
   type ReactNode,
-  type Dispatch,
-  type SetStateAction,
 } from 'react'
 
-import { type LineItemType } from 'types'
+import { type TabItem } from 'components/ui/Tabs'
+import { LineItemsContextType, type LineItemType } from 'types'
 
-type LineItemsContextType = {
-  lineItems: LineItemType[]
-  setLineItems: Dispatch<SetStateAction<LineItemType[]>>
-}
-
-const LineItemsContext = createContext<LineItemsContextType | undefined>(undefined)
+export const LineItemsContext = createContext<LineItemsContextType | undefined>(undefined)
 
 type LineItemsProviderProps = {
   children: ReactNode
@@ -27,19 +20,23 @@ export const LineItemsProvider = ({
   children,
   initialLineItems,
 }: LineItemsProviderProps): ReactNode => {
+  const initialPackage = [
+    { value: 0, label: "Package 1" },
+  ]
+
   const [lineItems, setLineItems] = useState<LineItemType[]>(initialLineItems)
+  const [packages, setPackages] = useState<TabItem[]>(initialPackage)
 
   return (
-    <LineItemsContext.Provider value={{ lineItems, setLineItems }}>
+    <LineItemsContext.Provider
+      value={{
+        lineItems,
+        setLineItems,
+        packages,
+        setPackages
+      }}
+    >
       {children}
     </LineItemsContext.Provider>
   )
-}
-
-export const useLineItems = (): LineItemsContextType => {
-  const context = useContext(LineItemsContext)
-  if (context === undefined) {
-    throw new Error('useLineItems must be used within a LineItemsProvider')
-  }
-  return context
 }

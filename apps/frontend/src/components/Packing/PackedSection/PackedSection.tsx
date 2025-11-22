@@ -1,4 +1,3 @@
-import { BoxIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Tabs } from "components/ui/Tabs";
@@ -37,7 +36,7 @@ export const PackedSection = () => {
   // ]);
 
   const packages = [
-    { value: 0, label: "Package 1", icon: <BoxIcon size={14} /> },
+    { value: 0, label: "Package 1" },
     { value: 1, label: "Package 2" },
   ]
 

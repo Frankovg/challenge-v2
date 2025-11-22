@@ -1,1 +1,1 @@
-export { LineItemsProvider, useLineItems } from './LineItemsContext'
+export { LineItemsProvider, LineItemsContext } from './LineItemsContext'
