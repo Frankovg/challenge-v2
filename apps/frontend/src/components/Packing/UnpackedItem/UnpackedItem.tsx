@@ -3,6 +3,7 @@ import { FC } from "react"
 
 import { Card } from "components/ui/Card"
 import { CardButton } from "components/ui/CardButton"
+import { Tooltip } from "components/ui/Tooltip"
 
 import { ItemNameContainer, UnpackedItemContainer } from "./UnpackedItem.styles"
 
@@ -25,13 +26,19 @@ export const UnpackedItem: FC<Props> = (props) => {
             <span>{item.location.toUpperCase()}</span>
           </ItemNameContainer>
           <div className="actions-container">
-            <div className="quantity-container">
-              {item.quantity}
-            </div>
-            <CardButton onClick={() => handleClick('one')}>+1</CardButton>
-            <CardButton onClick={() => handleClick('all')}>All</CardButton>
+            <Tooltip title='Quantity'>
+              <div className="quantity-container">
+                {item.quantity}
+              </div>
+            </Tooltip>
+            <Tooltip title='Add One'>
+              <CardButton onClick={() => handleClick('one')}>+1</CardButton>
+            </Tooltip>
+            <Tooltip title='Add All'>
+              <CardButton onClick={() => handleClick('all')}>All</CardButton>
+            </Tooltip>
           </div>
-        </UnpackedItemContainer>
+        </UnpackedItemContainer >
       }
     />
   )

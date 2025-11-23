@@ -7,6 +7,7 @@ import { Logo } from 'components/Logo'
 import { ThemeToggle } from 'components/ThemeToggle'
 
 import { IconButton } from '../IconButton'
+import { Tooltip } from '../Tooltip'
 
 import {
   ActionsSection,
@@ -26,9 +27,11 @@ export const Navbar = (): ReactNode => {
 
         <ActionsSection>
           <ThemeToggle />
-          <IconButton aria-label="User menu">
-            <User />
-          </IconButton>
+          <Tooltip title='Not available' >
+            <IconButton aria-label="User menu">
+              <User />
+            </IconButton>
+          </Tooltip>
         </ActionsSection>
       </NavContent>
     </NavbarContainer>

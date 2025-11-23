@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes'
 import { FC, useEffect, useState } from 'react'
 
 import { IconButton } from 'components/ui/IconButton'
+import { Tooltip } from 'components/ui/Tooltip'
 
 import { DARK, LIGHT, MOON_ICON, SUN_ICON } from './const'
 
@@ -28,16 +29,17 @@ export const ThemeToggle: FC = () => {
   }
 
   return (
-    <IconButton
-      onClick={toggleTheme}
-      aria-label={`Switch to ${newTheme} mode`}
-      title={`Switch to ${newTheme} mode`}
-    >
-      {!isDark ? (
-        <MoonIcon aria-label={MOON_ICON} />
-      ) : (
-        <SunIcon aria-label={SUN_ICON} />
-      )}
-    </IconButton>
+    <Tooltip title={`Switch to ${newTheme} mode`} >
+      <IconButton
+        onClick={toggleTheme}
+        aria-label={`Switch to ${newTheme} mode`}
+      >
+        {!isDark ? (
+          <MoonIcon aria-label={MOON_ICON} />
+        ) : (
+          <SunIcon aria-label={SUN_ICON} />
+        )}
+      </IconButton>
+    </Tooltip>
   )
 }

@@ -31,31 +31,3 @@ export const ActionsSection = styled.div`
   align-items: center;
   gap: var(--spacing-xs);
 `
-
-// export const ShipButton = styled.button`
-//   display: flex;
-//   align-items: center;
-//   gap: var(--spacing-xs);
-//   padding: var(--spacing-sm) var(--spacing-lg);
-//   border: none;
-//   border-radius: 6px;
-//   background-color: #22c55e;
-//   color: white;
-//   font-size: var(--font-size-base);
-//   font-weight: var(--font-weight-medium);
-//   cursor: pointer;
-//   transition: background-color var(--transition-base), transform 0.1s;
-
-//   &:hover {
-//     background-color: #16a34a;
-//   }
-
-//   &:active {
-//     transform: scale(0.98);
-//   }
-
-//   svg {
-//     width: 20px;
-//     height: 20px;
-//   }
-// `

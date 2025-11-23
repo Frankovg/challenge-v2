@@ -2,6 +2,7 @@ import { Plus, Trash2 } from "lucide-react"
 import { FC } from "react"
 
 import { IconButton } from "components/ui/IconButton"
+import { Tooltip } from "components/ui/Tooltip"
 
 import { PackageButtonsContainer } from "./PackageButtons.styles"
 
@@ -14,21 +15,23 @@ type Props = {
 export const PackageButtons: FC<Props> = ({ add, remove, disabledRemove = false }) => {
   return (
     <PackageButtonsContainer >
-      <IconButton
-        onClick={add}
-        aria-label="Add package"
-        title="Add package"
-      >
-        <Plus size={20} />
-      </IconButton>
-      <IconButton
-        onClick={remove}
-        aria-label="Remove package"
-        title="Remove package"
-        disabled={disabledRemove}
-      >
-        <Trash2 size={20} />
-      </IconButton>
+      <Tooltip title='Add Package' >
+        <IconButton
+          onClick={add}
+          aria-label="Add package"
+        >
+          <Plus size={20} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title='Delete Package' >
+        <IconButton
+          onClick={remove}
+          aria-label="Remove package"
+          disabled={disabledRemove}
+        >
+          <Trash2 size={20} />
+        </IconButton>
+      </Tooltip>
     </PackageButtonsContainer>
   )
 }
