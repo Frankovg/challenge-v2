@@ -1,9 +1,10 @@
 'use client'
 
+import Input from '@mui/material/Input';
 import { useState } from 'react';
 
 import { Button } from 'components/ui/Button';
-import { Modal } from 'components/ui/Modal';
+import { Dialog } from 'components/ui/Dialog';
 import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
 import { useApp } from "hooks/useApp";
@@ -104,7 +105,7 @@ export const PackedSection = () => {
         </div>
         <div className='bottom-header'>
           <div>
-            {/* //TODO: barcode */}
+            <Input />
           </div>
           <PackageButtons
             add={handleAddPackage}
@@ -133,7 +134,7 @@ export const PackedSection = () => {
         </ScrollArea>
       </PackageContent>
 
-      <Modal
+      <Dialog
         open={openConfirmationModal.open}
         onClose={handleCloseModal}
         ariaLabelledBy={`confirm-${openConfirmationModal.action}-modal-title`}
@@ -147,7 +148,7 @@ export const PackedSection = () => {
           buttonLabel={MODAL_DICTIONARY[openConfirmationModal.action].buttonLabel}
           description={MODAL_DICTIONARY[openConfirmationModal.action].description}
         />
-      </Modal>
+      </Dialog>
     </PackedSectionContainer>
   )
 }

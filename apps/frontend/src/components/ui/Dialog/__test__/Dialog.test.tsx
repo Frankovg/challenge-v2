@@ -1,13 +1,13 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
-import { Modal } from '../Modal'
+import { Dialog } from '../Dialog'
 
-describe('Modal', () => {
+describe('Dialog', () => {
   it('renders children when open', () => {
     render(
-      <Modal open onClose={() => { }}>
+      <Dialog open onClose={() => { }}>
         <div>Test Content</div>
-      </Modal>
+      </Dialog>
     )
 
     expect(screen.getByText('Test Content')).toBeInTheDocument()
@@ -15,9 +15,9 @@ describe('Modal', () => {
 
   it('does not render children when closed', () => {
     render(
-      <Modal open={false} onClose={() => { }}>
+      <Dialog open={false} onClose={() => { }}>
         <div>Test Content</div>
-      </Modal>
+      </Dialog>
     )
 
     expect(screen.queryByText('Test Content')).not.toBeInTheDocument()
@@ -26,9 +26,9 @@ describe('Modal', () => {
   it('calls onClose when backdrop is clicked', async () => {
     const handleClose = jest.fn()
     render(
-      <Modal open onClose={handleClose}>
+      <Dialog open onClose={handleClose}>
         <div>Test Content</div>
-      </Modal>
+      </Dialog>
     )
 
     const backdrop = document.querySelector('[class*="MuiBackdrop"]')
@@ -43,9 +43,9 @@ describe('Modal', () => {
   it('calls onClose when Escape key is pressed', async () => {
     const handleClose = jest.fn()
     render(
-      <Modal open onClose={handleClose}>
+      <Dialog open onClose={handleClose}>
         <div>Test Content</div>
-      </Modal>
+      </Dialog>
     )
 
     // Get the modal element and fire keydown on it
@@ -57,23 +57,23 @@ describe('Modal', () => {
         expect(handleClose).toHaveBeenCalled()
       })
     } else {
-      throw new Error('Modal not found')
+      throw new Error('Dialog not found')
     }
   })
 
   it('unmounts content when keepMounted is false and modal is closed', () => {
     const { rerender } = render(
-      <Modal open keepMounted={false} onClose={() => { }}>
+      <Dialog open keepMounted={false} onClose={() => { }}>
         <div>Test Content</div>
-      </Modal>
+      </Dialog>
     )
 
     expect(screen.getByText('Test Content')).toBeInTheDocument()
 
     rerender(
-      <Modal open={false} keepMounted={false} onClose={() => { }}>
+      <Dialog open={false} keepMounted={false} onClose={() => { }}>
         <div>Test Content</div>
-      </Modal>
+      </Dialog>
     )
 
     expect(screen.queryByText('Test Content')).not.toBeInTheDocument()
@@ -81,17 +81,17 @@ describe('Modal', () => {
 
   it('renders multiple children components', () => {
     render(
-      <Modal open onClose={() => { }}>
+      <Dialog open onClose={() => { }}>
         <div>
-          <h2>Modal Title</h2>
-          <p>Modal description</p>
+          <h2>Dialog Title</h2>
+          <p>Dialog description</p>
           <button>Action Button</button>
         </div>
-      </Modal>
+      </Dialog>
     )
 
-    expect(screen.getByText('Modal Title')).toBeInTheDocument()
-    expect(screen.getByText('Modal description')).toBeInTheDocument()
+    expect(screen.getByText('Dialog Title')).toBeInTheDocument()
+    expect(screen.getByText('Dialog description')).toBeInTheDocument()
     expect(screen.getByText('Action Button')).toBeInTheDocument()
   })
 })

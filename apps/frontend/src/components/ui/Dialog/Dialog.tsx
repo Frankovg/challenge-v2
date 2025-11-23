@@ -1,9 +1,9 @@
 'use client'
 
-import { Modal as MuiModal } from '@mui/material'
+import Modal from '@mui/material/Modal'
 import { type FC, type ReactNode } from 'react'
 
-import { ModalBackdrop, ModalContent } from './Modal.styles'
+import { ModalBackdrop, DialogContent } from './Dialog.styles'
 
 type ModalProps = {
   open: boolean
@@ -14,7 +14,7 @@ type ModalProps = {
   keepMounted?: boolean
 }
 
-export const Modal: FC<ModalProps> = ({
+export const Dialog: FC<ModalProps> = ({
   open,
   onClose,
   children,
@@ -23,7 +23,7 @@ export const Modal: FC<ModalProps> = ({
   keepMounted = false,
 }) => {
   return (
-    <MuiModal
+    <Modal
       open={open}
       onClose={onClose}
       aria-labelledby={ariaLabelledBy}
@@ -36,7 +36,7 @@ export const Modal: FC<ModalProps> = ({
         zIndex: 'var(--z-modal)',
       }}
     >
-      <ModalContent tabIndex={-1}>{children}</ModalContent>
-    </MuiModal>
+      <DialogContent tabIndex={-1}>{children}</DialogContent>
+    </Modal>
   )
 }

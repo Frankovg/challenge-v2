@@ -1,6 +1,6 @@
 import { styled } from 'styled-components'
 
-export const ModalContent = styled.div`
+export const DialogContent = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;

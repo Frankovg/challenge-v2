@@ -1,10 +1,10 @@
-import { Tooltip as MuiTooltip, type TooltipProps } from "@mui/material"
+import TooltipMUI, { TooltipProps } from "@mui/material/Tooltip"
 import { FC } from "react"
 
 export const Tooltip: FC<TooltipProps> = ({ arrow = true, ...props }) => {
   const { children } = props
   return (
-    <MuiTooltip
+    <TooltipMUI
       {...props}
       arrow={arrow}
       slotProps={{
@@ -20,6 +20,6 @@ export const Tooltip: FC<TooltipProps> = ({ arrow = true, ...props }) => {
         },
       }}>
       {children}
-    </MuiTooltip>
+    </TooltipMUI>
   )
 }
