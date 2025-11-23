@@ -32,11 +32,12 @@ export const Barcode = () => {
   });
 
   const onSubmit = async ({ barcode }: TBarcode) => {
+    if (!barcode) return;
+
     const isValid = await trigger("barcode")
     if (!isValid) return
 
     const product = getProductByCode(lineItems, barcode)
-
     packProduct(product, selectedPackageId, 1)
     reset()
   }
