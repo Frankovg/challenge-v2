@@ -21,7 +21,7 @@ import { INITIAL_PACKAGE } from './const'
 
 import type { LineItemsContextType, PackedItem, LineItemType, PackedPackage } from 'types'
 
-export const LineItemsContext = createContext<LineItemsContextType | undefined>(undefined)
+export const AppContext = createContext<LineItemsContextType | undefined>(undefined)
 
 type LineItemsProviderProps = {
   children: ReactNode
@@ -132,12 +132,13 @@ export const LineItemsProvider = ({
       console.error(error)
     }
     console.log("Packed: ", packItems)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
 
   return (
-    <LineItemsContext.Provider
+    <AppContext.Provider
       value={{
         lineItems,
         packages,
@@ -154,6 +155,6 @@ export const LineItemsProvider = ({
       }}
     >
       {children}
-    </LineItemsContext.Provider>
+    </AppContext.Provider>
   )
 }

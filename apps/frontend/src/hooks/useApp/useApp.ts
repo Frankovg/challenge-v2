@@ -1,10 +1,10 @@
 import { useContext } from "react"
 
-import { LineItemsContext } from "contexts/LineItemsContext"
+import { AppContext } from "contexts/AppContext"
 import { LineItemsContextType } from "types"
 
-export const useLineItems = (): LineItemsContextType => {
-  const context = useContext(LineItemsContext)
+export const useApp = (): LineItemsContextType => {
+  const context = useContext(AppContext)
   if (context === undefined) {
     throw new Error('useLineItems must be used within a LineItemsProvider')
   }

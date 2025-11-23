@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 
 import { ScrollArea } from 'components/ui/ScrollArea'
-import { useLineItems } from 'hooks/useLineItems'
+import { useApp } from 'hooks/useApp'
 
 import { UnpackedItem } from '../UnpackedItem'
 
@@ -10,7 +10,7 @@ import { UnpackedSectionContainer } from './UnpackedSection.styles'
 import type { AddToPackageButton, LineItemType } from 'types'
 
 export const UnpackedSection = (): ReactNode => {
-  const { lineItems, selectedPackageData, packItem } = useLineItems()
+  const { lineItems, selectedPackageData, packItem } = useApp()
 
   const selectedPackageId = selectedPackageData.id ?? 0
 

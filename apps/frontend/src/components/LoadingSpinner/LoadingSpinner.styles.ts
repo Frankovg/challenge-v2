@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import { keyframes, styled } from 'styled-components'
 
 const spin = keyframes`
   0% { transform: rotate(0deg); }

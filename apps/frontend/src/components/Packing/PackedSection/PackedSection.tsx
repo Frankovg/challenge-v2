@@ -6,7 +6,7 @@ import { Button } from 'components/ui/Button';
 import { Modal } from 'components/ui/Modal';
 import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
-import { useLineItems } from "hooks/useLineItems";
+import { useApp } from "hooks/useApp";
 
 
 import { ConfirmationModal } from '../ConfirmationModal';
@@ -34,7 +34,7 @@ export const PackedSection = () => {
     removePackage,
     allItemsPacked,
     shipPackages
-  } = useLineItems()
+  } = useApp()
 
   const initialModalState: ModalState = { open: false, action: 'ship' }
 

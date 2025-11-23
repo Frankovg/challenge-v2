@@ -1,6 +1,6 @@
 import { render, screen, renderHook, act } from '@testing-library/react'
 
-import { useLineItems } from 'hooks/useLineItems'
+import { useLineItems } from 'hooks/useApp'
 import { LineItemType } from 'types'
 
 import { LineItemsProvider } from '..'

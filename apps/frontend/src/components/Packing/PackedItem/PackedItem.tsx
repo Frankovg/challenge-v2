@@ -4,7 +4,7 @@ import { FC, useMemo } from "react"
 
 import { Card } from "components/ui/Card"
 import { NumberSpinner } from "components/ui/NumberSpinner"
-import { useLineItems } from "hooks/useLineItems"
+import { useApp } from "hooks/useApp"
 import { LineItemType } from "types"
 
 import { PackedItemContainer } from "./PackedItem.styles"
@@ -15,7 +15,7 @@ type Props = {
 
 export const PackedItem: FC<Props> = (props) => {
   const { item } = props
-  const { lineItems, selectedPackageData, updateItemQuantity } = useLineItems()
+  const { lineItems, selectedPackageData, updateItemQuantity } = useApp()
 
   const maxQuantity = useMemo(() => {
     const unpackedItem = lineItems.find(li => li.id === item.id)
