@@ -1,22 +1,22 @@
 import { styled } from 'styled-components'
 
 export const ConfirmationModalContainer = styled.div`
-  padding: 24px;
+  padding: var(--spacing-lg);
   max-width: 500px;
 `
 
 export const ModalTitle = styled.h2`
   margin-top: 0;
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-md);
 `
 
 export const ModalDescription = styled.p`
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-lg);
 `
 
 export const ButtonContainer = styled.div`
   display: flex;
-  gap: 12px;
+  gap: var(--spacing-sm);
   justify-content: flex-end;
 `
 

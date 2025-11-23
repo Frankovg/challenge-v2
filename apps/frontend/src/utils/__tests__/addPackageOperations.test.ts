@@ -63,8 +63,8 @@ describe('createPackage', (): void => {
     const result = createPackage(nonSequentialPackages)
 
     expect(result).toHaveLength(3)
-    expect(result[2].data.id).toBe(11) // Math.max(5, 10) + 1
-    expect(result[2].value).toBe(2) // Math.max(0, 1) + 1
+    expect(result[2].data.id).toBe(11)
+    expect(result[2].value).toBe(2)
   })
 
   it('should handle non-sequential package values correctly', (): void => {
@@ -90,9 +90,9 @@ describe('createPackage', (): void => {
     const result = createPackage(nonSequentialValues)
 
     expect(result).toHaveLength(3)
-    expect(result[2].value).toBe(11) // Math.max(5, 10) + 1
-    expect(result[2].label).toBe('Package 12') // value + 1
-    expect(result[2].data.id).toBe(2) // Math.max(0, 1) + 1
+    expect(result[2].value).toBe(11)
+    expect(result[2].label).toBe('Package 12')
+    expect(result[2].data.id).toBe(2)
   })
 
   it('should create new package with empty line_items array', (): void => {
@@ -104,8 +104,6 @@ describe('createPackage', (): void => {
 
   it('should generate correct label format', (): void => {
     const result = createPackage(mockPackages)
-
-    // Label should be "Package {value + 1}"
     expect(result[2].label).toBe(`Package ${result[2].value + 1}`)
   })
 })

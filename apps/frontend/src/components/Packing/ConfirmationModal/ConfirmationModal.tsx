@@ -44,6 +44,7 @@ export const ConfirmationModal: FC<Props> = ({
           Cancel
         </Button>
         <Button
+          data-color={buttonColor}
           color={buttonColor}
           onClick={confirm}
           loading={isLoading}
