@@ -8,7 +8,7 @@ export const LoadingSpinner: FC = () => {
   return (
     <LoadingContainer>
       <Spinner />
-      <p>Loading items...</p>
+      <p>Loading products...</p>
     </LoadingContainer>
   )
 }

@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation'
 import { ReactNode, Suspense } from 'react'
 
 import { Packing } from 'components/Packing'
@@ -15,6 +16,8 @@ export default async function HomePage(): Promise<ReactNode> {
   })
 
   const lineItems = data?.line_items || []
+
+  if (!lineItems) notFound()
 
   return (
     <Suspense fallback={<Loading />}>

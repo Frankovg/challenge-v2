@@ -6,6 +6,8 @@ const spin = keyframes`
 `
 
 export const LoadingContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,10 +22,10 @@ export const LoadingContainer = styled.div`
 `
 
 export const Spinner = styled.div`
-  width: 50px;
-  height: 50px;
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top: 4px solid var(--foreground);
+  width: 30px;
+  height: 30px;
+  border: 4px solid var(--border-primary);
+  border-top: 4px solid var(--border-secondary);
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;
 `
