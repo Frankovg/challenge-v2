@@ -1,13 +1,13 @@
 import { styled } from 'styled-components'
 
 export const HeaderGrid = styled.div`
+  margin-bottom: var(--spacing-sm);
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 1rem;
-  padding: 0 1rem;
-  margin-right: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
+  gap: var(--spacing-md);
+  padding: 0 var(--spacing-xl) 0 var(--spacing-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;

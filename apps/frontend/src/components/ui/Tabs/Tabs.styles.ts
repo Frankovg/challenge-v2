@@ -4,6 +4,7 @@ import { styled } from 'styled-components'
 export const StyledTabs = styled(Tabs)`
   border-bottom: 1px solid var(--border-primary);
   min-height: 48px;
+  margin-bottom: var(--spacing-lg);
 
   & .MuiTabs-indicator {
     background-color: var(--color-blue-600);
