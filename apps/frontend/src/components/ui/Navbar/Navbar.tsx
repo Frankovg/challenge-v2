@@ -13,15 +13,10 @@ import {
   LogoSection,
   NavbarContainer,
   NavContent,
-  // ShipButton,
 } from './Navbar.styles'
 
 export const Navbar = (): ReactNode => {
-  // const handleShip = (): void => {
-  //   // TODO: Implement ship functionality
-  //   console.log('Ship all packages')
-  // }
-  //TODO: shipping button in packaged products
+
   return (
     <NavbarContainer>
       <NavContent>
@@ -34,10 +29,6 @@ export const Navbar = (): ReactNode => {
           <IconButton aria-label="User menu">
             <User />
           </IconButton>
-          {/* <ShipButton type="button" onClick={handleShip}>
-              <Ship />
-              Ship All Packages
-            </ShipButton> */}
         </ActionsSection>
       </NavContent>
     </NavbarContainer>

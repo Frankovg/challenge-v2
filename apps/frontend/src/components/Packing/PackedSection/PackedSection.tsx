@@ -1,22 +1,23 @@
 'use client'
 
-import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from 'components/ui/Button';
-import { IconButton } from 'components/ui/IconButton';
 import { Modal } from 'components/ui/Modal';
 import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
 import { useLineItems } from "hooks/useLineItems";
-import { PackedPackage } from 'types';
+
 
 import { ConfirmationModal } from '../ConfirmationModal';
+import { PackageButtons } from '../PackageButtons';
 import { PackageContent } from "../PackageContent"
 import { PackedItem } from '../PackedItem';
 
 import { MODAL_DICTIONARY } from './const';
-import { ButtonGroup, HeaderContainer, PackedSectionContainer } from "./PackedSection.styles"
+import { HeaderContainer, PackedSectionContainer } from "./PackedSection.styles"
+
+import type { PackedPackage } from 'types';
 
 type ModalState = {
   open: boolean,
@@ -101,23 +102,11 @@ export const PackedSection = () => {
           <div>
             {/* //TODO: barcode */}
           </div>
-          <ButtonGroup>
-            <IconButton
-              onClick={handleAddPackage}
-              aria-label="Add package"
-              title="Add package"
-            >
-              <Plus size={20} />
-            </IconButton>
-            <IconButton
-              onClick={handleRemovePackage}
-              aria-label="Remove package"
-              title="Remove package"
-              disabled={packages.length === 1 && selectedPackageData.line_items.length === 0}
-            >
-              <Trash2 size={20} />
-            </IconButton>
-          </ButtonGroup>
+          <PackageButtons
+            add={handleAddPackage}
+            remove={handleRemovePackage}
+            disabledRemove={packages.length === 1 && selectedPackageData.line_items.length === 0}
+          />
         </div>
       </HeaderContainer>
 

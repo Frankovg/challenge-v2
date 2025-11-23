@@ -13,7 +13,7 @@ export const NavbarContainer = styled.header`
 export const NavContent = styled.div`
   max-width: var(--max-content-width);
   margin: 0 auto;
-  padding: var(--spacing-md) var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-lg);
   display: flex;
   align-items: center;
   justify-content: space-between;
