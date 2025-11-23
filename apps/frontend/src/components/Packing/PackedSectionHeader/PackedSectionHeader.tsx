@@ -35,7 +35,6 @@ export const PackedSectionHeader: FC<Props> = (props) => {
           subtitle={`${quantityPackages} package(s) created`}
         />
         <Button
-          variant='primary'
           color='success'
           disabled={disabledShipping}
           onClick={handleShipPackages}

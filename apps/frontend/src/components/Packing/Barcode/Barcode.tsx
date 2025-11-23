@@ -66,7 +66,12 @@ export const Barcode = () => {
           <span className="text-error">{errors.barcode.message}</span>
         )}
       </div>
-      <Button type='submit' variant='outlined' >Search</Button>
+      <Button
+        type='submit'
+        variant='outlined'
+      >
+        Search
+      </Button>
     </BarcodeForm >
   )
 }

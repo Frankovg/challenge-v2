@@ -10,6 +10,7 @@ import React, {
 } from 'react'
 
 import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
+import { sleep } from "lib/sleep";
 import { createPackage } from 'utils/addPackageOperations'
 import { rebuildPackageTabs, restoreItems, selectPackage } from 'utils/packageOperations'
 import { reduceLineItemQuantity, updatePackagesWithItem } from 'utils/packingOperations'
@@ -37,6 +38,7 @@ export const LineItemsProvider = ({
   const [packages, setPackages] = useState<PackedItem[]>(INITIAL_PACKAGE)
   const [lineItems, setLineItems] = useState<LineItemType[]>(initialLineItems)
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const { packItems, error } = usePackItemsMutation()
 
@@ -181,6 +183,11 @@ export const LineItemsProvider = ({
     }
 
     try {
+      setLoading(true)
+      if (process.env.NODE_ENV === "development") {
+        await sleep(1000);
+      }
+
       const result = await packItems(items)
 
       setPackages(INITIAL_PACKAGE)
@@ -193,6 +200,7 @@ export const LineItemsProvider = ({
         description: `${items.length} package(s) ready to ship.`,
         type: "success",
       })
+      setLoading(false)
     } catch {
       if (process.env.NODE_ENV === 'development') console.error(error)
 
@@ -225,7 +233,8 @@ export const LineItemsProvider = ({
         removePackage,
         updateItemQuantity,
         shipPackages,
-        resetDemo
+        resetDemo,
+        loading
       }}
     >
       {children}

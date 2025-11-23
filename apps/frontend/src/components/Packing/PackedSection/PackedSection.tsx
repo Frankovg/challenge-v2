@@ -32,7 +32,8 @@ export const PackedSection = () => {
     addPackage,
     removePackage,
     readyForShipping,
-    shipPackages
+    shipPackages,
+    loading
   } = useApp()
 
   const initialModalState: ModalState = { open: false, action: 'ship' }
@@ -130,6 +131,7 @@ export const PackedSection = () => {
           title={MODAL_DICTIONARY[openConfirmationModal.action].title}
           buttonLabel={MODAL_DICTIONARY[openConfirmationModal.action].buttonLabel}
           description={MODAL_DICTIONARY[openConfirmationModal.action].description}
+          isLoading={loading}
         />
       </Dialog>
     </PackedSectionContainer>

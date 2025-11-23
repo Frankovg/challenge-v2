@@ -2,7 +2,9 @@
 
 import { type FC } from 'react'
 
-import { LoadingContainer, Spinner } from './LoadingSpinner.styles'
+import { Spinner } from 'components/ui/Spinner'
+
+import { LoadingContainer } from './LoadingSpinner.styles'
 
 export const LoadingSpinner: FC = () => {
   return (

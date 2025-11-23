@@ -1,6 +1,7 @@
 import { type FC } from "react"
 
 import { Button } from "components/ui/Button"
+import { Spinner } from "components/ui/Spinner"
 
 import {
   ButtonContainer,
@@ -15,7 +16,8 @@ type Props = {
   title: string,
   description: string,
   variant: 'delete' | 'ship',
-  buttonLabel: string
+  buttonLabel: string,
+  isLoading?: boolean
 }
 
 export const ConfirmationModal: FC<Props> = ({
@@ -24,7 +26,8 @@ export const ConfirmationModal: FC<Props> = ({
   title,
   description,
   variant,
-  buttonLabel = 'Confirm'
+  buttonLabel = 'Confirm',
+  isLoading = false
 }) => {
   const buttonColor = variant === 'delete' ? 'warning' : 'success'
 
@@ -40,7 +43,13 @@ export const ConfirmationModal: FC<Props> = ({
         <Button onClick={close} >
           Cancel
         </Button>
-        <Button color={buttonColor} onClick={confirm} >
+        <Button
+          color={buttonColor}
+          onClick={confirm}
+          loading={isLoading}
+          loadingPosition="start"
+          loadingIndicator={(<Spinner size={16} />)}
+        >
           {buttonLabel}
         </Button>
       </ButtonContainer>

@@ -60,6 +60,7 @@ export type LineItemsContextType = {
   updateItemQuantity: (packageId: number, itemId: number, newQuantity: number) => void
   shipPackages: (items: PackedPackage[], ready: boolean) => Promise<void>
   resetDemo: (items: LineItemType[]) => void
+  loading: boolean
 
 }
 
