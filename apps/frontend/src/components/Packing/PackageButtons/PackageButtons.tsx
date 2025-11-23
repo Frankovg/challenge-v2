@@ -24,13 +24,15 @@ export const PackageButtons: FC<Props> = ({ add, remove, disabledRemove = false 
         </IconButton>
       </Tooltip>
       <Tooltip title='Delete Package' >
-        <IconButton
-          onClick={remove}
-          aria-label="Remove package"
-          disabled={disabledRemove}
-        >
-          <Trash2 size={20} />
-        </IconButton>
+        <span>
+          <IconButton
+            onClick={remove}
+            aria-label="Remove package"
+            disabled={disabledRemove}
+          >
+            <Trash2 size={20} />
+          </IconButton>
+        </span>
       </Tooltip>
     </PackageButtonsContainer>
   )

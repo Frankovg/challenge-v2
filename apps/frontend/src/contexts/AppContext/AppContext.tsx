@@ -1,5 +1,6 @@
 'use client'
 
+import { Toast } from "@base-ui-components/react/toast";
 import React, {
   createContext,
   useCallback,
@@ -38,7 +39,9 @@ export const LineItemsProvider = ({
 
   const { packItems, error } = usePackItemsMutation()
 
-  const selectedPackageData = packages[selectedPackageIndex]?.data
+  const toastManager = Toast.useToastManager();
+
+  const selectedPackageData = useMemo(() => packages[selectedPackageIndex]?.data, [packages, selectedPackageIndex])
 
   const allItemsPacked = useMemo(() => lineItems.length === 0, [lineItems])
   // const totalPackedItems = useMemo(() => {
@@ -48,16 +51,36 @@ export const LineItemsProvider = ({
   // }, [packages])
 
 
-  const packItem = useCallback((item: LineItemType, packageId: number, quantity: number): void => {
-    if (quantity <= 0 || quantity > item.quantity) return
+  const packProduct = useCallback((item: LineItemType, packageId: number, quantity: number): void => {
+    if (quantity <= 0 || quantity > item.quantity) {
+      toastManager.add({
+        title: "Invalid quantity",
+        description: "Please enter a valid amount.",
+        type: "error",
+      })
+      return
+    }
 
     setPackages(prev => updatePackagesWithItem(prev, item, packageId, quantity))
     setLineItems(prev => reduceLineItemQuantity(prev, item.id, quantity))
+
+    toastManager.add({
+      title: "Product packed",
+      description: `${quantity} product(s) packed successfully.`,
+      type: "success",
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
   const addPackage = useCallback((): void => {
     setPackages(prev => createPackage(prev))
+    toastManager.add({
+      title: "Package created",
+      description: 'New package created successfully.',
+      type: "success",
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -91,7 +114,22 @@ export const LineItemsProvider = ({
 
 
   const updateItemQuantity = useCallback((packageId: number, itemId: number, newQuantity: number): void => {
-    if (newQuantity < 0) return
+    if (newQuantity < 0) {
+      toastManager.add({
+        title: "Invalid quantity",
+        description: "Please enter a valid amount.",
+        type: "error",
+      })
+      return
+    }
+
+    if (newQuantity === 0) {
+      toastManager.add({
+        title: "Product unpacked",
+        description: 'Product unpacked successfully.',
+        type: "success",
+      })
+    }
 
     let itemToUpdate: LineItemType | null = null
     let quantityDiff = 0
@@ -119,19 +157,33 @@ export const LineItemsProvider = ({
         reduceLineItemQuantity
       )
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
   const shipPackages = useCallback(async (items: PackedPackage[]) => {
     try {
       const result = await packItems(items)
-      console.log("result ", result);
 
       setPackages(INITIAL_PACKAGE)
+      setSelectedPackageIndex(0)
+
+      if (process.env.NODE_ENV === 'development') console.log("Packed: ", result)
+
+      toastManager.add({
+        title: "Shipment created successfully",
+        description: `${items.length} package(s) ready to ship.`,
+        type: "success",
+      })
     } catch {
-      console.error(error)
+      if (process.env.NODE_ENV === 'development') console.error(error)
+
+      toastManager.add({
+        title: 'Shipping Error',
+        description: 'Unable to process shipping.',
+        type: 'error',
+      })
     }
-    console.log("Packed: ", packItems)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -147,7 +199,7 @@ export const LineItemsProvider = ({
         selectedPackageData,
         allItemsPacked,
         // totalPackedItems,
-        packItem,
+        packProduct,
         addPackage,
         removePackage,
         updateItemQuantity,

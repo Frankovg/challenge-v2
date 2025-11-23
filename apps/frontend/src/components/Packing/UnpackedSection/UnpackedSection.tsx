@@ -10,13 +10,13 @@ import { UnpackedSectionContainer } from './UnpackedSection.styles'
 import type { AddToPackageButton, LineItemType } from 'types'
 
 export const UnpackedSection = (): ReactNode => {
-  const { lineItems, selectedPackageData, packItem } = useApp()
+  const { lineItems, selectedPackageData, packProduct } = useApp()
 
-  const selectedPackageId = selectedPackageData.id ?? 0
+  const selectedPackageId = selectedPackageData?.id ?? 0
 
   const handlePack = (item: LineItemType, q: AddToPackageButton): void => {
     const quantity = q === 'one' ? 1 : item.quantity
-    packItem(item, selectedPackageId, quantity)
+    packProduct(item, selectedPackageId, quantity)
   }
 
   return (
