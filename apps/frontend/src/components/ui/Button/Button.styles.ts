@@ -1,7 +1,7 @@
 import MuiButton from '@mui/material/Button'
 import { styled } from 'styled-components'
 
-interface StyledButtonProps {
+type StyledButtonProps = {
   $customVariant?: 'primary' | 'secondary' | 'outlined' | 'text'
 }
 

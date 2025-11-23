@@ -2,7 +2,9 @@
 
 import { FC, JSXElementConstructor, ReactElement, SyntheticEvent } from 'react'
 
-import { StyledTab, StyledTabs } from './Tabs.styles'
+import { PackedItem } from 'types'
+
+import { StyledTab, StyledTabs, TabLabel } from './Tabs.styles'
 
 export type TabItem = {
   label: string
@@ -12,7 +14,7 @@ export type TabItem = {
 }
 
 type Props = {
-  tabs: TabItem[]
+  tabs: PackedItem[]
   value: string | number
   onChange: (value: number) => void
   'aria-label'?: string
@@ -50,14 +52,22 @@ export const Tabs: FC<Props> = ({
       indicatorColor={indicatorColor}
       textColor={textColor}
     >
-      {tabs.map((tab) => (
-        <StyledTab
-          key={tab.value}
-          label={tab.label}
-          value={tab.value}
-          disabled={tab.disabled}
-        />
-      ))}
+      {tabs.map((tab) => {
+        const quantityProducts = tab.data.line_items.length
+        return (
+          <StyledTab
+            key={tab.value}
+            label={(
+              <TabLabel $isEmpty={quantityProducts === 0}>
+                {tab.label}
+                <span>{quantityProducts}</span>
+              </TabLabel>
+            )}
+            value={tab.value}
+            disabled={tab.disabled}
+          />
+        )
+      })}
     </StyledTabs>
   )
 }

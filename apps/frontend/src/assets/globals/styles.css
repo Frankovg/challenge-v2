@@ -175,7 +175,7 @@
   --status-error-text: var(--color-red-900);
   --status-error-border: var(--color-red-500);
 
-  --status-info-bg: var(--color-blue-50);
+  --status-info-bg: var(--color-gray-200);
   --status-info-text: var(--color-blue-900);
   --status-info-border: var(--color-blue-500);
 

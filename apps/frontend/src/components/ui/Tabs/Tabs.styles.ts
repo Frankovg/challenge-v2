@@ -40,12 +40,41 @@ export const StyledTab = styled(Tab)`
   }
 
   &.Mui-selected {
-    color: var(--color-blue-600);
+    color: var(--text-primary);
     font-weight: 600;
   }
 
   &.Mui-disabled {
     color: var(--text-disabled);
     opacity: 0.5;
+  }
+`
+
+type TabLabelProps = {
+  $isEmpty: boolean
+}
+
+export const TabLabel = styled.p<TabLabelProps>`
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+
+  span {
+    background-color: var(--status-info-bg);
+    color: var(--status-info-text);
+    padding: var(--spacing-sm);
+    border-radius: 100%;
+    font-size: var(--font-size-xs);
+    width: var(--font-size-2xl);
+    height: var(--font-size-2xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ${(props) => props.$isEmpty === true &&
+    `
+    color: var(--status-error-text)
+    `
+  }
   }
 `
