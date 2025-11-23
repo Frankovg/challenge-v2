@@ -44,11 +44,6 @@ export const LineItemsProvider = ({
   const selectedPackageData = useMemo(() => packages[selectedPackageIndex]?.data, [packages, selectedPackageIndex])
 
   const allItemsPacked = useMemo(() => lineItems.length === 0, [lineItems])
-  // const totalPackedItems = useMemo(() => {
-  //   return packages.reduce((total, pkg) => {
-  //     return total + pkg.data.line_items.reduce((sum, item) => sum + item.quantity, 0)
-  //   }, 0)
-  // }, [packages])
 
 
   const packProduct = useCallback((item: LineItemType, packageId: number, quantity: number): void => {
@@ -188,7 +183,6 @@ export const LineItemsProvider = ({
   }, [])
 
 
-
   return (
     <AppContext.Provider
       value={{
@@ -198,7 +192,6 @@ export const LineItemsProvider = ({
         setSelectedPackageIndex,
         selectedPackageData,
         allItemsPacked,
-        // totalPackedItems,
         packProduct,
         addPackage,
         removePackage,

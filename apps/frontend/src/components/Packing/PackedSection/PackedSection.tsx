@@ -13,6 +13,7 @@ import { ConfirmationModal } from '../ConfirmationModal';
 import { PackageButtons } from '../PackageButtons';
 import { PackageContent } from "../PackageContent"
 import { PackedItem } from '../PackedItem';
+import { SectionTitle } from '../SectionTitle';
 
 import { MODAL_DICTIONARY } from './const';
 import { HeaderContainer, PackedSectionContainer } from "./PackedSection.styles"
@@ -88,7 +89,10 @@ export const PackedSection = () => {
     <PackedSectionContainer>
       <HeaderContainer>
         <div className='top-header'>
-          <h3>Packed Products</h3>
+          <SectionTitle
+            title='Packed Products'
+            subtitle={`${packages.length} package(s) created`}
+          />
           <Button
             variant='primary'
             color='success'

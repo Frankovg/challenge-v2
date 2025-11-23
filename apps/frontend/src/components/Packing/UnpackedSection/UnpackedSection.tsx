@@ -3,6 +3,7 @@ import { type ReactNode } from 'react'
 import { ScrollArea } from 'components/ui/ScrollArea'
 import { useApp } from 'hooks/useApp'
 
+import { SectionTitle } from '../SectionTitle'
 import { UnpackedItem } from '../UnpackedItem'
 
 import { UnpackedSectionContainer } from './UnpackedSection.styles'
@@ -21,7 +22,11 @@ export const UnpackedSection = (): ReactNode => {
 
   return (
     <UnpackedSectionContainer>
-      Unpacked products
+      <SectionTitle
+        title='Unpacked products'
+        subtitle={`${lineItems.length} product(s) remaining`}
+      />
+
       <ScrollArea>
         {lineItems?.map((item) => (
           <UnpackedItem
