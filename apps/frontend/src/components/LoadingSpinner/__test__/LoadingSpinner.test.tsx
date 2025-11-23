@@ -6,7 +6,7 @@ import { LoadingSpinner } from '../LoadingSpinner'
 describe('LoadingSpinner', () => {
   it('renders loading text', () => {
     render(<LoadingSpinner />)
-    expect(screen.getByText('Loading items...')).toBeInTheDocument()
+    expect(screen.getByText('Loading products...')).toBeInTheDocument()
   })
 
   it('renders spinner element', () => {
