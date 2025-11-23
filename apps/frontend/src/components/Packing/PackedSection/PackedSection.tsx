@@ -8,6 +8,7 @@ import { Tabs } from "components/ui/Tabs";
 import { useApp } from "hooks/useApp";
 
 import { ConfirmationModal } from '../ConfirmationModal';
+import { EmptyPackage } from '../EmptyPackage';
 import { PackageContent } from "../PackageContent"
 import { PackedItem } from '../PackedItem';
 import { PackedSectionHeader } from '../PackedSectionHeader';
@@ -71,7 +72,7 @@ export const PackedSection = () => {
   const handleConfirmModal = async (): Promise<void> => {
     if (openConfirmationModal.action === 'ship') {
       const items: PackedPackage[] = packages.map((pack) => pack.data)
-      await shipPackages(items)
+      await shipPackages(items, readyForShipping)
     } else {
       if (pendingPackageIdToRemove !== null) {
         removePackage(pendingPackageIdToRemove, true)
@@ -102,14 +103,18 @@ export const PackedSection = () => {
       />
 
       <PackageContent >
-        <ScrollArea>
-          {selectedPackageData.line_items?.map((item) => (
-            <PackedItem
-              key={item.id}
-              item={item}
-            />
-          ))}
-        </ScrollArea>
+        {selectedPackageData.line_items.length ? (
+          <ScrollArea>
+            {selectedPackageData.line_items?.map((item) => (
+              <PackedItem
+                key={item.id}
+                item={item}
+              />
+            ))}
+          </ScrollArea>
+        ) : (
+          <EmptyPackage />
+        )}
       </PackageContent>
 
       <Dialog

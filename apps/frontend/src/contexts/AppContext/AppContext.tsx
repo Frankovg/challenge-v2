@@ -169,8 +169,8 @@ export const LineItemsProvider = ({
   }, [])
 
 
-  const shipPackages = useCallback(async (items: PackedPackage[]) => {
-    if (!readyForShipping) {
+  const shipPackages = useCallback(async (items: PackedPackage[], ready: boolean) => {
+    if (!ready) {
       toastManager.add({
         title: 'Shipping Error',
         description: 'Complete or remove empty packages.',

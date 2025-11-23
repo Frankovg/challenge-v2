@@ -58,7 +58,7 @@ export type LineItemsContextType = {
   addPackage: () => void
   removePackage: (packageId: number, force?: boolean) => void
   updateItemQuantity: (packageId: number, itemId: number, newQuantity: number) => void
-  shipPackages: (items: PackedPackage[]) => Promise<void>
+  shipPackages: (items: PackedPackage[], ready: boolean) => Promise<void>
 }
 
 export type AddToPackageButton = 'one' | 'all'
