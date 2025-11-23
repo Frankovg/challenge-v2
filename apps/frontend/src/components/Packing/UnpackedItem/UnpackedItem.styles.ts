@@ -44,4 +44,9 @@ export const ItemNameContainer = styled.div`
     color: var(--status-info-text);
     font-size: var(--font-size-sm);
   }
+
+  .sku {
+    font-size: var(--font-size-xs);
+    line-height: 1px;
+  }
 `

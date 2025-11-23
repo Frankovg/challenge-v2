@@ -28,7 +28,8 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     box-shadow: var(--shadow-sm);
 
     &:hover:not(:disabled) {
-      box-shadow: var(--shadow-sm);
+      background-color: var(--button-primary-bg-hover);
+      box-shadow: var(--shadow-md);
     }
 
     &:active:not(:disabled) {
@@ -77,8 +78,8 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     props.$customVariant === 'outlined' &&
     `
     background-color: transparent;
-    color: var(--text-primary);
-    border: 1px solid var(--border-primary);
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-primary) !important;
 
     &:hover:not(:disabled) {
       background-color: var(--bg-hover);

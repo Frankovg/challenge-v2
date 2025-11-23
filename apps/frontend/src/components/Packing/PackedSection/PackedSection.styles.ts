@@ -22,6 +22,6 @@ export const HeaderContainer = styled.div`
   .bottom-header{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
   }
 `

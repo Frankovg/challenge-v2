@@ -158,7 +158,7 @@
   --input-bg: var(--color-white);
   --input-border: var(--color-gray-300);
   --input-border-hover: var(--color-gray-400);
-  --input-border-focus: var(--color-blue-500);
+  --input-border-focus: var(--color-gray-600);
   --input-text: var(--color-gray-900);
   --input-placeholder: var(--color-gray-500);
 

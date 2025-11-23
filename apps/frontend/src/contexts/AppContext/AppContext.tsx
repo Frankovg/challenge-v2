@@ -50,7 +50,16 @@ export const LineItemsProvider = ({
   }, [lineItems, packages])
 
 
-  const packProduct = useCallback((item: LineItemType, packageId: number, quantity: number): void => {
+  const packProduct = useCallback((item: LineItemType | undefined, packageId: number, quantity: number): void => {
+    if (!item) {
+      toastManager.add({
+        title: "Product not found",
+        description: "Could not find the product.",
+        type: "error",
+      })
+      return
+    }
+
     if (quantity <= 0 || quantity > item.quantity) {
       toastManager.add({
         title: "Invalid quantity",

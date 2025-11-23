@@ -1,6 +1,5 @@
 'use client'
 
-import Input from '@mui/material/Input';
 import { useState } from 'react';
 
 import { Button } from 'components/ui/Button';
@@ -9,7 +8,7 @@ import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
 import { useApp } from "hooks/useApp";
 
-
+import { Barcode } from '../Barcode';
 import { ConfirmationModal } from '../ConfirmationModal';
 import { PackageButtons } from '../PackageButtons';
 import { PackageContent } from "../PackageContent"
@@ -104,9 +103,7 @@ export const PackedSection = () => {
           </Button>
         </div>
         <div className='bottom-header'>
-          <div>
-            <Input />
-          </div>
+          <Barcode />
           <PackageButtons
             add={handleAddPackage}
             remove={handleRemovePackage}

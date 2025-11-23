@@ -22,6 +22,7 @@ export const UnpackedItem: FC<Props> = (props) => {
       content={
         <UnpackedItemContainer>
           <ItemNameContainer >
+            <p className="sku">sku</p>
             <p>{item.sku}</p>
             <span>{item.location.toUpperCase()}</span>
           </ItemNameContainer>
