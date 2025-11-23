@@ -18,7 +18,8 @@ import {
   updatePackageItemQuantity,
 } from 'utils/updateQuantityOperations'
 
-import { INITIAL_PACKAGE } from './const'
+
+import { INITIAL_PACKAGE } from "./const";
 
 import type { LineItemsContextType, PackedItem, LineItemType, PackedPackage } from 'types'
 
@@ -204,6 +205,11 @@ export const LineItemsProvider = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const resetDemo = useCallback((items: LineItemType[]) => {
+    setPackages(INITIAL_PACKAGE)
+    setLineItems(items)
+  }, [])
+
 
   return (
     <AppContext.Provider
@@ -218,7 +224,8 @@ export const LineItemsProvider = ({
         addPackage,
         removePackage,
         updateItemQuantity,
-        shipPackages
+        shipPackages,
+        resetDemo
       }}
     >
       {children}

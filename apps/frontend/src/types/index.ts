@@ -1,6 +1,6 @@
 import { type ApolloError } from '@apollo/client'
 
-import { TabItem } from "components/ui/Tabs"
+import { type TabItem } from "components/ui/Tabs"
 
 export type LineItemType = {
   id: number
@@ -59,6 +59,8 @@ export type LineItemsContextType = {
   removePackage: (packageId: number, force?: boolean) => void
   updateItemQuantity: (packageId: number, itemId: number, newQuantity: number) => void
   shipPackages: (items: PackedPackage[], ready: boolean) => Promise<void>
+  resetDemo: (items: LineItemType[]) => void
+
 }
 
 export type AddToPackageButton = 'one' | 'all'
