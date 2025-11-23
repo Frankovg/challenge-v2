@@ -43,7 +43,11 @@ export const LineItemsProvider = ({
 
   const selectedPackageData = useMemo(() => packages[selectedPackageIndex]?.data, [packages, selectedPackageIndex])
 
-  const allItemsPacked = useMemo(() => lineItems.length === 0, [lineItems])
+  const readyForShipping = useMemo(() => {
+    const allItemsPacked = lineItems.length === 0
+    const allPackagesCompleted = !(packages.some((pkg) => !pkg.data.line_items.length))
+    return allItemsPacked && allPackagesCompleted
+  }, [lineItems, packages])
 
 
   const packProduct = useCallback((item: LineItemType, packageId: number, quantity: number): void => {
@@ -157,6 +161,15 @@ export const LineItemsProvider = ({
 
 
   const shipPackages = useCallback(async (items: PackedPackage[]) => {
+    if (!readyForShipping) {
+      toastManager.add({
+        title: 'Shipping Error',
+        description: 'Complete or remove empty packages.',
+        type: 'error',
+      })
+      return
+    }
+
     try {
       const result = await packItems(items)
 
@@ -191,7 +204,7 @@ export const LineItemsProvider = ({
         selectedPackageIndex,
         setSelectedPackageIndex,
         selectedPackageData,
-        allItemsPacked,
+        readyForShipping,
         packProduct,
         addPackage,
         removePackage,

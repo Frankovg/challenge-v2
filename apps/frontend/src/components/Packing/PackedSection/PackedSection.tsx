@@ -33,7 +33,7 @@ export const PackedSection = () => {
     selectedPackageData,
     addPackage,
     removePackage,
-    allItemsPacked,
+    readyForShipping,
     shipPackages
   } = useApp()
 
@@ -96,7 +96,7 @@ export const PackedSection = () => {
           <Button
             variant='primary'
             color='success'
-            disabled={!allItemsPacked}
+            disabled={!readyForShipping}
             onClick={handleShipPackages}
           >
             Ship Package(s)

@@ -53,7 +53,7 @@ export type LineItemsContextType = {
   selectedPackageIndex: number
   setSelectedPackageIndex: (index: number) => void
   selectedPackageData: PackedItem['data']
-  allItemsPacked: boolean
+  readyForShipping: boolean
   packProduct: (item: LineItemType, packageId: number, quantity: number) => void
   addPackage: () => void
   removePackage: (packageId: number, force?: boolean) => void
