@@ -5,5 +5,5 @@ export const UnpackedSectionContainer = styled.section`
   padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
 `

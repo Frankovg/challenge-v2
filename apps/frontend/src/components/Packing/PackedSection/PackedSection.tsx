@@ -2,21 +2,18 @@
 
 import { useState } from 'react';
 
-import { Button } from 'components/ui/Button';
 import { Dialog } from 'components/ui/Dialog';
 import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
 import { useApp } from "hooks/useApp";
 
-import { Barcode } from '../Barcode';
 import { ConfirmationModal } from '../ConfirmationModal';
-import { PackageButtons } from '../PackageButtons';
 import { PackageContent } from "../PackageContent"
 import { PackedItem } from '../PackedItem';
-import { SectionTitle } from '../SectionTitle';
+import { PackedSectionHeader } from '../PackedSectionHeader';
 
 import { MODAL_DICTIONARY } from './const';
-import { HeaderContainer, PackedSectionContainer } from "./PackedSection.styles"
+import { PackedSectionContainer } from "./PackedSection.styles"
 
 import type { PackedPackage } from 'types';
 
@@ -87,30 +84,14 @@ export const PackedSection = () => {
 
   return (
     <PackedSectionContainer>
-      <HeaderContainer>
-        <div className='top-header'>
-          <SectionTitle
-            title='Packed Products'
-            subtitle={`${packages.length} package(s) created`}
-          />
-          <Button
-            variant='primary'
-            color='success'
-            disabled={!readyForShipping}
-            onClick={handleShipPackages}
-          >
-            Ship Package(s)
-          </Button>
-        </div>
-        <div className='bottom-header'>
-          <Barcode />
-          <PackageButtons
-            add={handleAddPackage}
-            remove={handleRemovePackage}
-            disabledRemove={packages.length === 1 && selectedPackageData.line_items.length === 0}
-          />
-        </div>
-      </HeaderContainer>
+      <PackedSectionHeader
+        quantityPackages={packages.length}
+        disabledShipping={!readyForShipping}
+        disableDeletePackage={packages.length === 1 && selectedPackageData.line_items.length === 0}
+        handleShipPackages={handleShipPackages}
+        handleAddPackage={handleAddPackage}
+        handleRemovePackage={handleRemovePackage}
+      />
 
       <Tabs
         tabs={packages}
