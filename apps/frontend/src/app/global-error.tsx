@@ -3,7 +3,7 @@
 import NextError from "next/error";
 
 export default function GlobalError({ error }: { error: Error }) {
-  console.error(error)
+  console.error("Error: ", error)
   return (
     <html>
       <body>
