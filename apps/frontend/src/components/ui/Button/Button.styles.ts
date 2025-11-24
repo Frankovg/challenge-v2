@@ -39,7 +39,7 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     }
 
     &.Mui-disabled {
-      background-color: var(--bg-disabled) !important;
+      background-color: var(--button-secondary-bg) !important;
       color: var(--text-disabled) !important;
       cursor: not-allowed !important;
     }
