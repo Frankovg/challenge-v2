@@ -25,6 +25,7 @@ export const PackedItem: FC<Props> = (props) => {
   }, [lineItems, item.id])
 
   const handleQuantityChange = (newQuantity: number): void => {
+    if (!selectedPackageData) return
     updateItemQuantity(selectedPackageData.id, item.id, newQuantity)
   }
 
