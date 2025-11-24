@@ -52,7 +52,7 @@ export type LineItemsContextType = {
   packages: PackedItem[]
   selectedPackageIndex: number
   setSelectedPackageIndex: (index: number) => void
-  selectedPackageData: PackedItem['data']
+  selectedPackageData: PackedItem['data'] | undefined
   readyForShipping: boolean
   packProduct: (item: LineItemType | undefined, packageId: number, quantity: number) => void
   addPackage: () => void
