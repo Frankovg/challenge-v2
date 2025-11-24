@@ -2,6 +2,7 @@
 
 import { FC, ReactNode } from 'react'
 
+import { Footer } from 'components/ui/Footer'
 import { Navbar } from 'components/ui/Navbar'
 
 import { Main } from './Layout.styles'
@@ -15,6 +16,7 @@ export const Layout: FC<LayoutProps> = ({ children }: { children: ReactNode }) =
     <>
       <Navbar />
       <Main>{children}</Main>
+      <Footer />
     </>
   )
 }

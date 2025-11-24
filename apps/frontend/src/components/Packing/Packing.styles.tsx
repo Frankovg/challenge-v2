@@ -12,7 +12,7 @@ export const PackingWrapper = styled.div`
     bottom: 0;
     left: 0;
     padding: var(--spacing-md);
-    margin: var(--spacing-lg);
+    margin: 0 0 var(--spacing-3xl) var(--spacing-lg);
     border: none;
     border-radius: var(--radius-xl);
     background-color: var(--color-orange-500);
@@ -20,6 +20,7 @@ export const PackingWrapper = styled.div`
     font-weight: var(--font-weight-semibold);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    z-index: var(--z-popover);
 
     &:hover {
       background-color: var(--color-orange-700);
