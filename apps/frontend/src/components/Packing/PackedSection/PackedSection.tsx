@@ -47,7 +47,7 @@ export const PackedSection = () => {
   }
 
   const handleRemovePackage = (): void => {
-    if (packages.length === 0) return
+    if (packages.length === 0 || !selectedPackageData) return
 
     const packageId = selectedPackageData.id
     const packageToRemove = packages.find(pkg => pkg.data.id === packageId)
