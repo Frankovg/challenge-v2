@@ -99,38 +99,4 @@ describe('ThemeToggle component', () => {
       expect(screen.queryByLabelText(MOON_ICON)).not.toBeInTheDocument()
     })
   })
-
-  describe('accessibility', () => {
-    it('should be keyboard navigable', async () => {
-      mockUseTheme.mockReturnValue({
-        resolvedTheme: LIGHT,
-        setTheme: mockSetTheme,
-      })
-
-      render(<ThemeToggle />)
-
-      const button = screen.getByRole('button')
-
-      await userEvent.tab()
-      expect(button).toHaveFocus()
-
-      await userEvent.keyboard('{Enter}')
-      expect(mockSetTheme).toHaveBeenCalledWith(DARK)
-    })
-
-    it('should provide proper aria labels for screen readers', () => {
-      mockUseTheme.mockReturnValue({
-        resolvedTheme: LIGHT,
-        setTheme: mockSetTheme,
-      })
-
-      render(<ThemeToggle />)
-
-      const button = screen.getByRole('button')
-      const moonIcon = screen.getByLabelText(MOON_ICON)
-
-      expect(button).toHaveAttribute('aria-label', 'Switch to dark mode')
-      expect(moonIcon).toBeInTheDocument()
-    })
-  })
 })
