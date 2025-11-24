@@ -1,95 +1,91 @@
-# UI challenge
+# ShipHero Packing System
 
-Here at ShipHero, one of the core parts of our business is packing products to send them to final customers.
+A product packing system built with **Next.js 15** (App Router), **TypeScript**, **Apollo Client**, and **Styled Components**.
 
-The challenge goal is to build a system that should be able, given a hypothetical API call that will retrieve an array of products data, let the user pack those products.
+---
 
-## Project structure
+## Core Features
 
-The project has been divided into two subprojects (`apps/`). They are aggregated together in a single repository with the usage of Yarn workspaces.
+- [x] Split view: unpacked items (left) / packed items (right)
+- [x] Create and remove packages
+- [x] Pack items by clicking
+- [x] Pack items via barcode scan
+- [x] Modify packed quantities (add/remove)
+- [x] Ship button when all items packed
+- [x] Submit packages via GraphQL mutation
 
-- `apps/api` contains the project with the mocked API. **Please, do not make changes there.** You can treat this subproject as a black box;
-- `apps/frontend` stores the actual frontend project that needs to be updated with your solution for the tasks mentioned below.
+---
 
-## Your tasks
+## Extra Features
 
-Some of the functional requirements of the system are the following ones:
+- Dark/Light theme with persistence
+- Clean, modern UI design
+- Tooltips and toast notifications
+- Pack one item or entire stock at once
+- Always displays at least one empty package
+- Confirmation modals for critical actions
+- Barcode input validation
+- **86.7% test coverage**
+- Strong TypeScript throughout
+- Well-organized component architecture
 
-- You should start by listing all unpacked items at the left of a split view. Use the provided mocked API to get the list of items (see below in the Available built-in commands section to know more).
-- In the right section, you should view the packaged items, organized in packages.
-- You should be able to create new packages and also to remove an empty package.
-- You can create multiple packages and pack items inside those packages (users can decide to put all items in a single package, or create multiple packages).
-- You can pack one item into the currently selected package by clicking on it from the list.
-- You also can pack by receiving a barcode scan (very fast keyboard input sequence that ends with an Enter key) with the item's SKU.
-- When an item is packed you can change its quantity by adding more items or removing (unpacking).
-- When all items are packed (either in one or multiple packages), show a "Ship" button. When the user clicks that button, use the mutation that is also provided in the mocked API and send to the server the packages information with what is being shipped (what products in what packages).
+---
 
-You can refactor, redesign the UI or rewrite anything you want to show us the way you like to code, do HTML, styling.
-
-The project is ready to run so that you don't have to worry about setting up all the different libraries and you can start coding right away. Just remember to run `yarn` at the root of the repository to fetch all the required dependencies before starting.
-
-## How to communicate with us?
-
-We're gonna invite you to our Slack channel as a guest. In this channel, all the people involved in the project will be present, you can ask your questions or anything related to the process in there and we'll answer as soon as possible.
-
-**Feel free to ask as much as you need!**
-
-## How to deliver your solution?
-
-Please open a PR with your changes so we can review it and give you some feedback if there's place for it, your PR must contain:
-
-- A detailed description of your solution and design decisions you made.
-- The code with your solution.
-- Writing tests for your solution is mandatory. The solution will not be reviewed until basic scenarios are covered.
-
-## What if you're running out of time?
-
-If you think you will run out of time to implement all tasks, prioritize writing tests for the features you already implement rather than adding new features.
-
-## Available built-in commands
-
-**Run the mocked API**
+## Commands
 
 ```bash
-# from ./apps/api
+# Install dependencies
+yarn install
+
+# Run both API and frontend
 yarn dev
-```
 
-**Run the UI in dev mode**
-
-```bash
-# from ./apps/frontend
+# Run only the API (from ./apps/api)
 yarn dev
-```
 
-**Build the Nextjs app**
+# Run only the frontend (from ./apps/frontend)
+yarn dev
 
-```bash
-# from ./apps/frontend
+# Build for production (from ./apps/frontend)
 yarn build
-```
 
-**Run the UI and the mocked API at the same time**
-
-```bash
-# from root directory
-yarn dev
-```
-
-**Run the tests**
-
-Coverage report will be available under `coverage` folder.
-
-```bash
-# from root directory
+# Run tests with coverage
 yarn test
-```
 
-**Run ESlint**
-
-Make sure the output is clean.
-
-```bash
-# from root directory
+# Run ESLint
 yarn lint
 ```
+
+---
+
+## Future Improvements
+
+| Area              | Recommendation                                                                  |
+| ----------------- | ------------------------------------------------------------------------------- |
+| **Styling**       | Replace Styled Components with Tailwind CSS for better SSR performance          |
+| **Data Fetching** | Add React Query for caching and optimized SSR                                   |
+| **Responsive**    | Add tablet and mobile layouts                                                   |
+| **Backend**       | Store packages in database via GraphQL schema                                   |
+| **State**         | Use Zustand or Jotai to reduce re-renders (React Context can be heavy at scale) |
+| **Search**        | Add product search/filters with MeiliSearch                                     |
+
+---
+
+## Tech Stack
+
+- Next.js 15 (App Router)
+- React 19
+- TypeScript 5.9
+- Apollo Client 3
+- Styled Components 6
+- Jest + React Testing Library
+
+---
+
+Thanks for reviewing this project!
+
+_Franco Amoroso_
+
+[Franco Amoroso](https://www.linkedin.com/in/francoamoroso/)
+
+[Web Portfolio](https://www.franamoroso.com/)

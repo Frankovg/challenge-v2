@@ -12,7 +12,7 @@ export const PackingWrapper = styled.div`
     bottom: 0;
     left: 0;
     padding: var(--spacing-md);
-    margin: 0 0 var(--spacing-3xl) var(--spacing-lg);
+    margin: 0 0 var(--spacing-md) var(--spacing-lg);
     border: none;
     border-radius: var(--radius-xl);
     background-color: var(--color-orange-500);
