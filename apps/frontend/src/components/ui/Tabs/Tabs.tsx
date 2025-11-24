@@ -19,7 +19,11 @@ type Props = {
   value: string | number
   onChange: (value: number) => void
   'aria-label'?: string
+  orientation?: 'horizontal' | 'vertical'
+  centered?: boolean
   variant?: 'standard' | 'scrollable' | 'fullWidth'
+  indicatorColor?: 'primary' | 'secondary'
+  textColor?: 'primary' | 'secondary' | 'inherit'
 }
 
 export const Tabs: FC<Props> = ({
@@ -27,6 +31,11 @@ export const Tabs: FC<Props> = ({
   value,
   onChange,
   'aria-label': ariaLabel,
+  orientation = 'horizontal',
+  centered = false,
+  variant = 'standard',
+  indicatorColor = 'primary',
+  textColor = 'inherit',
 }) => {
 
   const handleChange = (_event: SyntheticEvent, newValue: number): void => {
@@ -38,6 +47,11 @@ export const Tabs: FC<Props> = ({
       value={value}
       onChange={handleChange}
       aria-label={ariaLabel}
+      orientation={orientation}
+      centered={centered}
+      variant={variant}
+      indicatorColor={indicatorColor}
+      textColor={textColor}
     >
       {tabs.map((tab) => {
         const quantityProducts = tab.data.line_items.length
