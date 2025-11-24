@@ -1,20 +1,35 @@
 import { render, screen, renderHook, act } from '@testing-library/react'
 
-import { useLineItems } from 'hooks/useApp'
+import { useApp } from 'hooks/useApp'
 import { LineItemType } from 'types'
 
 import { LineItemsProvider } from '..'
+
+jest.mock('@base-ui-components/react/toast', () => ({
+  Toast: {
+    useToastManager: jest.fn(() => ({
+      add: jest.fn(),
+    })),
+  },
+}))
+
+jest.mock('hooks/usePackItemsMutation', () => ({
+  usePackItemsMutation: jest.fn(() => ({
+    packItems: jest.fn(),
+    error: null,
+  })),
+}))
 
 const mockLineItems: LineItemType[] = [
   { id: 1, quantity: 2, sku: 'SKU-001', location: 'A1' },
   { id: 2, quantity: 5, sku: 'SKU-002', location: 'B2' },
 ]
 
-describe('LineItemsContext', () => {
+describe('AppContext', () => {
   describe('LineItemsProvider', () => {
     it('provides line items to children', () => {
       const TestComponent = () => {
-        const { lineItems } = useLineItems()
+        const { lineItems } = useApp()
         return (
           <div>
             {lineItems.map((item) => (
@@ -43,13 +58,13 @@ describe('LineItemsContext', () => {
         </LineItemsProvider>
       )
 
-      const { result } = renderHook(() => useLineItems(), { wrapper })
+      const { result } = renderHook(() => useApp(), { wrapper })
 
       expect(result.current.lineItems).toHaveLength(2)
       expect(result.current.packages[0].data.line_items).toHaveLength(0)
 
       act(() => {
-        result.current.packItem(mockLineItems[0], 0, 2)
+        result.current.packProduct(mockLineItems[0], 0, 2)
       })
 
       expect(result.current.lineItems).toHaveLength(1)
@@ -58,14 +73,13 @@ describe('LineItemsContext', () => {
     })
   })
 
-  describe('useLineItems', () => {
+  describe('useApp', () => {
     it('throws error when used outside of provider', () => {
-      // Suppress console.error for this test
       const originalError = console.error
       console.error = jest.fn()
 
       expect(() => {
-        renderHook(() => useLineItems())
+        renderHook(() => useApp())
       }).toThrow('useLineItems must be used within a LineItemsProvider')
 
       console.error = originalError
@@ -78,12 +92,13 @@ describe('LineItemsContext', () => {
         </LineItemsProvider>
       )
 
-      const { result } = renderHook(() => useLineItems(), { wrapper })
+      const { result } = renderHook(() => useApp(), { wrapper })
 
       expect(result.current.lineItems).toEqual(mockLineItems)
-      expect(typeof result.current.packItem).toBe('function')
-      expect(typeof result.current.unpackItem).toBe('function')
+      expect(typeof result.current.packProduct).toBe('function')
       expect(typeof result.current.updateItemQuantity).toBe('function')
+      expect(typeof result.current.addPackage).toBe('function')
+      expect(typeof result.current.removePackage).toBe('function')
     })
   })
 
@@ -95,21 +110,18 @@ describe('LineItemsContext', () => {
         </LineItemsProvider>
       )
 
-      const { result } = renderHook(() => useLineItems(), { wrapper })
+      const { result } = renderHook(() => useApp(), { wrapper })
 
-      // Pack an item first
       act(() => {
-        result.current.packItem(mockLineItems[0], 0, 2)
+        result.current.packProduct(mockLineItems[0], 0, 2)
       })
 
       expect(result.current.packages[0].data.line_items).toHaveLength(1)
 
-      // Try to remove package with items without force
       act(() => {
         result.current.removePackage(0, false)
       })
 
-      // Package should still exist (removal blocked)
       expect(result.current.packages[0].data.line_items).toHaveLength(1)
       expect(result.current.lineItems).toHaveLength(1)
     })
@@ -121,21 +133,18 @@ describe('LineItemsContext', () => {
         </LineItemsProvider>
       )
 
-      const { result } = renderHook(() => useLineItems(), { wrapper })
+      const { result } = renderHook(() => useApp(), { wrapper })
 
-      // Add a second package
       act(() => {
         result.current.addPackage()
       })
 
       expect(result.current.packages).toHaveLength(2)
 
-      // Remove empty package (no force needed)
       act(() => {
         result.current.removePackage(1)
       })
 
-      // Package should be removed
       expect(result.current.packages).toHaveLength(1)
     })
 
@@ -146,22 +155,19 @@ describe('LineItemsContext', () => {
         </LineItemsProvider>
       )
 
-      const { result } = renderHook(() => useLineItems(), { wrapper })
+      const { result } = renderHook(() => useApp(), { wrapper })
 
-      // Pack an item
       act(() => {
-        result.current.packItem(mockLineItems[0], 0, 2)
+        result.current.packProduct(mockLineItems[0], 0, 2)
       })
 
       expect(result.current.lineItems).toHaveLength(1)
       expect(result.current.packages[0].data.line_items).toHaveLength(1)
 
-      // Remove package with force
       act(() => {
         result.current.removePackage(0, true)
       })
 
-      // Items should be restored
       expect(result.current.lineItems).toHaveLength(2)
       expect(result.current.packages[0].data.line_items).toHaveLength(0)
     })
@@ -173,23 +179,20 @@ describe('LineItemsContext', () => {
         </LineItemsProvider>
       )
 
-      const { result } = renderHook(() => useLineItems(), { wrapper })
+      const { result } = renderHook(() => useApp(), { wrapper })
 
-      // Pack all items completely
       act(() => {
-        result.current.packItem(mockLineItems[0], 0, 2)  // Pack all 2
-        result.current.packItem(mockLineItems[1], 0, 5)  // Pack all 5
+        result.current.packProduct(mockLineItems[0], 0, 2)
+        result.current.packProduct(mockLineItems[1], 0, 5)
       })
 
       expect(result.current.lineItems).toHaveLength(0)
       expect(result.current.packages[0].data.line_items).toHaveLength(2)
 
-      // Force remove the only package
       act(() => {
         result.current.removePackage(0, true)
       })
 
-      // All items should be restored
       expect(result.current.lineItems).toHaveLength(2)
       expect(result.current.packages[0].data.line_items).toHaveLength(0)
     })

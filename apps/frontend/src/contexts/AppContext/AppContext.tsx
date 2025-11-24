@@ -80,8 +80,7 @@ export const LineItemsProvider = ({
       description: `${quantity} product(s) packed successfully.`,
       type: "success",
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [toastManager])
 
 
   const addPackage = useCallback((): void => {
@@ -91,8 +90,7 @@ export const LineItemsProvider = ({
       description: 'New package created successfully.',
       type: "success",
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [toastManager])
 
 
   const removePackage = useCallback((packageId: number, force = false): void => {
@@ -103,7 +101,7 @@ export const LineItemsProvider = ({
     const hasItems = itemsToReturn.length > 0
     const isSinglePackage = packages.length === 1
 
-    if (isSinglePackage && !hasItems || hasItems && !force) return
+    if ((isSinglePackage && !hasItems) || (hasItems && !force)) return
 
     if (isSinglePackage) {
       setPackages(INITIAL_PACKAGE)
@@ -111,16 +109,17 @@ export const LineItemsProvider = ({
       if (hasItems) {
         setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
       }
-    } else {
-      const removedPackageIndex = packages.findIndex(pkg => pkg.data.id === packageId)
-
-      setPackages(prev => rebuildPackageTabs(prev, packageId))
-      setSelectedPackageIndex(prevIndex =>
-        selectPackage(removedPackageIndex, prevIndex, packages.length)
-      )
-
-      if (hasItems) setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
+      return
     }
+
+    const removedPackageIndex = packages.findIndex(pkg => pkg.data.id === packageId)
+
+    setPackages(prev => rebuildPackageTabs(prev, packageId))
+    setSelectedPackageIndex(prevIndex =>
+      selectPackage(removedPackageIndex, prevIndex, packages.length)
+    )
+
+    if (hasItems) setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
   }, [packages])
 
 
@@ -168,8 +167,7 @@ export const LineItemsProvider = ({
         type: "success",
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [toastManager])
 
 
   const shipPackages = useCallback(async (items: PackedPackage[], ready: boolean) => {
@@ -200,18 +198,21 @@ export const LineItemsProvider = ({
         description: `${items.length} package(s) ready to ship.`,
         type: "success",
       })
-      setLoading(false)
-    } catch {
-      if (process.env.NODE_ENV === 'development') console.error(error)
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error(err)
+        console.error(error)
+      }
 
       toastManager.add({
         title: 'Shipping Error',
         description: 'Unable to process shipping.',
         type: 'error',
       })
+    } finally {
+      setLoading(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [toastManager, packItems, error])
 
 
   const resetDemo = useCallback((items: LineItemType[]) => {
