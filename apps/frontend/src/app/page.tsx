@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { ReactNode, Suspense } from 'react'
+import { ReactNode } from 'react'
 
 import { Packing } from 'components/Packing'
 import { LineItemsProvider } from 'contexts/AppContext'
@@ -7,23 +7,33 @@ import { LINE_ITEMS_QUERY } from 'hooks/useLineItemsQuery'
 import { APOLLO_CLIENT } from 'lib/apolloClient'
 import { LineItemsQueryType } from 'types'
 
-import Loading from './loading'
-
 export default async function HomePage(): Promise<ReactNode> {
-  const { data } = await APOLLO_CLIENT.query<LineItemsQueryType>({
-    query: LINE_ITEMS_QUERY,
-    fetchPolicy: 'network-only',
-  })
+  try {
+    const { data, error } = await APOLLO_CLIENT.query<LineItemsQueryType>({
+      query: LINE_ITEMS_QUERY,
+      fetchPolicy: 'network-only',
+    })
 
-  const lineItems = data?.line_items || []
+    if (error) {
+      console.error('Failed to fetch line items:', error)
+      throw new Error('Failed to load inventory data')
+    }
 
-  if (!lineItems) notFound()
+    const lineItems = data?.line_items || []
 
-  return (
-    <Suspense fallback={<Loading />}>
+    if (lineItems.length === 0) {
+      return (
+        notFound()
+      )
+    }
+
+    return (
       <LineItemsProvider initialLineItems={lineItems}>
         <Packing />
       </LineItemsProvider>
-    </Suspense>
-  )
+    )
+  } catch (error) {
+    console.error('Error loading page:', error)
+    throw error
+  }
 }
