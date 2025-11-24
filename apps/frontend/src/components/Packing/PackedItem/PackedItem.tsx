@@ -43,7 +43,6 @@ export const PackedItem: FC<Props> = (props) => {
               value={item.quantity}
               min={0}
               max={maxQuantity}
-              size="small"
               onChange={handleQuantityChange}
               label='Item quantity'
             />

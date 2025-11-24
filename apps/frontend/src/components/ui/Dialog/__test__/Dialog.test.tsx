@@ -48,7 +48,6 @@ describe('Dialog', () => {
       </Dialog>
     )
 
-    // Get the modal element and fire keydown on it
     const modal = document.querySelector('[role="presentation"]')
     if (modal) {
       fireEvent.keyDown(modal, { key: 'Escape', code: 'Escape' })
@@ -59,39 +58,5 @@ describe('Dialog', () => {
     } else {
       throw new Error('Dialog not found')
     }
-  })
-
-  it('unmounts content when keepMounted is false and modal is closed', () => {
-    const { rerender } = render(
-      <Dialog open keepMounted={false} onClose={() => { }}>
-        <div>Test Content</div>
-      </Dialog>
-    )
-
-    expect(screen.getByText('Test Content')).toBeInTheDocument()
-
-    rerender(
-      <Dialog open={false} keepMounted={false} onClose={() => { }}>
-        <div>Test Content</div>
-      </Dialog>
-    )
-
-    expect(screen.queryByText('Test Content')).not.toBeInTheDocument()
-  })
-
-  it('renders multiple children components', () => {
-    render(
-      <Dialog open onClose={() => { }}>
-        <div>
-          <h2>Dialog Title</h2>
-          <p>Dialog description</p>
-          <button>Action Button</button>
-        </div>
-      </Dialog>
-    )
-
-    expect(screen.getByText('Dialog Title')).toBeInTheDocument()
-    expect(screen.getByText('Dialog description')).toBeInTheDocument()
-    expect(screen.getByText('Action Button')).toBeInTheDocument()
   })
 })

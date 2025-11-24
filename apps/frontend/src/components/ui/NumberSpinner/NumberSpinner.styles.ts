@@ -1,22 +1,19 @@
 import { styled } from 'styled-components'
 
 type NumberSpinnerContainerProps = {
-  $size: 'small' | 'medium'
-  $error: boolean
   $disabled: boolean
 }
 
 export const NumberSpinnerContainer = styled.div<NumberSpinnerContainerProps>`
   display: flex;
   flex-direction: column;
-  gap: ${({ $size }) => ($size === 'small' ? '4px' : '6px')};
+  gap: 4px;
 
   .number-spinner-label {
-    font-size: ${({ $size }) => ($size === 'small' ? '12px' : '14px')};
+    font-size: 12px;
     font-weight: 500;
-    color: ${({ $error, $disabled }) =>
-      $disabled ? 'var(--text-disabled)' :
-      $error ? 'var(--error)' :
+    color: ${({ $disabled }) =>
+    $disabled ? 'var(--text-disabled)' :
       'var(--text-secondary)'};
     transition: color var(--transition-base);
   }
@@ -25,44 +22,35 @@ export const NumberSpinnerContainer = styled.div<NumberSpinnerContainerProps>`
     position: relative;
     display: flex;
     align-items: center;
-    width: ${({ $size }) => ($size === 'small' ? '80px' : '100px')};
+    width: 80px;
   }
 
   .number-spinner-input {
     width: 100%;
-    height: ${({ $size }) => ($size === 'small' ? '32px' : '40px')};
-    padding: ${({ $size }) => ($size === 'small' ? '4px 32px 4px 8px' : '8px 40px 8px 12px')};
-    font-size: ${({ $size }) => ($size === 'small' ? '13px' : '14px')};
+    height: 32px;
+    padding: 4px 32px 4px 8px;
+    font-size: 13px;
     font-family: inherit;
     color: ${({ $disabled }) => ($disabled ? 'var(--text-disabled)' : 'var(--text-primary)')};
     background-color: ${({ $disabled }) => ($disabled ? 'var(--bg-tertiary)' : 'var(--bg-primary)')};
-    border: 1px solid ${({ $error, $disabled }) =>
-      $disabled ? 'var(--border-tertiary)' :
-      $error ? 'var(--error)' :
-      'var(--border-secondary)'};
+    border: 1px solid ${({ $disabled }) => $disabled ? 'var(--border-tertiary)' : 'var(--border-secondary)'};
     border-radius: 6px;
     outline: none;
     transition: all var(--transition-base);
 
     &:hover:not(:disabled) {
-      border-color: ${({ $error }) => ($error ? 'var(--error)' : 'var(--border-primary)')};
+      border-color: 'var(--border-primary)';
     }
 
     &:focus {
-      border-color: ${({ $error }) => ($error ? 'var(--error)' : 'var(--primary)')};
-      box-shadow: 0 0 0 3px ${({ $error }) =>
-        $error ? 'rgba(244, 67, 54, 0.1)' : 'rgba(25, 118, 210, 0.1)'};
+      border-color: 'var(--primary)';
+      box-shadow: 0 0 0 3px 'rgba(25, 118, 210, 0.1)';
     }
 
-    /* Hide default number input arrows */
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
-    }
-
-    &[type='number'] {
-      -moz-appearance: textfield;
     }
 
     &:disabled {
@@ -84,7 +72,7 @@ export const NumberSpinnerContainer = styled.div<NumberSpinnerContainerProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: ${({ $size }) => ($size === 'small' ? '24px' : '32px')};
+    width: 24px;
     height: 50%;
     padding: 0;
     background-color: var(--bg-secondary);

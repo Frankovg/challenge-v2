@@ -100,9 +100,9 @@ export const StyledToastDescription = styled(MuiToast.Description)`
 `
 
 export const StyledToastClose = styled(MuiToast.Close)`
-  height: 20px;
-  width: 20px;
-  min-width: 20px;
+  height: 1.25rem;
+  width: 1.25rem;
+  min-width: 1.25rem;
   border-radius: var(--radius-sm);
   position: absolute;
   top: var(--spacing-sm);

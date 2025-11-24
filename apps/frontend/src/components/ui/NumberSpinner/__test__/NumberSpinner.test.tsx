@@ -4,12 +4,6 @@ import { NumberSpinner } from '../NumberSpinner'
 
 
 describe('NumberSpinner', () => {
-  it('renders with default value', () => {
-    render(<NumberSpinner defaultValue={5} />)
-    const input = screen.getByRole('spinbutton')
-    expect(input).toHaveValue(5)
-  })
-
   it('increments value when up button is clicked', () => {
     const handleChange = jest.fn()
     render(<NumberSpinner value={5} onChange={handleChange} />)
@@ -78,18 +72,6 @@ describe('NumberSpinner', () => {
     fireEvent.change(input, { target: { value: '5' } })
 
     expect(handleChange).toHaveBeenCalledWith(10)
-  })
-
-  it('renders small size', () => {
-    render(<NumberSpinner size="small" defaultValue={5} />)
-    const input = screen.getByRole('spinbutton')
-    expect(input).toBeInTheDocument()
-  })
-
-  it('shows error state', () => {
-    render(<NumberSpinner error defaultValue={5} />)
-    const input = screen.getByRole('spinbutton')
-    expect(input).toBeInTheDocument()
   })
 
   it('disables interactions when disabled', () => {

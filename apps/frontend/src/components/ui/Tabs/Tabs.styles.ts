@@ -4,7 +4,7 @@ import { styled } from 'styled-components'
 
 export const StyledTabs = styled(Tabs)`
   border-bottom: 1px solid var(--border-primary);
-  min-height: 48px;
+  min-height: 3rem;
   margin-bottom: var(--spacing-lg);
 
   & .MuiTabs-indicator {
@@ -32,7 +32,7 @@ export const StyledTab = styled(Tab)`
   font-size: 0.875rem;
   font-weight: 500;
   text-transform: none;
-  min-height: 48px;
+  min-height: 3rem;
   padding: var(--spacing-sm) var(--spacing-md);
   transition: all var(--transition-base);
 

@@ -4,8 +4,8 @@ export const IconButtonContainer = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   border: none;
   border-radius: 50%;
   background-color: transparent;
@@ -22,7 +22,7 @@ export const IconButtonContainer = styled.button`
   }
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
   }
 `

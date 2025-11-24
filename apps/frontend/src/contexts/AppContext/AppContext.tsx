@@ -20,7 +20,6 @@ import { selectPackage } from "utils/selectPackage";
 import { updatePackageItemQuantity } from "utils/updatePackageItemQuantity";
 import { updatePackagesWithItem } from "utils/updatePackagesWithItem";
 
-
 import { INITIAL_PACKAGE } from "./const";
 
 import type { LineItemsContextType, PackedItem, LineItemType, PackedPackage } from 'types'
@@ -135,14 +134,6 @@ export const LineItemsProvider = ({
       return
     }
 
-    if (newQuantity === 0) {
-      toastManager.add({
-        title: "Product unpacked",
-        description: 'Product unpacked successfully.',
-        type: "success",
-      })
-    }
-
     let itemToUpdate: LineItemType | null = null
     let quantityDiff = 0
 
@@ -169,6 +160,14 @@ export const LineItemsProvider = ({
         reduceLineItemQuantity
       )
     )
+
+    if (newQuantity === 0) {
+      toastManager.add({
+        title: "Product unpacked",
+        description: 'Product unpacked successfully.',
+        type: "success",
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -213,6 +212,7 @@ export const LineItemsProvider = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
 
   const resetDemo = useCallback((items: LineItemType[]) => {
     setPackages(INITIAL_PACKAGE)

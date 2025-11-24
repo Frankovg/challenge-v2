@@ -41,7 +41,7 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     &.Mui-disabled {
       background-color: var(--bg-disabled) !important;
       color: var(--text-disabled) !important;
-      cursor: not-allowed;
+      cursor: not-allowed !important;
     }
   `}
 
@@ -66,18 +66,18 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     }
 
     &.Mui-disabled {
-      background-color: var(--bg-disabled);
-      color: var(--text-disabled);
-      border-color: var(--border-primary);
-      cursor: not-allowed;
-      opacity: 0.6;
+      background-color: var(--bg-disabled) !important;
+      color: var(--text-disabled) !important;
+      border-color: var(--border-primary) !important;
+      cursor: not-allowed !important;
+      opacity: 0.6 !important;
     }
   `}
 
   ${(props) =>
     props.$customVariant === 'outlined' &&
     `
-    background-color: transparent;
+    background-color: transparent !important;
     color: var(--text-primary) !important;
     border: 1px solid var(--border-primary) !important;
 
@@ -92,11 +92,11 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     }
 
     &.Mui-disabled {
-      background-color: transparent;
-      color: var(--text-disabled);
-      border-color: var(--border-primary);
-      cursor: not-allowed;
-      opacity: 0.6;
+      background-color: transparent !important;
+      color: var(--text-disabled) !important;
+      border-color: var(--border-primary) !important;
+      cursor: not-allowed !important;
+      opacity: 0.6 !important;
     }
   `}
 
@@ -117,10 +117,10 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     }
 
     &.Mui-disabled {
-      background-color: transparent;
-      color: var(--text-disabled);
-      cursor: not-allowed;
-      opacity: 0.6;
+      background-color: transparent !important;
+      color: var(--text-disabled) !important;
+      cursor: not-allowed !important;
+      opacity: 0.6 !important;
     }
   `}
 

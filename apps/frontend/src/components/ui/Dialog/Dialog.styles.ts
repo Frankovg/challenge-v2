@@ -15,35 +15,8 @@ export const DialogContent = styled.div`
   overflow: auto;
   z-index: var(--z-modal);
   transition:
-    background-color var(--transition-base),
-    border-color var(--transition-base);
-
-  &:focus-visible {
-    outline: 2px solid var(--border-focus);
-    outline-offset: 2px;
-  }
-
-  /* Custom scrollbar for modal content */
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--scrollbar-track);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb);
-    border-radius: var(--radius-full);
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover);
-  }
+  background-color var(--transition-base),
+  border-color var(--transition-base);
 `
 
 export const ModalBackdrop = styled.div.withConfig({
@@ -55,7 +28,6 @@ export const ModalBackdrop = styled.div.withConfig({
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  /* backdrop-filter: blur(1px); */
   z-index: var(--z-modal-backdrop);
   -webkit-tap-highlight-color: transparent;
 `
