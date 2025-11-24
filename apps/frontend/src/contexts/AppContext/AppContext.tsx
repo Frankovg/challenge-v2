@@ -11,13 +11,14 @@ import React, {
 
 import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
 import { sleep } from "lib/sleep";
-import { createPackage } from 'utils/addPackageOperations'
-import { rebuildPackageTabs, restoreItems, selectPackage } from 'utils/packageOperations'
-import { reduceLineItemQuantity, updatePackagesWithItem } from 'utils/packingOperations'
-import {
-  adjustLineItemsAfterUpdate,
-  updatePackageItemQuantity,
-} from 'utils/updateQuantityOperations'
+import { adjustLineItemsAfterUpdate } from 'utils/adjustLineItemsAfterUpdate'
+import { createPackage } from 'utils/createPackage'
+import { rebuildPackageTabs } from "utils/rebuildPackageTabs";
+import { reduceLineItemQuantity } from 'utils/reduceLineItemQuantity'
+import { restoreItems } from "utils/restoreItems";
+import { selectPackage } from "utils/selectPackage";
+import { updatePackageItemQuantity } from "utils/updatePackageItemQuantity";
+import { updatePackagesWithItem } from "utils/updatePackagesWithItem";
 
 
 import { INITIAL_PACKAGE } from "./const";

@@ -1,4 +1,4 @@
-import { createPackage } from '../addPackageOperations'
+import { createPackage } from '../createPackage'
 
 import { mockPackages } from './mocks'
 

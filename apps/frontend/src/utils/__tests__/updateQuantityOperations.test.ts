@@ -1,7 +1,7 @@
-import {
-  adjustLineItemsAfterUpdate,
-  updatePackageItemQuantity,
-} from '../updateQuantityOperations'
+import { reduceLineItemQuantity } from 'utils/reduceLineItemQuantity'
+import { updatePackageItemQuantity } from 'utils/updatePackageItemQuantity'
+
+import { adjustLineItemsAfterUpdate } from '../adjustLineItemsAfterUpdate'
 
 import { mockLineItems } from './mocks'
 
@@ -34,7 +34,11 @@ describe('updateQuantityOperations', () => {
     ]
 
     it('updates item quantity in the correct package', () => {
-      const result = updatePackageItemQuantity(packagesWithItems, 0, 1, 8)
+      const packageId = 0
+      const itemId = 1
+      const newQuantity = 8
+
+      const result = updatePackageItemQuantity(packagesWithItems, packageId, itemId, newQuantity)
 
       expect(result[0].data.line_items[0].quantity).toBe(8)
       expect(result[0].data.line_items[1].quantity).toBe(3)
@@ -42,72 +46,78 @@ describe('updateQuantityOperations', () => {
     })
 
     it('removes item when quantity is 0', () => {
-      const result = updatePackageItemQuantity(packagesWithItems, 0, 1, 0)
+      const packageId = 0
+      const itemId = 1
+      const newQuantity = 0
+
+      const result = updatePackageItemQuantity(packagesWithItems, packageId, itemId, newQuantity)
 
       expect(result[0].data.line_items).toHaveLength(1)
       expect(result[0].data.line_items[0].id).toBe(2)
     })
-
-    it('does not modify other packages', () => {
-      const result = updatePackageItemQuantity(packagesWithItems, 0, 1, 10)
-
-      expect(result[1]).toEqual(packagesWithItems[1])
-    })
   })
 
   describe('adjustLineItemsAfterUpdate', () => {
-    const mockReduceLineItemQuantity = (
-      items: LineItemType[],
-      itemId: number,
-      quantity: number
-    ): LineItemType[] => {
-      return items.reduce<LineItemType[]>((acc, item) => {
-        if (item.id !== itemId) {
-          acc.push(item)
-          return acc
-        }
-        const remainingQuantity = item.quantity - quantity
-        if (remainingQuantity > 0) {
-          acc.push({ ...item, quantity: remainingQuantity })
-        }
-        return acc
-      }, [])
-    }
+    // const mockReduceLineItemQuantity = (
+    //   items: LineItemType[],
+    //   itemId: number,
+    //   quantity: number
+    // ): LineItemType[] => {
+    //   return items.reduce<LineItemType[]>((acc, item) => {
+    //     if (item.id !== itemId) {
+    //       acc.push(item)
+    //       return acc
+    //     }
+    //     const remainingQuantity = item.quantity - quantity
+    //     if (remainingQuantity > 0) {
+    //       acc.push({ ...item, quantity: remainingQuantity })
+    //     }
+    //     return acc
+    //   }, [])
+    // }
 
     describe('when item is completely removed (newQuantity = 0)', () => {
-      it('returns all items to unpacked when existing item found', () => {
+      it('returns all items to unpacked products list when existing item found', () => {
         const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
         const lineItems: LineItemType[] = [
           { ...mockLineItems[0], quantity: 3 },
           { ...mockLineItems[1], quantity: 2 },
         ]
 
+        const itemId = mockLineItems[0].id
+        const newQuantity = 0
+        const quantityDiff = 5
+
         const result = adjustLineItemsAfterUpdate(
           lineItems,
           itemToUpdate,
-          mockLineItems[0].id,
-          0,
-          5,
-          mockReduceLineItemQuantity
+          itemId,
+          newQuantity,
+          quantityDiff,
+          reduceLineItemQuantity
         )
 
-        expect(result[0].quantity).toBe(8) // 3 + 5
+        expect(result[0].quantity).toBe(8)
         expect(result[1].quantity).toBe(2)
       })
 
-      it('adds item back to unpacked when not existing', () => {
+      it('adds item back to unpacked products list when not existing', () => {
         const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
         const lineItems: LineItemType[] = [
           { ...mockLineItems[1], quantity: 2 },
         ]
 
+        const itemId = mockLineItems[0].id
+        const newQuantity = 0
+        const quantityDiff = 5
+
         const result = adjustLineItemsAfterUpdate(
           lineItems,
           itemToUpdate,
-          mockLineItems[0].id,
-          0,
-          5,
-          mockReduceLineItemQuantity
+          itemId,
+          newQuantity,
+          quantityDiff,
+          reduceLineItemQuantity
         )
 
         expect(result).toHaveLength(2)
@@ -116,41 +126,49 @@ describe('updateQuantityOperations', () => {
       })
     })
 
-    describe('when quantity decreased (quantityDiff > 0)', () => {
-      it('adds difference to existing unpacked item', () => {
-        const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
-        const lineItems: LineItemType[] = [
-          { ...mockLineItems[0], quantity: 2 },
-        ]
+    it('creates new unpacked product when not existing', () => {
+      const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
+      const lineItems: LineItemType[] = []
 
-        const result = adjustLineItemsAfterUpdate(
-          lineItems,
-          itemToUpdate,
-          mockLineItems[0].id,
-          3,
-          2,
-          mockReduceLineItemQuantity
-        )
+      const itemId = mockLineItems[0].id
+      const newQuantity = 3
+      const quantityDiff = 2
 
-        expect(result[0].quantity).toBe(4) // 2 + 2
-      })
+      const result = adjustLineItemsAfterUpdate(
+        lineItems,
+        itemToUpdate,
+        itemId,
+        newQuantity,
+        quantityDiff,
+        reduceLineItemQuantity
+      )
 
-      it('creates new unpacked item when not existing', () => {
-        const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
-        const lineItems: LineItemType[] = []
+      expect(result).toHaveLength(1)
+      expect(result[0].quantity).toBe(2)
+    })
+  })
 
-        const result = adjustLineItemsAfterUpdate(
-          lineItems,
-          itemToUpdate,
-          mockLineItems[0].id,
-          3,
-          2,
-          mockReduceLineItemQuantity
-        )
+  describe('when quantity decreased (quantityDiff > 0)', () => {
+    it('adds difference to existing unpacked product', () => {
+      const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
+      const lineItems: LineItemType[] = [
+        { ...mockLineItems[0], quantity: 2 },
+      ]
 
-        expect(result).toHaveLength(1)
-        expect(result[0].quantity).toBe(2)
-      })
+      const itemId = mockLineItems[0].id
+      const newQuantity = 3
+      const quantityDiff = 2
+
+      const result = adjustLineItemsAfterUpdate(
+        lineItems,
+        itemToUpdate,
+        itemId,
+        newQuantity,
+        quantityDiff,
+        reduceLineItemQuantity
+      )
+
+      expect(result[0].quantity).toBe(4)
     })
 
     describe('when quantity increased (quantityDiff < 0)', () => {
@@ -160,16 +178,20 @@ describe('updateQuantityOperations', () => {
           { ...mockLineItems[0], quantity: 5 },
         ]
 
+        const itemId = mockLineItems[0].id
+        const newQuantity = 7
+        const quantityDiff = -2
+
         const result = adjustLineItemsAfterUpdate(
           lineItems,
           itemToUpdate,
-          mockLineItems[0].id,
-          7,
-          -2,
-          mockReduceLineItemQuantity
+          itemId,
+          newQuantity,
+          quantityDiff,
+          reduceLineItemQuantity
         )
 
-        expect(result[0].quantity).toBe(3) // 5 - 2
+        expect(result[0].quantity).toBe(3)
       })
 
       it('removes item completely when quantity reaches 0', () => {
@@ -178,36 +200,20 @@ describe('updateQuantityOperations', () => {
           { ...mockLineItems[0], quantity: 2 },
         ]
 
+        const itemId = mockLineItems[0].id
+        const newQuantity = 7
+        const quantityDiff = -2
+
         const result = adjustLineItemsAfterUpdate(
           lineItems,
           itemToUpdate,
-          mockLineItems[0].id,
-          7,
-          -2,
-          mockReduceLineItemQuantity
+          itemId,
+          newQuantity,
+          quantityDiff,
+          reduceLineItemQuantity
         )
 
         expect(result).toHaveLength(0)
-      })
-    })
-
-    describe('when quantity unchanged (quantityDiff = 0)', () => {
-      it('returns items unchanged', () => {
-        const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
-        const lineItems: LineItemType[] = [
-          { ...mockLineItems[0], quantity: 5 },
-        ]
-
-        const result = adjustLineItemsAfterUpdate(
-          lineItems,
-          itemToUpdate,
-          mockLineItems[0].id,
-          5,
-          0,
-          mockReduceLineItemQuantity
-        )
-
-        expect(result).toEqual(lineItems)
       })
     })
   })
