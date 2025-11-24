@@ -36,17 +36,22 @@ export const NumberSpinner: FC<NumberSpinnerProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (disabled) return
-    const inputValue = e.target.value
+    const inputValue = e.target.value.trim()
+
     if (inputValue === '') {
       onChange?.(min)
       return
     }
-
-    const numValue = parseInt(inputValue, 10)
-    if (!isNaN(numValue)) {
-      const clampedValue = Math.min(Math.max(numValue, min), max)
-      onChange?.(clampedValue)
+    if (!/^-?\d+$/.test(inputValue)) {
+      return
     }
+    const numValue = Number(inputValue)
+    if (!Number.isFinite(numValue) || !Number.isSafeInteger(numValue)) {
+      return
+    }
+
+    const clampedValue = Math.min(Math.max(numValue, min), max)
+    onChange?.(clampedValue)
   }
 
   return (
