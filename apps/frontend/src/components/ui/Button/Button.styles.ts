@@ -28,7 +28,7 @@ export const StyledButton = styled(MuiButton) <StyledButtonProps>`
     box-shadow: var(--shadow-sm);
 
     &:hover:not(:disabled) {
-      background-color: var(--button-primary-bg-hover);
+      background-color: opacity-50;
       box-shadow: var(--shadow-md);
     }
 
