@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { useCallback, type ReactNode } from 'react'
 
 import { ScrollArea } from 'components/ui/ScrollArea'
 import { useApp } from 'hooks/useApp'
@@ -15,10 +15,10 @@ export const UnpackedSection = (): ReactNode => {
 
   const selectedPackageId = selectedPackageData?.id ?? 0
 
-  const handlePack = (item: LineItemType, q: AddToPackageButton): void => {
+  const handlePack = useCallback((item: LineItemType, q: AddToPackageButton): void => {
     const quantity = q === 'one' ? 1 : item.quantity
     packProduct(item, selectedPackageId, quantity)
-  }
+  }, [packProduct, selectedPackageId])
 
   return (
     <UnpackedSectionContainer>
