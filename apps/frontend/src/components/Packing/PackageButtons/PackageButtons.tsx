@@ -27,7 +27,7 @@ export const PackageButtons: FC<Props> = ({ add, remove, disabledRemove = false 
         <span>
           <IconButton
             onClick={remove}
-            aria-label="Remove package"
+            aria-label="Delete package"
             disabled={disabledRemove}
           >
             <Trash2 size={20} />

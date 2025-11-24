@@ -63,7 +63,7 @@ export const Barcode = () => {
           placeholder="Scan barcode or enter SKU"
         />
         {errors.barcode && (
-          <span className="text-error">{errors.barcode.message}</span>
+          <span>{errors.barcode.message}</span>
         )}
       </div>
       <Button

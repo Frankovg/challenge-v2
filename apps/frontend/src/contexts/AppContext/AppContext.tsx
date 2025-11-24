@@ -215,8 +215,9 @@ export const LineItemsProvider = ({
 
 
   const resetDemo = useCallback((items: LineItemType[]) => {
-    setPackages(INITIAL_PACKAGE)
     setLineItems(items)
+    setSelectedPackageIndex(0)
+    setPackages(INITIAL_PACKAGE)
   }, [])
 
 
