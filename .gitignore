@@ -1,1 +1,15 @@
 node_modules
+
+# TypeScript
+*.tsbuildinfo
+
+# Next.js
+.next/
+out/
+
+# Testing
+coverage/
+
+# Build
+dist/
+build/
