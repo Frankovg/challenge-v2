@@ -58,24 +58,6 @@ describe('updateQuantityOperations', () => {
   })
 
   describe('adjustLineItemsAfterUpdate', () => {
-    // const mockReduceLineItemQuantity = (
-    //   items: LineItemType[],
-    //   itemId: number,
-    //   quantity: number
-    // ): LineItemType[] => {
-    //   return items.reduce<LineItemType[]>((acc, item) => {
-    //     if (item.id !== itemId) {
-    //       acc.push(item)
-    //       return acc
-    //     }
-    //     const remainingQuantity = item.quantity - quantity
-    //     if (remainingQuantity > 0) {
-    //       acc.push({ ...item, quantity: remainingQuantity })
-    //     }
-    //     return acc
-    //   }, [])
-    // }
-
     describe('when item is completely removed (newQuantity = 0)', () => {
       it('returns all items to unpacked products list when existing item found', () => {
         const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
