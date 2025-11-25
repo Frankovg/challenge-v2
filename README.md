@@ -1,91 +1,158 @@
-# ShipHero Packing System
+<div align="center">
 
-A product packing system built with **Next.js 15** (App Router), **TypeScript**, **Apollo Client**, and **Styled Components**.
+# 📦 Packing System
 
----
+### A modern warehouse packing solution built for speed and efficiency
 
-## Core Features
+<br />
 
-- [x] Split view: unpacked items (left) / packed items (right)
-- [x] Create and remove packages
-- [x] Pack items by clicking
-- [x] Pack items via barcode scan
-- [x] Modify packed quantities (add/remove)
-- [x] Ship button when all items packed
-- [x] Submit packages via GraphQL mutation
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![GraphQL](https://img.shields.io/badge/GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
+![Testing](https://img.shields.io/badge/Coverage-86.7%25-success?style=for-the-badge)
 
----
+<br />
 
-## Extra Features
+[Features](#-features) · [Quick Start](#-quick-start) · [Architecture](#-architecture) · [Testing](#-testing) · [Roadmap](#-roadmap)
 
-- Dark/Light theme with persistence
-- Clean, modern UI design
-- Tooltips and toast notifications
-- Pack one item or entire stock at once
-- Always displays at least one empty package
-- Confirmation modals for critical actions
-- Barcode input validation
-- **86.7% test coverage**
-- Strong TypeScript throughout
-- Well-organized component architecture
+</div>
+
+<br />
 
 ---
 
-## Commands
+<br />
 
-```bash
-# Install dependencies
-yarn install
+## About
 
-# Run both API and frontend
-yarn dev
+This project is a **Frontend Developer Challenge** submission. It demonstrates proficiency in modern React development, state management, API integration, and UI/UX design principles.
 
-# Run only the API (from ./apps/api)
-yarn dev
+The application simulates a warehouse packing workflow where operators can efficiently pack products into packages using click interactions or barcode scanning.
 
-# Run only the frontend (from ./apps/frontend)
-yarn dev
+<br />
 
-# Build for production (from ./apps/frontend)
-yarn build
+## ✨ Features
 
-# Run tests with coverage
-yarn test
+### Core Functionality
 
-# Run ESLint
-yarn lint
+| Feature                  | Description                                              |
+| ------------------------ | -------------------------------------------------------- |
+| **Split View Interface** | Unpacked items on the left, packed packages on the right |
+| **Package Management**   | Create, modify, and remove packages dynamically          |
+| **Click-to-Pack**        | Intuitive one-click packing experience                   |
+| **Barcode Scanner**      | Real-time barcode input with validation                  |
+| **Quantity Control**     | Granular control over packed item quantities             |
+| **Ship & Submit**        | GraphQL mutation to finalize and ship packages           |
+
+### Extra Mile
+
+| Feature                 | Why It Matters                               |
+| ----------------------- | -------------------------------------------- |
+| **Dark/Light Theme**    | Persisted preference with `next-themes`      |
+| **Toast Notifications** | User feedback notifications                  |
+| **Confirmation Modals** | Prevents accidental actions                  |
+| **Bulk Actions**        | Pack entire stock with one click             |
+| **Empty Package State** | Always shows at least one package ready      |
+| **Type Safety**         | Strict TypeScript across the entire codebase |
+
+<br />
+
+## 🛠 Tech Stack
+
+```
+Frontend        Next.js 15 · React 19 · TypeScript · Styled Components
+State           React Context + Custom Hooks
+Data Layer      Apollo Client · GraphQL
+UI Components   MUI · Lucide Icons · Base UI
+Forms           React Hook Form · Zod validation
+Testing         Jest · React Testing Library
 ```
 
+<br />
+
+## 🚀 Quick Start
+
+```bash
+# 1. Install dependencies
+yarn install
+
+# 2. Start development (API + Frontend)
+yarn dev
+
+# App runs at http://localhost:3000
+```
+
+### Available Scripts
+
+| Command      | Description                                     |
+| ------------ | ----------------------------------------------- |
+| `yarn dev`   | Start both API and frontend in development mode |
+| `yarn build` | Create production build                         |
+| `yarn test`  | Run test suite with coverage report             |
+| `yarn lint`  | Run ESLint across the codebase                  |
+
+<br />
+
+## 📐 Architecture
+
+```
+apps/
+├── api/                 # GraphQL API server
+└── frontend/
+    └── src/
+        ├── app/         # Next.js App Router pages
+        ├── assets/      # Static assets
+        ├── components/  # Reusable UI components
+        ├── contexts/    # React Context providers
+        ├── hooks/       # Custom hooks
+        ├── lib/         # Apollo client & utilities
+        ├── types/       # TypeScript definitions
+        └── utils/       # Helper functions
+```
+
+<br />
+
+## 🧪 Testing
+
+The project maintains **86.7% test coverage** with a focus on:
+
+- Component rendering and interactions
+- User workflows (pack, unpack, ship)
+- Edge cases and error states
+
+```bash
+yarn test
+```
+
+<br />
+
+## 🗺 Recommended Improvements
+
+| Priority | Enhancement                 | Rationale                                           |
+| -------- | --------------------------- | --------------------------------------------------- |
+| High     | **Tailwind CSS Migration**  | Better SSR performance, smaller bundle              |
+| High     | **React Query Integration** | Caching, optimistic updates, stale-while-revalidate |
+| Medium   | **Responsive Design**       | Tablet and mobile support                           |
+| Medium   | **Zustand for State**       | Reduce re-renders at scale                          |
+| Low      | **Product Search**          | MeiliSearch integration for large catalogs          |
+| Low      | **Database Persistence**    | Store packages via GraphQL schema                   |
+
+<br />
+
 ---
 
-## Future Improvements
+<br />
 
-| Area              | Recommendation                                                                  |
-| ----------------- | ------------------------------------------------------------------------------- |
-| **Styling**       | Replace Styled Components with Tailwind CSS for better SSR performance          |
-| **Data Fetching** | Add React Query for caching and optimized SSR                                   |
-| **Responsive**    | Add tablet and mobile layouts                                                   |
-| **Backend**       | Store packages in database via GraphQL schema                                   |
-| **State**         | Use Zustand or Jotai to reduce re-renders (React Context can be heavy at scale) |
-| **Search**        | Add product search/filters with MeiliSearch                                     |
+<div align="center">
 
----
+### Built by Franco Amoroso
 
-## Tech Stack
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/francoamoroso/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://www.franamoroso.com/)
 
-- Next.js 15 (App Router)
-- React 19
-- TypeScript 5.9
-- Apollo Client 3
-- Styled Components 6
-- Jest + React Testing Library
+<br />
 
----
+_Thank you for taking the time to review this project!_
 
-Thanks for reviewing this project!
-
-_Franco Amoroso_
-
-[Franco Amoroso](https://www.linkedin.com/in/francoamoroso/)
-
-[Web Portfolio](https://www.franamoroso.com/)
+</div>
