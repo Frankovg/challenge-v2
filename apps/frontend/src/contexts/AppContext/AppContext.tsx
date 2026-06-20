@@ -133,26 +133,17 @@ export const LineItemsProvider = ({
       return
     }
 
-    let itemToUpdate: LineItemType | null = null
-    let quantityDiff = 0
+    const targetPackage = packages.find(pkg => pkg.data.id === packageId)
+    const itemToUpdate = targetPackage?.data.line_items.find(li => li.id === itemId)
+    if (!itemToUpdate) return
 
-    setPackages(prev => {
-      const pkg = prev.find(p => p.data.id === packageId)
-      if (!pkg) return prev
+    const quantityDiff = itemToUpdate.quantity - newQuantity
 
-      const item = pkg.data.line_items.find(li => li.id === itemId)
-      if (!item) return prev
-
-      itemToUpdate = item
-      quantityDiff = item.quantity - newQuantity
-
-      return updatePackageItemQuantity(prev, packageId, itemId, newQuantity)
-    })
-
+    setPackages(prev => updatePackageItemQuantity(prev, packageId, itemId, newQuantity))
     setLineItems(prevItems =>
       adjustLineItemsAfterUpdate(
         prevItems,
-        itemToUpdate!,
+        itemToUpdate,
         itemId,
         newQuantity,
         quantityDiff,
@@ -167,7 +158,7 @@ export const LineItemsProvider = ({
         type: "success",
       })
     }
-  }, [addToast])
+  }, [packages, addToast])
 
 
   const shipPackages = useCallback(async (items: PackedPackage[], ready: boolean) => {

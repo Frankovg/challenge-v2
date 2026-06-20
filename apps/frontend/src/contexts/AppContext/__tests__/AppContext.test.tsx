@@ -193,4 +193,56 @@ describe('AppContext', () => {
       expect(result.current.packages[0].data.line_items).toHaveLength(0)
     })
   })
+
+  describe('updateItemQuantity', () => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <LineItemsProvider initialLineItems={mockLineItems}>
+        {children}
+      </LineItemsProvider>
+    )
+
+    it('returns the difference to the unpacked list when a packed quantity is reduced', () => {
+      const { result } = renderHook(() => useApp(), { wrapper })
+
+      act(() => {
+        result.current.packProduct(mockLineItems[0], 0, 2)
+      })
+
+      // id 1 is fully packed, so only id 2 remains unpacked
+      expect(result.current.lineItems.find((li) => li.id === 1)).toBeUndefined()
+
+      act(() => {
+        result.current.updateItemQuantity(0, 1, 1)
+      })
+
+      expect(result.current.packages[0].data.line_items[0].quantity).toBe(1)
+      expect(result.current.lineItems.find((li) => li.id === 1)?.quantity).toBe(1)
+    })
+
+    it('unpacks the item and restores its full quantity when set to 0', () => {
+      const { result } = renderHook(() => useApp(), { wrapper })
+
+      act(() => {
+        result.current.packProduct(mockLineItems[0], 0, 2)
+      })
+
+      act(() => {
+        result.current.updateItemQuantity(0, 1, 0)
+      })
+
+      expect(result.current.packages[0].data.line_items).toHaveLength(0)
+      expect(result.current.lineItems.find((li) => li.id === 1)?.quantity).toBe(2)
+    })
+
+    it('ignores updates for an item that is not in the package', () => {
+      const { result } = renderHook(() => useApp(), { wrapper })
+
+      act(() => {
+        result.current.updateItemQuantity(0, 999, 1)
+      })
+
+      expect(result.current.packages[0].data.line_items).toHaveLength(0)
+      expect(result.current.lineItems).toHaveLength(2)
+    })
+  })
 })
