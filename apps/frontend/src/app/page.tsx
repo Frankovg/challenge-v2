@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 
-import { Packing } from 'components/Packing'
+import { Packing } from 'components/Packing/Packing'
 import { LineItemsProvider } from 'contexts/AppContext'
 import { LINE_ITEMS_QUERY } from 'hooks/useLineItemsQuery'
 import { APOLLO_CLIENT } from 'lib/apolloClient'

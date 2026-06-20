@@ -1,0 +1,27 @@
+import { FC } from 'react'
+import { styled } from 'styled-components'
+
+const SectionTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding-bottom: var(--spacing-md);
+  p {
+    font-size: var(--font-size-sm);
+  }
+`
+
+type Props = {
+  title: string
+  subtitle?: string
+}
+
+export const SectionTitle: FC<Props> = (props) => {
+  const { title, subtitle } = props
+  return (
+    <SectionTitleContainer>
+      <h4>{title}</h4>
+      {subtitle && <p>{subtitle}</p>}
+    </SectionTitleContainer>
+  )
+}
