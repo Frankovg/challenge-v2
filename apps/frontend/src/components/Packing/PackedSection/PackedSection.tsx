@@ -3,18 +3,18 @@
 import { useState } from 'react';
 
 import { Dialog } from 'components/ui/Dialog';
+import { Box } from 'components/ui/icons';
 import { ScrollArea } from 'components/ui/ScrollArea';
 import { Tabs } from "components/ui/Tabs";
 import { useApp } from "hooks/useApp";
 
 import { ConfirmationModal } from '../ConfirmationModal';
-import { EmptyPackage } from '../EmptyPackage';
 import { PackageContent } from "../PackageContent"
 import { PackedItem } from '../PackedItem';
 import { PackedSectionHeader } from '../PackedSectionHeader';
 
 import { MODAL_DICTIONARY } from './const';
-import { PackedSectionContainer } from "./PackedSection.styles"
+import { EmptyState, PackedSectionContainer } from "./PackedSection.styles"
 
 import type { PackedPackage } from 'types';
 
@@ -114,7 +114,11 @@ export const PackedSection = () => {
             ))}
           </ScrollArea>
         ) : (
-          <EmptyPackage />
+          <EmptyState>
+            <Box size={64} strokeWidth={1.25} />
+            <h5>Package is Empty</h5>
+            <p>Select products from the left to add them here.</p>
+          </EmptyState>
         )}
       </PackageContent>
 
