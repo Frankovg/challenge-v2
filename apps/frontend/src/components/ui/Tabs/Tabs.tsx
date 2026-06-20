@@ -1,17 +1,10 @@
 'use client'
 
-import { type FC, type JSXElementConstructor, type ReactElement } from 'react'
+import { type FC } from 'react'
 
 import { StyledTab, StyledTabs, TabLabel } from './Tabs.styles'
 
 import type { PackedItem } from 'types'
-
-export type TabItem = {
-  label: string
-  value: string | number
-  icon?: string | ReactElement<unknown, string | JSXElementConstructor<unknown>>
-  disabled?: boolean
-}
 
 type Props = {
   tabs: PackedItem[]

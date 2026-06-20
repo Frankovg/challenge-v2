@@ -1,7 +1,5 @@
 import { type ApolloError } from '@apollo/client'
 
-import { type TabItem } from "components/ui/Tabs"
-
 export type LineItemType = {
   id: number
   quantity: number
@@ -39,10 +37,12 @@ export type UseLineItemsQueryType = {
   loading: boolean
 }
 
-export interface PackedItem extends Omit<TabItem, 'value'> {
+export type PackedItem = {
   value: number
+  label: string
+  disabled?: boolean
   data: {
-    id: number,
+    id: number
     line_items: LineItemType[]
   }
 }
