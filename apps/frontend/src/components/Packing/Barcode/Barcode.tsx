@@ -1,56 +1,56 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { type FormEvent, useState } from 'react'
 
 import { Button } from 'components/ui/Button'
 import { ScanBarcode } from 'components/ui/icons'
 import { Input } from 'components/ui/Input'
 import { useApp } from 'hooks/useApp'
-import { barcodeSchema, type TBarcode } from 'lib/validations'
+import { validateBarcode } from 'lib/validations'
 import { getProductByCode } from 'utils/getProductByCode'
 
 import { BarcodeForm } from './Barcode.styles'
 
 export const Barcode = () => {
   const { lineItems, selectedPackageData, packProduct } = useApp()
+  const [barcode, setBarcode] = useState('')
+  const [error, setError] = useState<string | null>(null)
 
   const selectedPackageId = selectedPackageData?.id ?? 0
 
-  const {
-    trigger,
-    register,
-    formState: { errors },
-    reset,
-    handleSubmit,
-  } = useForm<TBarcode>({
-    resolver: zodResolver(barcodeSchema),
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-  })
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
 
-  const onSubmit = async ({ barcode }: TBarcode) => {
-    if (!barcode) return
+    const value = barcode.trim()
+    if (!value) return
 
-    const isValid = await trigger('barcode')
-    if (!isValid) return
+    const validationError = validateBarcode(value)
+    if (validationError) {
+      setError(validationError)
+      return
+    }
 
-    const product = getProductByCode(lineItems, barcode)
+    const product = getProductByCode(lineItems, value)
     packProduct(product, selectedPackageId, 1)
-    reset()
+    setBarcode('')
+    setError(null)
   }
 
   return (
-    <BarcodeForm onSubmit={handleSubmit(onSubmit)}>
+    <BarcodeForm onSubmit={handleSubmit}>
       <div className="input-container">
         <Input
           id="barcode"
           startAdornment={<ScanBarcode size={16} />}
           placeholder="Scan barcode or enter SKU"
-          error={!!errors.barcode}
-          {...register('barcode')}
+          error={!!error}
+          value={barcode}
+          onChange={(event) => {
+            setBarcode(event.target.value)
+            if (error) setError(null)
+          }}
         />
-        {errors.barcode && <span>{errors.barcode.message}</span>}
+        {error && <span>{error}</span>}
       </div>
       <Button type="submit" variant="outlined">
         Search
