@@ -1,42 +1,55 @@
 'use client'
 
-import Modal from '@mui/material/Modal'
-import { type FC, type ReactNode } from 'react'
+import { type FC, type ReactNode, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 
-import { ModalBackdrop, DialogContent } from './Dialog.styles'
+import { DialogContent, Overlay } from './Dialog.styles'
 
-type ModalProps = {
+type Props = {
   open: boolean
   onClose: () => void
   children: ReactNode
   ariaLabelledBy?: string
   ariaDescribedBy?: string
-  keepMounted?: boolean
 }
 
-export const Dialog: FC<ModalProps> = ({
+export const Dialog: FC<Props> = ({
   open,
   onClose,
   children,
   ariaLabelledBy,
   ariaDescribedBy,
-  keepMounted = false,
 }) => {
-  return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      aria-labelledby={ariaLabelledBy}
-      aria-describedby={ariaDescribedBy}
-      keepMounted={keepMounted}
-      slots={{
-        backdrop: ModalBackdrop,
-      }}
-      sx={{
-        zIndex: 'var(--z-modal)',
+  useEffect(() => {
+    if (!open) return
+
+    const handleKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape') onClose()
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [open, onClose])
+
+  if (!open) return null
+
+  return createPortal(
+    <Overlay
+      data-testid="dialog-overlay"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose()
       }}
     >
-      <DialogContent tabIndex={-1}>{children}</DialogContent>
-    </Modal>
+      <DialogContent
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        tabIndex={-1}
+      >
+        {children}
+      </DialogContent>
+    </Overlay>,
+    document.body
   )
 }

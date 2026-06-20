@@ -1,10 +1,9 @@
-import { Toast as MuiToast } from "@base-ui-components/react/toast";
 import { Readex_Pro as FontSans } from "next/font/google";
 import { ThemeProvider } from 'next-themes'
 import React, { type ReactNode } from 'react'
 
 import { Layout } from 'components/Layout'
-import { Toast } from "components/ui/Toast";
+import { Toast, ToastProvider } from "components/ui/Toast";
 import StyledComponentsRegistry from 'lib/StyledComponentsRegistry'
 
 import { ApolloWrapper } from './ApolloWrapper'
@@ -30,10 +29,10 @@ export default function RootLayout({ children }: { children: ReactNode }): React
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <StyledComponentsRegistry>
             <ApolloWrapper>
-              <MuiToast.Provider>
+              <ToastProvider>
                 <Layout>{children}</Layout>
                 <Toast />
-              </MuiToast.Provider>
+              </ToastProvider>
             </ApolloWrapper>
           </StyledComponentsRegistry>
         </ThemeProvider>

@@ -1,11 +1,10 @@
 'use client'
 
-import { FC, JSXElementConstructor, ReactElement, SyntheticEvent } from 'react'
+import { type FC, type JSXElementConstructor, type ReactElement } from 'react'
 
 import { StyledTab, StyledTabs, TabLabel } from './Tabs.styles'
 
 import type { PackedItem } from 'types'
-
 
 export type TabItem = {
   label: string
@@ -19,11 +18,7 @@ type Props = {
   value: string | number
   onChange: (value: number) => void
   'aria-label'?: string
-  orientation?: 'horizontal' | 'vertical'
-  centered?: boolean
   variant?: 'standard' | 'scrollable' | 'fullWidth'
-  indicatorColor?: 'primary' | 'secondary'
-  textColor?: 'primary' | 'secondary' | 'inherit'
 }
 
 export const Tabs: FC<Props> = ({
@@ -31,42 +26,29 @@ export const Tabs: FC<Props> = ({
   value,
   onChange,
   'aria-label': ariaLabel,
-  orientation = 'horizontal',
-  centered = false,
   variant = 'standard',
-  indicatorColor = 'primary',
-  textColor = 'inherit',
 }) => {
-
-  const handleChange = (_event: SyntheticEvent, newValue: number): void => {
-    onChange(newValue)
-  }
-
   return (
-    <StyledTabs
-      value={value}
-      onChange={handleChange}
-      aria-label={ariaLabel}
-      orientation={orientation}
-      centered={centered}
-      variant={variant}
-      indicatorColor={indicatorColor}
-      textColor={textColor}
-    >
+    <StyledTabs role="tablist" aria-label={ariaLabel} $scrollable={variant === 'scrollable'}>
       {tabs.map((tab) => {
         const quantityProducts = tab.data.line_items.length
+        const selected = value === tab.value
+
         return (
           <StyledTab
             key={tab.value}
-            label={(
-              <TabLabel $isEmpty={quantityProducts === 0}>
-                {tab.label}
-                <span>{quantityProducts}</span>
-              </TabLabel>
-            )}
-            value={tab.value}
+            type="button"
+            role="tab"
+            aria-selected={selected}
+            $selected={selected}
             disabled={tab.disabled}
-          />
+            onClick={() => onChange(Number(tab.value))}
+          >
+            <TabLabel $isEmpty={quantityProducts === 0}>
+              {tab.label}
+              <span>{quantityProducts}</span>
+            </TabLabel>
+          </StyledTab>
         )
       })}
     </StyledTabs>

@@ -1,153 +1,112 @@
-import MuiButton from '@mui/material/Button'
-import { styled } from 'styled-components'
+import { css, styled } from 'styled-components'
 
 type StyledButtonProps = {
-  $customVariant?: 'primary' | 'secondary' | 'outlined' | 'text'
+  $variant: 'primary' | 'secondary' | 'outlined' | 'text'
+  $color: 'default' | 'success' | 'warning' | 'error'
 }
 
-export const StyledButton = styled(MuiButton) <StyledButtonProps>`
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-normal);
-  text-transform: none;
-  border-radius: var(--radius-md);
-  padding: var(--spacing-sm) var(--spacing-md);
-  transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
-
-  ${(props) =>
-    props.$customVariant === 'primary' &&
-    `
+const VARIANTS = {
+  primary: css`
     background-color: var(--button-primary-bg);
     color: var(--button-primary-text);
-    border: none;
-    box-shadow: var(--shadow-sm);
+    border: 1px solid transparent;
 
     &:hover:not(:disabled) {
-      background-color: opacity-50;
+      background-color: var(--button-primary-bg-hover);
       box-shadow: var(--shadow-md);
     }
-
     &:active:not(:disabled) {
       background-color: var(--button-primary-bg-active);
-      transform: translateY(0);
-      box-shadow: var(--shadow-sm);
     }
-
-    &.Mui-disabled {
-      background-color: var(--button-secondary-bg) !important;
-      color: var(--text-disabled) !important;
-      cursor: not-allowed !important;
-    }
-  `}
-
-  ${(props) =>
-    props.$customVariant === 'secondary' &&
-    `
+  `,
+  secondary: css`
     background-color: var(--button-secondary-bg);
     color: var(--button-secondary-text);
     border: 1px solid var(--border-primary);
-    box-shadow: var(--shadow-sm);
 
     &:hover:not(:disabled) {
       background-color: var(--button-secondary-bg-hover);
       border-color: var(--border-focus);
-      box-shadow: var(--shadow-md);
     }
-
     &:active:not(:disabled) {
       background-color: var(--button-secondary-bg-active);
-      transform: translateY(0);
-      box-shadow: var(--shadow-sm);
     }
-
-    &.Mui-disabled {
-      background-color: var(--bg-disabled) !important;
-      color: var(--text-disabled) !important;
-      border-color: var(--border-primary) !important;
-      cursor: not-allowed !important;
-      opacity: 0.6 !important;
-    }
-  `}
-
-  ${(props) =>
-    props.$customVariant === 'outlined' &&
-    `
-    background-color: transparent !important;
-    color: var(--text-primary) !important;
-    border: 1px solid var(--border-primary) !important;
+  `,
+  outlined: css`
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
 
     &:hover:not(:disabled) {
       background-color: var(--bg-hover);
       border-color: var(--border-focus);
-      box-shadow: var(--shadow-sm);
     }
-
     &:active:not(:disabled) {
       background-color: var(--bg-active);
     }
-
-    &.Mui-disabled {
-      background-color: transparent !important;
-      color: var(--text-disabled) !important;
-      border-color: var(--border-primary) !important;
-      cursor: not-allowed !important;
-      opacity: 0.6 !important;
-    }
-  `}
-
-  ${(props) =>
-    props.$customVariant === 'text' &&
-    `
+  `,
+  text: css`
     background-color: transparent;
     color: var(--text-link);
-    border: none;
+    border: 1px solid transparent;
 
     &:hover:not(:disabled) {
       background-color: var(--bg-hover);
       color: var(--text-link-hover);
     }
+  `,
+}
 
-    &:active:not(:disabled) {
-      background-color: var(--bg-active);
+const COLORS = {
+  default: css``,
+  success: css`
+    background-color: var(--color-green-500);
+    color: var(--color-white);
+    border-color: var(--color-green-500);
+    &:hover:not(:disabled) {
+      background-color: var(--color-green-700);
     }
-
-    &.Mui-disabled {
-      background-color: transparent !important;
-      color: var(--text-disabled) !important;
-      cursor: not-allowed !important;
-      opacity: 0.6 !important;
+  `,
+  warning: css`
+    background-color: var(--color-orange-500);
+    color: var(--color-white);
+    border-color: var(--color-orange-500);
+    &:hover:not(:disabled) {
+      background-color: var(--color-orange-700);
     }
-  `}
+  `,
+  error: css`
+    background-color: var(--color-red-500);
+    color: var(--color-white);
+    border-color: var(--color-red-500);
+    &:hover:not(:disabled) {
+      background-color: var(--color-red-700);
+    }
+  `,
+}
 
-  &:focus-visible {
-    outline: 2px solid var(--border-focus);
-    outline-offset: 2px;
-  }
+export const StyledButton = styled.button<StyledButtonProps>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 
-  &.MuiButton-sizeSmall {
-    font-size: var(--font-size-xs);
-    padding: calc(var(--spacing-xs) + 2px) var(--spacing-sm);
-  }
+  ${({ $variant }) => VARIANTS[$variant]}
+  ${({ $color }) => COLORS[$color]}
 
-  &.MuiButton-sizeLarge {
-    font-size: var(--font-size-base);
-    padding: var(--spacing-md) var(--spacing-lg);
-  }
-
-  &.MuiButton-fullWidth {
-    width: 100%;
-  }
-
-  .MuiButton-startIcon {
-    margin-right: var(--spacing-xs);
-  }
-
-  .MuiButton-endIcon {
-    margin-left: var(--spacing-xs);
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 `

@@ -1,25 +1,29 @@
-import TooltipMUI, { TooltipProps } from "@mui/material/Tooltip"
-import { FC } from "react"
+'use client'
 
-export const Tooltip: FC<TooltipProps> = ({ arrow = true, ...props }) => {
-  const { children } = props
+import { type FC, type ReactElement, type ReactNode, useState } from 'react'
+
+import { TooltipBubble, TooltipWrapper } from './Tooltip.styles'
+
+type Props = {
+  title: ReactNode
+  children: ReactElement
+  placement?: 'top' | 'bottom'
+}
+
+export const Tooltip: FC<Props> = ({ title, children, placement = 'top' }) => {
+  const [open, setOpen] = useState(false)
+
+  const show = (): void => setOpen(true)
+  const hide = (): void => setOpen(false)
+
   return (
-    <TooltipMUI
-      {...props}
-      arrow={arrow}
-      slotProps={{
-        popper: {
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, -5],
-              },
-            },
-          ],
-        },
-      }}>
+    <TooltipWrapper onMouseEnter={show} onMouseLeave={hide} onFocus={show} onBlur={hide}>
       {children}
-    </TooltipMUI>
+      {open && title && (
+        <TooltipBubble role="tooltip" $placement={placement}>
+          {title}
+        </TooltipBubble>
+      )}
+    </TooltipWrapper>
   )
 }

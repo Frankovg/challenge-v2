@@ -1,32 +1,41 @@
 'use client'
 
-import { Toast as MuiToast } from "@base-ui-components/react/toast";
+import { type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 
 import {
-  StyledToastViewport,
-  StyledToastRoot,
+  StyledToastClose,
   StyledToastContent,
-  StyledToastTitle,
   StyledToastDescription,
-  StyledToastClose
+  StyledToastRoot,
+  StyledToastTitle,
+  StyledToastViewport,
 } from './Toast.styles'
+import { useToast } from './ToastContext'
 
-export const Toast = () => {
-  const { toasts } = MuiToast.useToastManager();
+export const Toast = (): ReactNode => {
+  const { toasts, remove } = useToast()
 
-  return (
-    <MuiToast.Portal>
-      <StyledToastViewport>
-        {toasts.map((t) => (
-          <StyledToastRoot key={t.id} toast={t} data-type={t.type || 'info'}>
-            <StyledToastContent>
-              <StyledToastTitle>{t.title}</StyledToastTitle>
-              <StyledToastDescription>{t.description}</StyledToastDescription>
-            </StyledToastContent>
-            <StyledToastClose />
-          </StyledToastRoot>
-        ))}
-      </StyledToastViewport>
-    </MuiToast.Portal>
+  if (typeof document === 'undefined' || toasts.length === 0) return null
+
+  return createPortal(
+    <StyledToastViewport>
+      {toasts.map((toast) => (
+        <StyledToastRoot key={toast.id} role="status" data-type={toast.type ?? 'info'}>
+          <StyledToastContent>
+            {toast.title && <StyledToastTitle>{toast.title}</StyledToastTitle>}
+            {toast.description && (
+              <StyledToastDescription>{toast.description}</StyledToastDescription>
+            )}
+          </StyledToastContent>
+          <StyledToastClose
+            type="button"
+            aria-label="Close notification"
+            onClick={() => remove(toast.id)}
+          />
+        </StyledToastRoot>
+      ))}
+    </StyledToastViewport>,
+    document.body
   )
 }

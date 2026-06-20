@@ -5,12 +5,8 @@ import { LineItemType } from 'types'
 
 import { LineItemsProvider } from '..'
 
-jest.mock('@base-ui-components/react/toast', () => ({
-  Toast: {
-    useToastManager: jest.fn(() => ({
-      add: jest.fn(),
-    })),
-  },
+jest.mock('components/ui/Toast', () => ({
+  useToast: () => ({ add: jest.fn(), remove: jest.fn(), toasts: [] }),
 }))
 
 jest.mock('hooks/usePackItemsMutation', () => ({

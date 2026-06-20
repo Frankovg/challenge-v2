@@ -1,6 +1,5 @@
 'use client'
 
-import { Toast } from "@base-ui-components/react/toast";
 import React, {
   createContext,
   useCallback,
@@ -9,6 +8,7 @@ import React, {
   type ReactNode,
 } from 'react'
 
+import { useToast } from 'components/ui/Toast'
 import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
 import { sleep } from "lib/sleep";
 import { adjustLineItemsAfterUpdate } from 'utils/adjustLineItemsAfterUpdate'
@@ -42,7 +42,7 @@ export const LineItemsProvider = ({
 
   const { packItems, error } = usePackItemsMutation()
 
-  const toastManager = Toast.useToastManager();
+  const { add: addToast } = useToast()
 
   const selectedPackageData = useMemo(() => packages[selectedPackageIndex]?.data, [packages, selectedPackageIndex])
 
@@ -55,7 +55,7 @@ export const LineItemsProvider = ({
 
   const packProduct = useCallback((item: LineItemType | undefined, packageId: number, quantity: number): void => {
     if (!item) {
-      toastManager.add({
+      addToast({
         title: "Product not found",
         description: "Could not find the product.",
         type: "error",
@@ -64,7 +64,7 @@ export const LineItemsProvider = ({
     }
 
     if (quantity <= 0 || quantity > item.quantity) {
-      toastManager.add({
+      addToast({
         title: "Invalid quantity",
         description: "Please enter a valid amount.",
         type: "error",
@@ -75,22 +75,22 @@ export const LineItemsProvider = ({
     setPackages(prev => updatePackagesWithItem(prev, item, packageId, quantity))
     setLineItems(prev => reduceLineItemQuantity(prev, item.id, quantity))
 
-    toastManager.add({
+    addToast({
       title: "Product packed",
       description: `${quantity} product(s) packed successfully.`,
       type: "success",
     })
-  }, [toastManager])
+  }, [addToast])
 
 
   const addPackage = useCallback((): void => {
     setPackages(prev => createPackage(prev))
-    toastManager.add({
+    addToast({
       title: "Package created",
       description: 'New package created successfully.',
       type: "success",
     })
-  }, [toastManager])
+  }, [addToast])
 
 
   const removePackage = useCallback((packageId: number, force = false): void => {
@@ -125,7 +125,7 @@ export const LineItemsProvider = ({
 
   const updateItemQuantity = useCallback((packageId: number, itemId: number, newQuantity: number): void => {
     if (newQuantity < 0) {
-      toastManager.add({
+      addToast({
         title: "Invalid quantity",
         description: "Please enter a valid amount.",
         type: "error",
@@ -161,18 +161,18 @@ export const LineItemsProvider = ({
     )
 
     if (newQuantity === 0) {
-      toastManager.add({
+      addToast({
         title: "Product unpacked",
         description: 'Product unpacked successfully.',
         type: "success",
       })
     }
-  }, [toastManager])
+  }, [addToast])
 
 
   const shipPackages = useCallback(async (items: PackedPackage[], ready: boolean) => {
     if (!ready) {
-      toastManager.add({
+      addToast({
         title: 'Shipping Error',
         description: 'Complete or remove empty packages.',
         type: 'error',
@@ -193,7 +193,7 @@ export const LineItemsProvider = ({
 
       if (process.env.NODE_ENV === 'development') console.log("Packed: ", result)
 
-      toastManager.add({
+      addToast({
         title: "Shipment created successfully",
         description: `${items.length} package(s) ready to ship.`,
         type: "success",
@@ -204,7 +204,7 @@ export const LineItemsProvider = ({
         console.error(error)
       }
 
-      toastManager.add({
+      addToast({
         title: 'Shipping Error',
         description: 'Unable to process shipping.',
         type: 'error',
@@ -212,7 +212,7 @@ export const LineItemsProvider = ({
     } finally {
       setLoading(false)
     }
-  }, [toastManager, packItems, error])
+  }, [addToast, packItems, error])
 
 
   const resetDemo = useCallback((items: LineItemType[]) => {

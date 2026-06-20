@@ -1,11 +1,11 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 
 import { Dialog } from '../Dialog'
 
 describe('Dialog', () => {
   it('renders children when open', () => {
     render(
-      <Dialog open onClose={() => { }}>
+      <Dialog open onClose={() => {}}>
         <div>Test Content</div>
       </Dialog>
     )
@@ -15,7 +15,7 @@ describe('Dialog', () => {
 
   it('does not render children when closed', () => {
     render(
-      <Dialog open={false} onClose={() => { }}>
+      <Dialog open={false} onClose={() => {}}>
         <div>Test Content</div>
       </Dialog>
     )
@@ -23,7 +23,7 @@ describe('Dialog', () => {
     expect(screen.queryByText('Test Content')).not.toBeInTheDocument()
   })
 
-  it('calls onClose when backdrop is clicked', async () => {
+  it('calls onClose when the overlay is clicked', () => {
     const handleClose = jest.fn()
     render(
       <Dialog open onClose={handleClose}>
@@ -31,16 +31,12 @@ describe('Dialog', () => {
       </Dialog>
     )
 
-    const backdrop = document.querySelector('[class*="MuiBackdrop"]')
-    if (backdrop) {
-      fireEvent.click(backdrop)
-      await waitFor(() => {
-        expect(handleClose).toHaveBeenCalled()
-      })
-    }
+    fireEvent.mouseDown(screen.getByTestId('dialog-overlay'))
+
+    expect(handleClose).toHaveBeenCalledTimes(1)
   })
 
-  it('calls onClose when Escape key is pressed', async () => {
+  it('does not call onClose when the content is clicked', () => {
     const handleClose = jest.fn()
     render(
       <Dialog open onClose={handleClose}>
@@ -48,15 +44,21 @@ describe('Dialog', () => {
       </Dialog>
     )
 
-    const modal = document.querySelector('[role="presentation"]')
-    if (modal) {
-      fireEvent.keyDown(modal, { key: 'Escape', code: 'Escape' })
+    fireEvent.mouseDown(screen.getByText('Test Content'))
 
-      await waitFor(() => {
-        expect(handleClose).toHaveBeenCalled()
-      })
-    } else {
-      throw new Error('Dialog not found')
-    }
+    expect(handleClose).not.toHaveBeenCalled()
+  })
+
+  it('calls onClose when Escape is pressed', () => {
+    const handleClose = jest.fn()
+    render(
+      <Dialog open onClose={handleClose}>
+        <div>Test Content</div>
+      </Dialog>
+    )
+
+    fireEvent.keyDown(document, { key: 'Escape' })
+
+    expect(handleClose).toHaveBeenCalledTimes(1)
   })
 })

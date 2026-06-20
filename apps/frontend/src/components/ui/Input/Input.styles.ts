@@ -1,119 +1,65 @@
+import { styled } from 'styled-components'
 
-import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
+export const InputContainer = styled.label`
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  width: 100%;
+`
 
-export const CssTextField = styled(TextField)({
-  width: '100%',
+export const LabelText = styled.span`
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+`
 
-  '& .MuiOutlinedInput-root': {
-    backgroundColor: 'var(--input-bg)',
-    borderRadius: 'var(--radius-sm)',
-    transition: 'all var(--transition-base)',
-    fontFamily: 'var(--font-family-base)',
-    fontSize: 'var(--font-size-sm)',
+export const Field = styled.div<{ $hasError?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 100%;
+  background-color: var(--input-bg);
+  border: 1px solid
+    ${({ $hasError }) => ($hasError ? 'var(--border-error)' : 'var(--input-border)')};
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  transition: border-color var(--transition-base);
 
-    '& fieldset': {
-      borderColor: 'var(--input-border)',
-      borderWidth: '1px',
-      transition: 'border-color var(--transition-base)',
-    },
+  &:hover {
+    border-color: ${({ $hasError }) =>
+      $hasError ? 'var(--border-error)' : 'var(--input-border-hover)'};
+  }
 
-    '&:hover fieldset': {
-      borderColor: 'var(--input-border-hover)',
-    },
+  &:focus-within {
+    border-color: ${({ $hasError }) =>
+      $hasError ? 'var(--border-error)' : 'var(--input-border-focus)'};
+  }
 
-    '&.Mui-focused fieldset': {
-      borderColor: 'var(--input-border-focus)',
-      borderWidth: '2px',
-    },
+  .adornment {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-secondary);
+  }
 
-    '&.Mui-error fieldset': {
-      borderColor: 'var(--border-error)',
-    },
+  input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--input-text);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
 
-    '&.Mui-disabled': {
-      backgroundColor: 'var(--bg-disabled)',
-      '& fieldset': {
-        borderColor: 'var(--border-secondary)',
-      },
-    },
-  },
+    &::placeholder {
+      color: var(--input-placeholder);
+      opacity: 1;
+    }
 
-  '& .MuiInputBase-input': {
-    color: 'var(--input-text)',
-    padding: 'var(--spacing-sm) var(--spacing-md)',
-    height: 'auto',
-
-    '&::placeholder': {
-      color: 'var(--input-placeholder)',
-      opacity: 1,
-    },
-
-    '&.Mui-disabled': {
-      color: 'var(--text-disabled)',
-      WebkitTextFillColor: 'var(--text-disabled)',
-    },
-  },
-
-  '& .MuiInputLabel-root': {
-    color: 'var(--text-secondary)',
-    fontSize: 'var(--font-size-sm)',
-    fontWeight: 'var(--font-weight-medium)',
-
-    '&.Mui-focused': {
-      color: 'var(--input-border-focus)',
-    },
-
-    '&.Mui-error': {
-      color: 'var(--border-error)',
-    },
-
-    '&.Mui-disabled': {
-      color: 'var(--text-disabled)',
-    },
-  },
-
-  '& .MuiFormHelperText-root': {
-    fontSize: 'var(--font-size-xs)',
-    marginTop: 'var(--spacing-xs)',
-    color: 'var(--text-tertiary)',
-
-    '&.Mui-error': {
-      color: 'var(--border-error)',
-    },
-  },
-
-  '& .MuiInputAdornment-root': {
-    color: 'var(--text-secondary)',
-    marginRight: 'var(--spacing-xs)',
-
-    '& svg': {
-      color: 'var(--text-secondary)',
-      transition: 'color var(--transition-base)',
-    },
-  },
-
-  '& .MuiOutlinedInput-root.Mui-focused .MuiInputAdornment-root': {
-    color: 'var(--input-border-focus)',
-
-    '& svg': {
-      color: 'var(--input-border-focus)',
-    },
-  },
-
-  '& .MuiOutlinedInput-root.Mui-error .MuiInputAdornment-root': {
-    color: 'var(--border-error)',
-
-    '& svg': {
-      color: 'var(--border-error)',
-    },
-  },
-
-  '& .MuiOutlinedInput-root.Mui-disabled .MuiInputAdornment-root': {
-    color: 'var(--text-disabled)',
-
-    '& svg': {
-      color: 'var(--text-disabled)',
-    },
-  },
-});
+    &:disabled {
+      color: var(--text-disabled);
+      -webkit-text-fill-color: var(--text-disabled);
+      cursor: not-allowed;
+    }
+  }
+`

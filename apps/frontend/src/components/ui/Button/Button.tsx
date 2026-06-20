@@ -1,35 +1,37 @@
-'use client'
-
-import { ButtonProps as MuiButtonProps } from '@mui/material/Button'
-import { ReactNode } from 'react'
+import { type ButtonHTMLAttributes, type ReactNode } from 'react'
 
 import { StyledButton } from './Button.styles'
 
-export interface ButtonProps extends Omit<MuiButtonProps, 'variant'> {
+export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'> & {
   variant?: 'primary' | 'secondary' | 'outlined' | 'text'
+  color?: 'default' | 'success' | 'warning' | 'error'
+  loading?: boolean
+  loadingIndicator?: ReactNode
+  loadingPosition?: 'start' | 'end'
   children: ReactNode
 }
 
 export const Button = ({
   variant = 'primary',
+  color = 'default',
+  loading = false,
+  loadingIndicator,
+  loadingPosition = 'start',
+  disabled,
   children,
   ...props
 }: ButtonProps): ReactNode => {
-  const getMuiVariant = (): MuiButtonProps['variant'] => {
-    if (variant === 'primary') return 'contained'
-    if (variant === 'secondary') return 'contained'
-    if (variant === 'outlined') return 'outlined'
-    return 'text'
-  }
-
   return (
     <StyledButton
-      variant={getMuiVariant()}
-      $customVariant={variant}
-      disableElevation
+      type="button"
+      $variant={variant}
+      $color={color}
+      disabled={disabled || loading}
       {...props}
     >
+      {loading && loadingPosition === 'start' && loadingIndicator}
       {children}
+      {loading && loadingPosition === 'end' && loadingIndicator}
     </StyledButton>
   )
 }
