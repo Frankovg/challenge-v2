@@ -1,7 +1,7 @@
-import { Plus, Trash2 } from "lucide-react"
 import { FC } from "react"
 
 import { IconButton } from "components/ui/IconButton"
+import { Plus, Trash2 } from "components/ui/icons"
 import { Tooltip } from "components/ui/Tooltip"
 
 import { PackageButtonsContainer } from "./PackageButtons.styles"

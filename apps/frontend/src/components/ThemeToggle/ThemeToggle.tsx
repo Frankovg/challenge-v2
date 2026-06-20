@@ -1,10 +1,10 @@
 'use client'
 
-import { MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { FC, useEffect, useState } from 'react'
 
 import { IconButton } from 'components/ui/IconButton'
+import { MoonIcon, SunIcon } from 'components/ui/icons'
 import { Tooltip } from 'components/ui/Tooltip'
 
 import { DARK, LIGHT, MOON_ICON, SUN_ICON } from './const'

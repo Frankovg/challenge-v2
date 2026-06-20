@@ -1,7 +1,8 @@
 'use client'
 
-import { ChevronDown, ChevronUp } from 'lucide-react'
 import { FC, ReactNode } from 'react'
+
+import { ChevronDown, ChevronUp } from 'components/ui/icons'
 
 import { NumberSpinnerContainer } from './NumberSpinner.styles'
 

@@ -1,10 +1,10 @@
 'use client'
 
-import { User } from 'lucide-react'
 import { ReactNode } from 'react'
 
 import { Logo } from 'components/Logo'
 import { ThemeToggle } from 'components/ThemeToggle'
+import { User } from 'components/ui/icons'
 
 import { IconButton } from '../IconButton'
 import { Tooltip } from '../Tooltip'

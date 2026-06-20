@@ -1,10 +1,10 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ScanBarcode } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
 import { Button } from 'components/ui/Button'
+import { ScanBarcode } from 'components/ui/icons'
 import { Input } from 'components/ui/Input'
 import { useApp } from 'hooks/useApp'
 import { barcodeSchema, type TBarcode } from 'lib/validations'

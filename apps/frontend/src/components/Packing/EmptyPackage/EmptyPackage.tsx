@@ -1,4 +1,4 @@
-import { Box } from "lucide-react"
+import { Box } from "components/ui/icons"
 
 import { EmptyPackageContainer } from "./EmptyPackage.styles"
 

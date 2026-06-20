@@ -1,6 +1,6 @@
 'use client'
 
-import { TriangleAlertIcon } from "lucide-react";
+import { TriangleAlertIcon } from "components/ui/icons";
 
 import { CenteredContainer, Message, Wrapper } from "./not-found.styles";
 

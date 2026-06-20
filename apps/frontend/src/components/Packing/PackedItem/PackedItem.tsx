@@ -1,8 +1,8 @@
 
-import { Trash2 } from "lucide-react"
 import { FC, useMemo } from "react"
 
 import { Card } from "components/ui/Card"
+import { Trash2 } from "components/ui/icons"
 import { NumberSpinner } from "components/ui/NumberSpinner"
 import { useApp } from "hooks/useApp"
 import { LineItemType } from "types"
