@@ -7,7 +7,7 @@ import { ScanBarcode } from 'components/ui/icons'
 import { Input } from 'components/ui/Input'
 import { useApp } from 'hooks/useApp'
 import { validateBarcode } from 'lib/validations'
-import { getProductByCode } from 'utils/getProductByCode'
+import { getProductByCode } from 'utils/lineItemOperations'
 
 import { BarcodeForm } from './Barcode.styles'
 

@@ -11,14 +11,18 @@ import React, {
 import { useToast } from 'components/ui/Toast'
 import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
 import { sleep } from "lib/sleep";
-import { adjustLineItemsAfterUpdate } from 'utils/adjustLineItemsAfterUpdate'
-import { createPackage } from 'utils/createPackage'
-import { rebuildPackageTabs } from "utils/rebuildPackageTabs";
-import { reduceLineItemQuantity } from 'utils/reduceLineItemQuantity'
-import { restoreItems } from "utils/restoreItems";
-import { selectPackage } from "utils/selectPackage";
-import { updatePackageItemQuantity } from "utils/updatePackageItemQuantity";
-import { updatePackagesWithItem } from "utils/updatePackagesWithItem";
+import {
+  adjustLineItemsAfterUpdate,
+  reduceLineItemQuantity,
+  restoreItems,
+} from 'utils/lineItemOperations'
+import {
+  createPackage,
+  rebuildPackageTabs,
+  selectPackage,
+  updatePackageItemQuantity,
+  updatePackagesWithItem,
+} from 'utils/packageOperations'
 
 import { INITIAL_PACKAGE } from "./const";
 
@@ -146,8 +150,7 @@ export const LineItemsProvider = ({
         itemToUpdate,
         itemId,
         newQuantity,
-        quantityDiff,
-        reduceLineItemQuantity
+        quantityDiff
       )
     )
 

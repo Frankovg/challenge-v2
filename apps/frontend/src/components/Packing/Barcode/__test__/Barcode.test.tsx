@@ -1,13 +1,13 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 
 import { useApp } from "hooks/useApp"
-import { getProductByCode } from "utils/getProductByCode"
+import { getProductByCode } from "utils/lineItemOperations"
 
 import { Barcode } from "../Barcode"
 
 
 jest.mock("hooks/useApp")
-jest.mock("utils/getProductByCode")
+jest.mock("utils/lineItemOperations")
 
 describe("Barcode", () => {
   const mockPackProduct = jest.fn()
