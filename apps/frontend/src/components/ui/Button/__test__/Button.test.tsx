@@ -14,7 +14,7 @@ describe('Button', () => {
     (variant) => {
       render(<Button variant={variant}>Label</Button>)
       expect(screen.getByRole('button', { name: 'Label' })).toBeInTheDocument()
-    }
+    },
   )
 
   it('calls onClick when pressed', async () => {
@@ -34,7 +34,7 @@ describe('Button', () => {
     render(
       <Button disabled onClick={handleClick}>
         Disabled
-      </Button>
+      </Button>,
     )
     const button = screen.getByRole('button', { name: 'Disabled' })
 
@@ -47,7 +47,7 @@ describe('Button', () => {
     render(
       <Button loading loadingIndicator={<span data-testid="spinner" />}>
         Save
-      </Button>
+      </Button>,
     )
 
     expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
@@ -56,6 +56,9 @@ describe('Button', () => {
 
   it('forwards the type attribute', () => {
     render(<Button type="submit">Submit</Button>)
-    expect(screen.getByRole('button', { name: 'Submit' })).toHaveAttribute('type', 'submit')
+    expect(screen.getByRole('button', { name: 'Submit' })).toHaveAttribute(
+      'type',
+      'submit',
+    )
   })
 })

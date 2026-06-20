@@ -17,7 +17,6 @@ import {
 } from './Navbar.styles'
 
 export const Navbar = (): ReactNode => {
-
   return (
     <NavbarContainer>
       <NavContent>
@@ -27,7 +26,7 @@ export const Navbar = (): ReactNode => {
 
         <ActionsSection>
           <ThemeToggle />
-          <Tooltip title='Not available' >
+          <Tooltip title="Not available">
             <IconButton aria-label="User menu">
               <User />
             </IconButton>

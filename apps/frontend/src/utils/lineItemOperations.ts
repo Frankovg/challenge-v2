@@ -3,7 +3,7 @@ import type { LineItemType } from 'types'
 /** Finds an unpacked product by its SKU. */
 export const getProductByCode = (
   items: LineItemType[],
-  code: string
+  code: string,
 ): LineItemType | undefined => {
   return items.find((item) => item.sku === code)
 }
@@ -12,7 +12,7 @@ export const getProductByCode = (
 export const reduceLineItemQuantity = (
   lineItems: LineItemType[],
   itemId: number,
-  quantityToRemove: number
+  quantityToRemove: number,
 ): LineItemType[] => {
   return lineItems.reduce<LineItemType[]>((acc, item) => {
     if (item.id !== itemId) {
@@ -32,7 +32,7 @@ export const reduceLineItemQuantity = (
 /** Returns items to the unpacked list, merging into existing entries. */
 export const restoreItems = (
   items: LineItemType[],
-  itemsToReturn: LineItemType[]
+  itemsToReturn: LineItemType[],
 ): LineItemType[] => {
   const updatedItems = [...items]
 
@@ -63,7 +63,7 @@ export const adjustLineItemsAfterUpdate = (
   itemToUpdate: LineItemType,
   itemId: number,
   newQuantity: number,
-  quantityDiff: number
+  quantityDiff: number,
 ): LineItemType[] => {
   const existingItem = lineItems.find((li) => li.id === itemId)
 
@@ -72,7 +72,7 @@ export const adjustLineItemsAfterUpdate = (
       return lineItems.map((li) =>
         li.id === itemId
           ? { ...li, quantity: li.quantity + itemToUpdate.quantity }
-          : li
+          : li,
       )
     }
     return [...lineItems, { ...itemToUpdate, quantity: itemToUpdate.quantity }]
@@ -81,7 +81,7 @@ export const adjustLineItemsAfterUpdate = (
   if (quantityDiff > 0) {
     if (existingItem) {
       return lineItems.map((li) =>
-        li.id === itemId ? { ...li, quantity: li.quantity + quantityDiff } : li
+        li.id === itemId ? { ...li, quantity: li.quantity + quantityDiff } : li,
       )
     }
     return [...lineItems, { ...itemToUpdate, quantity: quantityDiff }]

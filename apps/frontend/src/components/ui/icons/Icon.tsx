@@ -10,7 +10,11 @@ export type IconProps = Omit<SVGProps<SVGSVGElement>, 'children'> & {
  * Each icon below provides only its paths. Icons are decorative by default
  * (aria-hidden) unless an aria-label is supplied.
  */
-export const Icon = ({ size = 24, children, ...props }: IconProps): ReactNode => (
+export const Icon = ({
+  size = 24,
+  children,
+  ...props
+}: IconProps): ReactNode => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}

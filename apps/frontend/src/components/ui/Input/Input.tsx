@@ -14,12 +14,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <InputContainer>
         {label && <LabelText>{label}</LabelText>}
         <Field $hasError={error}>
-          {startAdornment && <span className="adornment">{startAdornment}</span>}
+          {startAdornment && (
+            <span className="adornment">{startAdornment}</span>
+          )}
           <input ref={ref} {...props} />
         </Field>
       </InputContainer>
     )
-  }
+  },
 )
 
 Input.displayName = 'Input'

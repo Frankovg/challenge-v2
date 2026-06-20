@@ -10,7 +10,7 @@ import React, {
 
 import { useToast } from 'components/ui/Toast'
 import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
-import { sleep } from "lib/sleep";
+import { sleep } from 'lib/sleep'
 import {
   adjustLineItemsAfterUpdate,
   reduceLineItemQuantity,
@@ -24,11 +24,18 @@ import {
   updatePackagesWithItem,
 } from 'utils/packageOperations'
 
-import { INITIAL_PACKAGE } from "./const";
+import { INITIAL_PACKAGE } from './const'
 
-import type { LineItemsContextType, PackedItem, LineItemType, PackedPackage } from 'types'
+import type {
+  LineItemsContextType,
+  PackedItem,
+  LineItemType,
+  PackedPackage,
+} from 'types'
 
-export const AppContext = createContext<LineItemsContextType | undefined>(undefined)
+export const AppContext = createContext<LineItemsContextType | undefined>(
+  undefined,
+)
 
 type LineItemsProviderProps = {
   children: ReactNode
@@ -48,173 +55,197 @@ export const LineItemsProvider = ({
 
   const { add: addToast } = useToast()
 
-  const selectedPackageData = useMemo(() => packages[selectedPackageIndex]?.data, [packages, selectedPackageIndex])
+  const selectedPackageData = useMemo(
+    () => packages[selectedPackageIndex]?.data,
+    [packages, selectedPackageIndex],
+  )
 
   const readyForShipping = useMemo(() => {
     const allItemsPacked = lineItems.length === 0
-    const allPackagesCompleted = !(packages.some((pkg) => !pkg.data.line_items.length))
+    const allPackagesCompleted = !packages.some(
+      (pkg) => !pkg.data.line_items.length,
+    )
     return allItemsPacked && allPackagesCompleted
   }, [lineItems, packages])
 
+  const packProduct = useCallback(
+    (
+      item: LineItemType | undefined,
+      packageId: number,
+      quantity: number,
+    ): void => {
+      if (!item) {
+        addToast({
+          title: 'Product not found',
+          description: 'Could not find the product.',
+          type: 'error',
+        })
+        return
+      }
 
-  const packProduct = useCallback((item: LineItemType | undefined, packageId: number, quantity: number): void => {
-    if (!item) {
+      if (quantity <= 0 || quantity > item.quantity) {
+        addToast({
+          title: 'Invalid quantity',
+          description: 'Please enter a valid amount.',
+          type: 'error',
+        })
+        return
+      }
+
+      setPackages((prev) =>
+        updatePackagesWithItem(prev, item, packageId, quantity),
+      )
+      setLineItems((prev) => reduceLineItemQuantity(prev, item.id, quantity))
+
       addToast({
-        title: "Product not found",
-        description: "Could not find the product.",
-        type: "error",
+        title: 'Product packed',
+        description: `${quantity} product(s) packed successfully.`,
+        type: 'success',
       })
-      return
-    }
-
-    if (quantity <= 0 || quantity > item.quantity) {
-      addToast({
-        title: "Invalid quantity",
-        description: "Please enter a valid amount.",
-        type: "error",
-      })
-      return
-    }
-
-    setPackages(prev => updatePackagesWithItem(prev, item, packageId, quantity))
-    setLineItems(prev => reduceLineItemQuantity(prev, item.id, quantity))
-
-    addToast({
-      title: "Product packed",
-      description: `${quantity} product(s) packed successfully.`,
-      type: "success",
-    })
-  }, [addToast])
-
+    },
+    [addToast],
+  )
 
   const addPackage = useCallback((): void => {
-    setPackages(prev => createPackage(prev))
+    setPackages((prev) => createPackage(prev))
     addToast({
-      title: "Package created",
+      title: 'Package created',
       description: 'New package created successfully.',
-      type: "success",
+      type: 'success',
     })
   }, [addToast])
 
+  const removePackage = useCallback(
+    (packageId: number, force = false): void => {
+      const packageToRemove = packages.find((pkg) => pkg.data.id === packageId)
+      if (!packageToRemove) return
 
-  const removePackage = useCallback((packageId: number, force = false): void => {
-    const packageToRemove = packages.find(pkg => pkg.data.id === packageId)
-    if (!packageToRemove) return
+      const itemsToReturn = [...packageToRemove.data.line_items]
+      const hasItems = itemsToReturn.length > 0
+      const isSinglePackage = packages.length === 1
 
-    const itemsToReturn = [...packageToRemove.data.line_items]
-    const hasItems = itemsToReturn.length > 0
-    const isSinglePackage = packages.length === 1
+      if ((isSinglePackage && !hasItems) || (hasItems && !force)) return
 
-    if ((isSinglePackage && !hasItems) || (hasItems && !force)) return
-
-    if (isSinglePackage) {
-      setPackages(INITIAL_PACKAGE)
-      setSelectedPackageIndex(0)
-      if (hasItems) {
-        setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
+      if (isSinglePackage) {
+        setPackages(INITIAL_PACKAGE)
+        setSelectedPackageIndex(0)
+        if (hasItems) {
+          setLineItems((prevItems) => restoreItems(prevItems, itemsToReturn))
+        }
+        return
       }
-      return
-    }
 
-    const removedPackageIndex = packages.findIndex(pkg => pkg.data.id === packageId)
-
-    setPackages(prev => rebuildPackageTabs(prev, packageId))
-    setSelectedPackageIndex(prevIndex =>
-      selectPackage(removedPackageIndex, prevIndex, packages.length)
-    )
-
-    if (hasItems) setLineItems(prevItems => restoreItems(prevItems, itemsToReturn))
-  }, [packages])
-
-
-  const updateItemQuantity = useCallback((packageId: number, itemId: number, newQuantity: number): void => {
-    if (newQuantity < 0) {
-      addToast({
-        title: "Invalid quantity",
-        description: "Please enter a valid amount.",
-        type: "error",
-      })
-      return
-    }
-
-    const targetPackage = packages.find(pkg => pkg.data.id === packageId)
-    const itemToUpdate = targetPackage?.data.line_items.find(li => li.id === itemId)
-    if (!itemToUpdate) return
-
-    const quantityDiff = itemToUpdate.quantity - newQuantity
-
-    setPackages(prev => updatePackageItemQuantity(prev, packageId, itemId, newQuantity))
-    setLineItems(prevItems =>
-      adjustLineItemsAfterUpdate(
-        prevItems,
-        itemToUpdate,
-        itemId,
-        newQuantity,
-        quantityDiff
+      const removedPackageIndex = packages.findIndex(
+        (pkg) => pkg.data.id === packageId,
       )
-    )
 
-    if (newQuantity === 0) {
-      addToast({
-        title: "Product unpacked",
-        description: 'Product unpacked successfully.',
-        type: "success",
-      })
-    }
-  }, [packages, addToast])
+      setPackages((prev) => rebuildPackageTabs(prev, packageId))
+      setSelectedPackageIndex((prevIndex) =>
+        selectPackage(removedPackageIndex, prevIndex, packages.length),
+      )
 
+      if (hasItems)
+        setLineItems((prevItems) => restoreItems(prevItems, itemsToReturn))
+    },
+    [packages],
+  )
 
-  const shipPackages = useCallback(async (items: PackedPackage[], ready: boolean) => {
-    if (!ready) {
-      addToast({
-        title: 'Shipping Error',
-        description: 'Complete or remove empty packages.',
-        type: 'error',
-      })
-      return
-    }
-
-    try {
-      setLoading(true)
-      if (process.env.NODE_ENV === "development") {
-        await sleep(1000);
+  const updateItemQuantity = useCallback(
+    (packageId: number, itemId: number, newQuantity: number): void => {
+      if (newQuantity < 0) {
+        addToast({
+          title: 'Invalid quantity',
+          description: 'Please enter a valid amount.',
+          type: 'error',
+        })
+        return
       }
 
-      const result = await packItems(items)
+      const targetPackage = packages.find((pkg) => pkg.data.id === packageId)
+      const itemToUpdate = targetPackage?.data.line_items.find(
+        (li) => li.id === itemId,
+      )
+      if (!itemToUpdate) return
 
-      setPackages(INITIAL_PACKAGE)
-      setSelectedPackageIndex(0)
+      const quantityDiff = itemToUpdate.quantity - newQuantity
 
-      if (process.env.NODE_ENV === 'development') console.log("Packed: ", result)
+      setPackages((prev) =>
+        updatePackageItemQuantity(prev, packageId, itemId, newQuantity),
+      )
+      setLineItems((prevItems) =>
+        adjustLineItemsAfterUpdate(
+          prevItems,
+          itemToUpdate,
+          itemId,
+          newQuantity,
+          quantityDiff,
+        ),
+      )
 
-      addToast({
-        title: "Shipment created successfully",
-        description: `${items.length} package(s) ready to ship.`,
-        type: "success",
-      })
-    } catch (err) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error(err)
-        console.error(error)
+      if (newQuantity === 0) {
+        addToast({
+          title: 'Product unpacked',
+          description: 'Product unpacked successfully.',
+          type: 'success',
+        })
+      }
+    },
+    [packages, addToast],
+  )
+
+  const shipPackages = useCallback(
+    async (items: PackedPackage[], ready: boolean) => {
+      if (!ready) {
+        addToast({
+          title: 'Shipping Error',
+          description: 'Complete or remove empty packages.',
+          type: 'error',
+        })
+        return
       }
 
-      addToast({
-        title: 'Shipping Error',
-        description: 'Unable to process shipping.',
-        type: 'error',
-      })
-    } finally {
-      setLoading(false)
-    }
-  }, [addToast, packItems, error])
+      try {
+        setLoading(true)
+        if (process.env.NODE_ENV === 'development') {
+          await sleep(1000)
+        }
 
+        const result = await packItems(items)
+
+        setPackages(INITIAL_PACKAGE)
+        setSelectedPackageIndex(0)
+
+        if (process.env.NODE_ENV === 'development')
+          console.log('Packed: ', result)
+
+        addToast({
+          title: 'Shipment created successfully',
+          description: `${items.length} package(s) ready to ship.`,
+          type: 'success',
+        })
+      } catch (err) {
+        if (process.env.NODE_ENV === 'development') {
+          console.error(err)
+          console.error(error)
+        }
+
+        addToast({
+          title: 'Shipping Error',
+          description: 'Unable to process shipping.',
+          type: 'error',
+        })
+      } finally {
+        setLoading(false)
+      }
+    },
+    [addToast, packItems, error],
+  )
 
   const resetDemo = useCallback((items: LineItemType[]) => {
     setLineItems(items)
     setSelectedPackageIndex(0)
     setPackages(INITIAL_PACKAGE)
   }, [])
-
 
   return (
     <AppContext.Provider
@@ -231,7 +262,7 @@ export const LineItemsProvider = ({
         updateItemQuantity,
         shipPackages,
         resetDemo,
-        loading
+        loading,
       }}
     >
       {children}

@@ -13,8 +13,10 @@ export const HeaderGrid = styled.div`
   letter-spacing: 0.05em;
 `
 
-export const HeaderCell = styled.div<{ $colSpan: number; $align?: 'left' | 'center' | 'right' }>`
-  grid-column: span ${props => props.$colSpan};
-  text-align: ${props => props.$align || 'left'};
+export const HeaderCell = styled.div<{
+  $colSpan: number
+  $align?: 'left' | 'center' | 'right'
+}>`
+  grid-column: span ${(props) => props.$colSpan};
+  text-align: ${(props) => props.$align || 'left'};
 `
-

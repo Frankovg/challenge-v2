@@ -8,7 +8,9 @@ export const FooterContainer = styled.footer`
   z-index: var(--z-sticky);
   background-color: var(--bg-primary);
   border-top: 1px solid var(--border-primary);
-  transition: background-color var(--transition-base), border-color var(--transition-base);
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base);
 `
 export const FooterContent = styled.div`
   max-width: var(--max-content-width);
@@ -24,6 +26,6 @@ export const FooterContent = styled.div`
   }
 
   a {
-        font-size: var(--font-size-sm);
+    font-size: var(--font-size-sm);
   }
 `

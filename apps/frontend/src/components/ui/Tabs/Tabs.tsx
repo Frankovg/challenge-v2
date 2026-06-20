@@ -22,7 +22,11 @@ export const Tabs: FC<Props> = ({
   variant = 'standard',
 }) => {
   return (
-    <StyledTabs role="tablist" aria-label={ariaLabel} $scrollable={variant === 'scrollable'}>
+    <StyledTabs
+      role="tablist"
+      aria-label={ariaLabel}
+      $scrollable={variant === 'scrollable'}
+    >
       {tabs.map((tab) => {
         const quantityProducts = tab.data.line_items.length
         const selected = value === tab.value

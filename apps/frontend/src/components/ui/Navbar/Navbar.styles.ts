@@ -7,7 +7,9 @@ export const NavbarContainer = styled.header`
   background-color: var(--bg-primary);
   border-bottom: 1px solid var(--border-primary);
   box-shadow: var(--shadow-md);
-  transition: background-color var(--transition-base), border-color var(--transition-base);
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base);
 `
 
 export const NavContent = styled.div`

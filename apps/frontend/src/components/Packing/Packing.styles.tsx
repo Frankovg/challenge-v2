@@ -27,4 +27,4 @@ export const PackingWrapper = styled.div`
       transform: scale(1.01);
     }
   }
-`;
+`

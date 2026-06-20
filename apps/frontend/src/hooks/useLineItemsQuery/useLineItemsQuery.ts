@@ -2,7 +2,6 @@ import { useQuery, gql } from '@apollo/client'
 
 import { LineItemsQueryType, UseLineItemsQueryType } from 'types'
 
-
 export const LINE_ITEMS_QUERY = gql`
   query line_items {
     line_items {

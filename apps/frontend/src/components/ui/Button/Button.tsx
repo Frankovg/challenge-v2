@@ -2,7 +2,10 @@ import { type ButtonHTMLAttributes, type ReactNode } from 'react'
 
 import { StyledButton } from './Button.styles'
 
-export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'> & {
+export type ButtonProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'color'
+> & {
   variant?: 'primary' | 'secondary' | 'outlined' | 'text'
   color?: 'default' | 'success' | 'warning' | 'error'
   loading?: boolean

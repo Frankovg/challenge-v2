@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from '@testing-library/react'
 
 import { NumberSpinner } from '../NumberSpinner'
 
-
 describe('NumberSpinner', () => {
   it('increments value when up button is clicked', () => {
     const handleChange = jest.fn()

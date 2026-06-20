@@ -17,7 +17,12 @@ export const Tooltip: FC<Props> = ({ title, children, placement = 'top' }) => {
   const hide = (): void => setOpen(false)
 
   return (
-    <TooltipWrapper onMouseEnter={show} onMouseLeave={hide} onFocus={show} onBlur={hide}>
+    <TooltipWrapper
+      onMouseEnter={show}
+      onMouseLeave={hide}
+      onFocus={show}
+      onBlur={hide}
+    >
       {children}
       {open && title && (
         <TooltipBubble role="tooltip" $placement={placement}>

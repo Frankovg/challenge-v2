@@ -15,7 +15,8 @@ export const StyledTab = styled.button<{ $selected?: boolean }>`
   background: transparent;
   border: none;
   cursor: pointer;
-  color: ${({ $selected }) => ($selected ? 'var(--text-primary)' : 'var(--text-secondary)')};
+  color: ${({ $selected }) =>
+    $selected ? 'var(--text-primary)' : 'var(--text-secondary)'};
   font-family: var(--font-family-base);
   font-size: 0.875rem;
   font-weight: ${({ $selected }) => ($selected ? 600 : 500)};

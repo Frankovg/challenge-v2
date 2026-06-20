@@ -12,7 +12,12 @@ import type { LineItemType } from 'types'
 describe('getProductByCode', () => {
   it('should return the correct product when code matches', () => {
     const result = getProductByCode(mockLineItems, 'SKU-002')
-    expect(result).toEqual({ id: 2, quantity: 5, sku: 'SKU-002', location: 'B2' })
+    expect(result).toEqual({
+      id: 2,
+      quantity: 5,
+      sku: 'SKU-002',
+      location: 'B2',
+    })
   })
 
   it('should return undefined when code does not match any product', () => {
@@ -29,7 +34,12 @@ describe('reduceLineItemQuantity', (): void => {
     const result = reduceLineItemQuantity(mockLineItems, 1, 3)
 
     expect(result).toHaveLength(3)
-    expect(result[0]).toEqual({ id: 1, quantity: 7, sku: 'SKU-001', location: 'A1' })
+    expect(result[0]).toEqual({
+      id: 1,
+      quantity: 7,
+      sku: 'SKU-001',
+      location: 'A1',
+    })
   })
 
   it('should remove item when remaining quantity is 0', (): void => {
@@ -54,7 +64,9 @@ describe('restoreItems', () => {
   })
 
   it('adds a new item when it does not exist in the list', () => {
-    const itemsToReturn = [{ id: 999, quantity: 4, sku: 'SKU-999', location: 'Z9' }]
+    const itemsToReturn = [
+      { id: 999, quantity: 4, sku: 'SKU-999', location: 'Z9' },
+    ]
 
     const result = restoreItems(mockLineItems, itemsToReturn)
 
@@ -81,7 +93,13 @@ describe('adjustLineItemsAfterUpdate', () => {
         { ...mockLineItems[1], quantity: 2 },
       ]
 
-      const result = adjustLineItemsAfterUpdate(lineItems, itemToUpdate, mockLineItems[0].id, 0, 5)
+      const result = adjustLineItemsAfterUpdate(
+        lineItems,
+        itemToUpdate,
+        mockLineItems[0].id,
+        0,
+        5,
+      )
 
       expect(result[0].quantity).toBe(8)
       expect(result[1].quantity).toBe(2)
@@ -91,7 +109,13 @@ describe('adjustLineItemsAfterUpdate', () => {
       const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
       const lineItems: LineItemType[] = [{ ...mockLineItems[1], quantity: 2 }]
 
-      const result = adjustLineItemsAfterUpdate(lineItems, itemToUpdate, mockLineItems[0].id, 0, 5)
+      const result = adjustLineItemsAfterUpdate(
+        lineItems,
+        itemToUpdate,
+        mockLineItems[0].id,
+        0,
+        5,
+      )
 
       expect(result).toHaveLength(2)
       expect(result[1].id).toBe(mockLineItems[0].id)
@@ -103,7 +127,13 @@ describe('adjustLineItemsAfterUpdate', () => {
     const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
     const lineItems: LineItemType[] = []
 
-    const result = adjustLineItemsAfterUpdate(lineItems, itemToUpdate, mockLineItems[0].id, 3, 2)
+    const result = adjustLineItemsAfterUpdate(
+      lineItems,
+      itemToUpdate,
+      mockLineItems[0].id,
+      3,
+      2,
+    )
 
     expect(result).toHaveLength(1)
     expect(result[0].quantity).toBe(2)
@@ -114,7 +144,13 @@ describe('adjustLineItemsAfterUpdate', () => {
       const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
       const lineItems: LineItemType[] = [{ ...mockLineItems[0], quantity: 2 }]
 
-      const result = adjustLineItemsAfterUpdate(lineItems, itemToUpdate, mockLineItems[0].id, 3, 2)
+      const result = adjustLineItemsAfterUpdate(
+        lineItems,
+        itemToUpdate,
+        mockLineItems[0].id,
+        3,
+        2,
+      )
 
       expect(result[0].quantity).toBe(4)
     })
@@ -125,7 +161,13 @@ describe('adjustLineItemsAfterUpdate', () => {
       const itemToUpdate = { ...mockLineItems[0], quantity: 5 }
       const lineItems: LineItemType[] = [{ ...mockLineItems[0], quantity: 5 }]
 
-      const result = adjustLineItemsAfterUpdate(lineItems, itemToUpdate, mockLineItems[0].id, 7, -2)
+      const result = adjustLineItemsAfterUpdate(
+        lineItems,
+        itemToUpdate,
+        mockLineItems[0].id,
+        7,
+        -2,
+      )
 
       expect(result[0].quantity).toBe(3)
     })
@@ -134,7 +176,13 @@ describe('adjustLineItemsAfterUpdate', () => {
       const itemToUpdate = { ...mockLineItems[0], quantity: 2 }
       const lineItems: LineItemType[] = [{ ...mockLineItems[0], quantity: 2 }]
 
-      const result = adjustLineItemsAfterUpdate(lineItems, itemToUpdate, mockLineItems[0].id, 7, -2)
+      const result = adjustLineItemsAfterUpdate(
+        lineItems,
+        itemToUpdate,
+        mockLineItems[0].id,
+        7,
+        -2,
+      )
 
       expect(result).toHaveLength(0)
     })

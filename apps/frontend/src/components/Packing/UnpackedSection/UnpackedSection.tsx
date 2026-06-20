@@ -15,15 +15,18 @@ export const UnpackedSection = (): ReactNode => {
 
   const selectedPackageId = selectedPackageData?.id ?? 0
 
-  const handlePack = useCallback((item: LineItemType, q: AddToPackageButton): void => {
-    const quantity = q === 'one' ? 1 : item.quantity
-    packProduct(item, selectedPackageId, quantity)
-  }, [packProduct, selectedPackageId])
+  const handlePack = useCallback(
+    (item: LineItemType, q: AddToPackageButton): void => {
+      const quantity = q === 'one' ? 1 : item.quantity
+      packProduct(item, selectedPackageId, quantity)
+    },
+    [packProduct, selectedPackageId],
+  )
 
   return (
     <UnpackedSectionContainer>
       <SectionTitle
-        title='Unpacked products'
+        title="Unpacked products"
         subtitle={`${lineItems.length} product(s) remaining`}
       />
 

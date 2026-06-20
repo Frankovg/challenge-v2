@@ -31,7 +31,11 @@ const AUTO_DISMISS_MS = 5000
 
 const ToastContext = createContext<ToastContextValue | undefined>(undefined)
 
-export const ToastProvider = ({ children }: { children: ReactNode }): ReactNode => {
+export const ToastProvider = ({
+  children,
+}: {
+  children: ReactNode
+}): ReactNode => {
   const [toasts, setToasts] = useState<ToastItem[]>([])
   const idRef = useRef(0)
 
@@ -45,7 +49,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }): ReactNode 
       setToasts((prev) => [...prev, { ...toast, id }])
       setTimeout(() => remove(id), AUTO_DISMISS_MS)
     },
-    [remove]
+    [remove],
   )
 
   const value = useMemo(() => ({ toasts, add, remove }), [toasts, add, remove])

@@ -23,7 +23,7 @@ export const createPackage = (packages: PackedItem[]): PackedItem[] => {
 /** Removes a package by id and reindexes the remaining tabs (value + label). */
 export const rebuildPackageTabs = (
   packages: PackedItem[],
-  packageId: number
+  packageId: number,
 ): PackedItem[] => {
   return packages
     .filter((pkg) => pkg.data.id !== packageId)
@@ -38,7 +38,7 @@ export const rebuildPackageTabs = (
 export const selectPackage = (
   removedPackageIndex: number,
   prevIndex: number,
-  packagesLength: number
+  packagesLength: number,
 ): number => {
   if (removedPackageIndex < prevIndex) {
     return prevIndex - 1
@@ -57,7 +57,7 @@ export const updatePackagesWithItem = (
   packages: PackedItem[],
   item: LineItemType,
   packageId: number,
-  quantity: number
+  quantity: number,
 ): PackedItem[] => {
   return packages.map((pkg) => {
     if (pkg.data.id !== packageId) return pkg
@@ -70,7 +70,9 @@ export const updatePackagesWithItem = (
         data: {
           ...pkg.data,
           line_items: pkg.data.line_items.map((li) =>
-            li.id === item.id ? { ...li, quantity: li.quantity + quantity } : li
+            li.id === item.id
+              ? { ...li, quantity: li.quantity + quantity }
+              : li,
           ),
         },
       }
@@ -91,7 +93,7 @@ export const updatePackageItemQuantity = (
   packages: PackedItem[],
   packageId: number,
   itemId: number,
-  newQuantity: number
+  newQuantity: number,
 ): PackedItem[] => {
   return packages.map((pkg) => {
     if (pkg.data.id !== packageId) return pkg
@@ -111,7 +113,7 @@ export const updatePackageItemQuantity = (
       data: {
         ...pkg.data,
         line_items: pkg.data.line_items.map((li) =>
-          li.id === itemId ? { ...li, quantity: newQuantity } : li
+          li.id === itemId ? { ...li, quantity: newQuantity } : li,
         ),
       },
     }

@@ -1,8 +1,8 @@
 'use client'
 
-import { TriangleAlertIcon } from "components/ui/icons";
+import { TriangleAlertIcon } from 'components/ui/icons'
 
-import { CenteredContainer, Message, Wrapper } from "./not-found.styles";
+import { CenteredContainer, Message, Wrapper } from './not-found.styles'
 
 export default async function NotFound() {
   return (
@@ -16,5 +16,5 @@ export default async function NotFound() {
         <Message>or the page may have been removed</Message>
       </CenteredContainer>
     </Wrapper>
-  );
+  )
 }

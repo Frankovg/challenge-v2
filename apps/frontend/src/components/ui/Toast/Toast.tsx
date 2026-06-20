@@ -21,11 +21,17 @@ export const Toast = (): ReactNode => {
   return createPortal(
     <StyledToastViewport>
       {toasts.map((toast) => (
-        <StyledToastRoot key={toast.id} role="status" data-type={toast.type ?? 'info'}>
+        <StyledToastRoot
+          key={toast.id}
+          role="status"
+          data-type={toast.type ?? 'info'}
+        >
           <StyledToastContent>
             {toast.title && <StyledToastTitle>{toast.title}</StyledToastTitle>}
             {toast.description && (
-              <StyledToastDescription>{toast.description}</StyledToastDescription>
+              <StyledToastDescription>
+                {toast.description}
+              </StyledToastDescription>
             )}
           </StyledToastContent>
           <StyledToastClose
@@ -36,6 +42,6 @@ export const Toast = (): ReactNode => {
         </StyledToastRoot>
       ))}
     </StyledToastViewport>,
-    document.body
+    document.body,
   )
 }

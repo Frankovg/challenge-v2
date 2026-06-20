@@ -7,7 +7,7 @@ describe('Dialog', () => {
     render(
       <Dialog open onClose={() => {}}>
         <div>Test Content</div>
-      </Dialog>
+      </Dialog>,
     )
 
     expect(screen.getByText('Test Content')).toBeInTheDocument()
@@ -17,7 +17,7 @@ describe('Dialog', () => {
     render(
       <Dialog open={false} onClose={() => {}}>
         <div>Test Content</div>
-      </Dialog>
+      </Dialog>,
     )
 
     expect(screen.queryByText('Test Content')).not.toBeInTheDocument()
@@ -28,7 +28,7 @@ describe('Dialog', () => {
     render(
       <Dialog open onClose={handleClose}>
         <div>Test Content</div>
-      </Dialog>
+      </Dialog>,
     )
 
     fireEvent.mouseDown(screen.getByTestId('dialog-overlay'))
@@ -41,7 +41,7 @@ describe('Dialog', () => {
     render(
       <Dialog open onClose={handleClose}>
         <div>Test Content</div>
-      </Dialog>
+      </Dialog>,
     )
 
     fireEvent.mouseDown(screen.getByText('Test Content'))
@@ -54,7 +54,7 @@ describe('Dialog', () => {
     render(
       <Dialog open onClose={handleClose}>
         <div>Test Content</div>
-      </Dialog>
+      </Dialog>,
     )
 
     fireEvent.keyDown(document, { key: 'Escape' })

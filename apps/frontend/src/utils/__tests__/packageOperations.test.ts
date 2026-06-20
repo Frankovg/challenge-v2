@@ -144,12 +144,19 @@ describe('updatePackagesWithItem', (): void => {
         label: 'Package 1',
         data: {
           id: 0,
-          line_items: [{ id: 1, quantity: 5, sku: 'TEST-SKU-001', location: 'A1' }],
+          line_items: [
+            { id: 1, quantity: 5, sku: 'TEST-SKU-001', location: 'A1' },
+          ],
         },
       },
     ]
 
-    const result = updatePackagesWithItem(packagesWithExistingItem, mockItem, 0, 3)
+    const result = updatePackagesWithItem(
+      packagesWithExistingItem,
+      mockItem,
+      0,
+      3,
+    )
 
     expect(result[0].data.line_items).toHaveLength(1)
     expect(result[0].data.line_items[0].quantity).toBe(8) // 5 + 3

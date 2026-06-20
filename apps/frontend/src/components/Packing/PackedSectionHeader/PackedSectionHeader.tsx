@@ -1,12 +1,12 @@
-import { type FC } from "react"
+import { type FC } from 'react'
 
-import { Button } from "components/ui/Button"
+import { Button } from 'components/ui/Button'
 
-import { Barcode } from "../Barcode"
-import { PackageButtons } from "../PackageButtons"
-import { SectionTitle } from "../SectionTitle"
+import { Barcode } from '../Barcode'
+import { PackageButtons } from '../PackageButtons'
+import { SectionTitle } from '../SectionTitle'
 
-import { HeaderContainer } from "./PackedSectionHeader.styles"
+import { HeaderContainer } from './PackedSectionHeader.styles'
 
 type Props = {
   quantityPackages: number
@@ -24,25 +24,25 @@ export const PackedSectionHeader: FC<Props> = (props) => {
     disableDeletePackage,
     handleShipPackages,
     handleAddPackage,
-    handleRemovePackage
+    handleRemovePackage,
   } = props
 
   return (
     <HeaderContainer>
-      <div className='top-header'>
+      <div className="top-header">
         <SectionTitle
-          title='Packed Products'
+          title="Packed Products"
           subtitle={`${quantityPackages} package(s) created`}
         />
         <Button
-          color='success'
+          color="success"
           disabled={disabledShipping}
           onClick={handleShipPackages}
         >
           Ship Package(s)
         </Button>
       </div>
-      <div className='bottom-header'>
+      <div className="bottom-header">
         <Barcode />
         <PackageButtons
           add={handleAddPackage}

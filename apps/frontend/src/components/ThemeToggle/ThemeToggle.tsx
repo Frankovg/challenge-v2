@@ -29,7 +29,7 @@ export const ThemeToggle: FC = () => {
   }
 
   return (
-    <Tooltip title={`Switch to ${newTheme} mode`} >
+    <Tooltip title={`Switch to ${newTheme} mode`}>
       <IconButton
         onClick={toggleTheme}
         aria-label={`Switch to ${newTheme} mode`}

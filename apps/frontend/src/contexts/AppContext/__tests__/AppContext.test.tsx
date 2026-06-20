@@ -40,7 +40,7 @@ describe('AppContext', () => {
       render(
         <LineItemsProvider initialLineItems={mockLineItems}>
           <TestComponent />
-        </LineItemsProvider>
+        </LineItemsProvider>,
       )
 
       expect(screen.getByTestId('item-1')).toHaveTextContent('SKU-001')
@@ -216,7 +216,9 @@ describe('AppContext', () => {
       })
 
       expect(result.current.packages[0].data.line_items[0].quantity).toBe(1)
-      expect(result.current.lineItems.find((li) => li.id === 1)?.quantity).toBe(1)
+      expect(result.current.lineItems.find((li) => li.id === 1)?.quantity).toBe(
+        1,
+      )
     })
 
     it('unpacks the item and restores its full quantity when set to 0', () => {
@@ -231,7 +233,9 @@ describe('AppContext', () => {
       })
 
       expect(result.current.packages[0].data.line_items).toHaveLength(0)
-      expect(result.current.lineItems.find((li) => li.id === 1)?.quantity).toBe(2)
+      expect(result.current.lineItems.find((li) => li.id === 1)?.quantity).toBe(
+        2,
+      )
     })
 
     it('ignores updates for an item that is not in the package', () => {

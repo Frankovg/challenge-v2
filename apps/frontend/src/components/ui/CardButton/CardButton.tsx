@@ -6,10 +6,9 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
 }
 
-export const CardButton = ({ children, ...props }: IconButtonProps): ReactNode => {
-  return (
-    <CardButtonContainer {...props}>
-      {children}
-    </CardButtonContainer>
-  )
+export const CardButton = ({
+  children,
+  ...props
+}: IconButtonProps): ReactNode => {
+  return <CardButtonContainer {...props}>{children}</CardButtonContainer>
 }

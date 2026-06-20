@@ -50,6 +50,6 @@ export const Dialog: FC<Props> = ({
         {children}
       </DialogContent>
     </Overlay>,
-    document.body
+    document.body,
   )
 }

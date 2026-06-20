@@ -10,7 +10,7 @@ export const UnpackedItemContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.5rem
+    gap: 0.5rem;
   }
 
   .quantity-container {
@@ -34,12 +34,11 @@ export const UnpackedItemContainer = styled.div`
   }
 `
 
-
 export const ItemNameContainer = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 1.2rem;
-    
+
   span {
     color: var(--status-info-text);
     font-size: var(--font-size-sm);

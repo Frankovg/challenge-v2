@@ -11,7 +11,9 @@ export const IconButtonContainer = styled.button`
   background-color: transparent;
   color: var(--text-primary);
   cursor: pointer;
-  transition: background-color var(--transition-base), color var(--transition-base);
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
 
   &:hover {
     background-color: var(--bg-tertiary);

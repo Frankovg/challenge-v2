@@ -3,7 +3,11 @@ import React, { type ReactNode } from 'react'
 import { HEADER_COLUMNS } from './const'
 import { HeaderCell, HeaderGrid } from './PackageContent.styles'
 
-export const PackageContent = ({ children }: { children: ReactNode }): ReactNode => {
+export const PackageContent = ({
+  children,
+}: {
+  children: ReactNode
+}): ReactNode => {
   return (
     <>
       <HeaderGrid>

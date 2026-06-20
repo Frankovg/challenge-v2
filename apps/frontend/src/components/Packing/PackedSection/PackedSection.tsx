@@ -1,25 +1,25 @@
 'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { Dialog } from 'components/ui/Dialog';
-import { Box } from 'components/ui/icons';
-import { ScrollArea } from 'components/ui/ScrollArea';
-import { Tabs } from "components/ui/Tabs";
-import { useApp } from "hooks/useApp";
+import { Dialog } from 'components/ui/Dialog'
+import { Box } from 'components/ui/icons'
+import { ScrollArea } from 'components/ui/ScrollArea'
+import { Tabs } from 'components/ui/Tabs'
+import { useApp } from 'hooks/useApp'
 
-import { ConfirmationModal } from '../ConfirmationModal';
-import { PackageContent } from "../PackageContent"
-import { PackedItem } from '../PackedItem';
-import { PackedSectionHeader } from '../PackedSectionHeader';
+import { ConfirmationModal } from '../ConfirmationModal'
+import { PackageContent } from '../PackageContent'
+import { PackedItem } from '../PackedItem'
+import { PackedSectionHeader } from '../PackedSectionHeader'
 
-import { MODAL_DICTIONARY } from './const';
-import { EmptyState, PackedSectionContainer } from "./PackedSection.styles"
+import { MODAL_DICTIONARY } from './const'
+import { EmptyState, PackedSectionContainer } from './PackedSection.styles'
 
-import type { PackedPackage } from 'types';
+import type { PackedPackage } from 'types'
 
 type ModalState = {
-  open: boolean,
+  open: boolean
   action: 'delete' | 'ship'
 }
 
@@ -33,13 +33,16 @@ export const PackedSection = () => {
     removePackage,
     readyForShipping,
     shipPackages,
-    loading
+    loading,
   } = useApp()
 
   const initialModalState: ModalState = { open: false, action: 'ship' }
 
-  const [openConfirmationModal, setOpenConfirmationModal] = useState(initialModalState)
-  const [pendingPackageIdToRemove, setPendingPackageIdToRemove] = useState<number | null>(null)
+  const [openConfirmationModal, setOpenConfirmationModal] =
+    useState(initialModalState)
+  const [pendingPackageIdToRemove, setPendingPackageIdToRemove] = useState<
+    number | null
+  >(null)
 
   const handleAddPackage = (): void => {
     addPackage()
@@ -50,8 +53,9 @@ export const PackedSection = () => {
     if (packages.length === 0 || !selectedPackageData) return
 
     const packageId = selectedPackageData.id
-    const packageToRemove = packages.find(pkg => pkg.data.id === packageId)
-    const hasItems = packageToRemove && packageToRemove.data.line_items.length > 0
+    const packageToRemove = packages.find((pkg) => pkg.data.id === packageId)
+    const hasItems =
+      packageToRemove && packageToRemove.data.line_items.length > 0
 
     if (hasItems) {
       setPendingPackageIdToRemove(packageId)
@@ -89,7 +93,9 @@ export const PackedSection = () => {
       <PackedSectionHeader
         quantityPackages={packages.length}
         disabledShipping={!readyForShipping}
-        disableDeletePackage={packages.length === 1 && selectedPackageData.line_items.length === 0}
+        disableDeletePackage={
+          packages.length === 1 && selectedPackageData.line_items.length === 0
+        }
         handleShipPackages={handleShipPackages}
         handleAddPackage={handleAddPackage}
         handleRemovePackage={handleRemovePackage}
@@ -103,14 +109,11 @@ export const PackedSection = () => {
         variant="scrollable"
       />
 
-      <PackageContent >
+      <PackageContent>
         {selectedPackageData.line_items.length ? (
           <ScrollArea>
             {selectedPackageData.line_items?.map((item) => (
-              <PackedItem
-                key={item.id}
-                item={item}
-              />
+              <PackedItem key={item.id} item={item} />
             ))}
           </ScrollArea>
         ) : (
@@ -133,8 +136,12 @@ export const PackedSection = () => {
           close={handleCloseModal}
           confirm={handleConfirmModal}
           title={MODAL_DICTIONARY[openConfirmationModal.action].title}
-          buttonLabel={MODAL_DICTIONARY[openConfirmationModal.action].buttonLabel}
-          description={MODAL_DICTIONARY[openConfirmationModal.action].description}
+          buttonLabel={
+            MODAL_DICTIONARY[openConfirmationModal.action].buttonLabel
+          }
+          description={
+            MODAL_DICTIONARY[openConfirmationModal.action].description
+          }
           isLoading={loading}
         />
       </Dialog>

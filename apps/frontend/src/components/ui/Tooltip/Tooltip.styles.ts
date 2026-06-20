@@ -10,7 +10,9 @@ export const TooltipBubble = styled.span<{ $placement: 'top' | 'bottom' }>`
   left: 50%;
   transform: translateX(-50%);
   ${({ $placement }) =>
-    $placement === 'top' ? 'bottom: calc(100% + 6px);' : 'top: calc(100% + 6px);'}
+    $placement === 'top'
+      ? 'bottom: calc(100% + 6px);'
+      : 'top: calc(100% + 6px);'}
   z-index: var(--z-popover);
   white-space: nowrap;
   pointer-events: none;

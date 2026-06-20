@@ -20,7 +20,8 @@ export const Field = styled.div<{ $hasError?: boolean }>`
   width: 100%;
   background-color: var(--input-bg);
   border: 1px solid
-    ${({ $hasError }) => ($hasError ? 'var(--border-error)' : 'var(--input-border)')};
+    ${({ $hasError }) =>
+      $hasError ? 'var(--border-error)' : 'var(--input-border)'};
   border-radius: var(--radius-sm);
   padding: var(--spacing-sm) var(--spacing-md);
   transition: border-color var(--transition-base);

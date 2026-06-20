@@ -27,7 +27,9 @@ describe('ThemeToggle component', () => {
 
       render(<ThemeToggle />)
 
-      const button = screen.getByRole('button', { name: /switch to dark mode/i })
+      const button = screen.getByRole('button', {
+        name: /switch to dark mode/i,
+      })
       const moonIcon = screen.getByLabelText(MOON_ICON)
 
       expect(moonIcon).toBeInTheDocument()
@@ -45,7 +47,9 @@ describe('ThemeToggle component', () => {
 
       render(<ThemeToggle />)
 
-      const button = screen.getByRole('button', { name: /switch to light mode/i })
+      const button = screen.getByRole('button', {
+        name: /switch to light mode/i,
+      })
       const sunIcon = screen.getByLabelText(SUN_ICON)
 
       expect(sunIcon).toBeInTheDocument()

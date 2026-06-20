@@ -6,8 +6,8 @@ const spin = keyframes`
 `
 
 type SpinnerProps = {
-  size?: number;
-};
+  size?: number
+}
 
 export const SpinnerContainer = styled.div<SpinnerProps>`
   width: ${({ size = 30 }) => `${size}px`};

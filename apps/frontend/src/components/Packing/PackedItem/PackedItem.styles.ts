@@ -14,7 +14,6 @@ export const PackedItemContainer = styled.div`
 
   .location-cell {
     grid-column: span 3;
-
   }
 
   .quantity-input {

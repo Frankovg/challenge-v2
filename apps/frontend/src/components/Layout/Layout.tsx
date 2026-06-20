@@ -11,7 +11,11 @@ type LayoutProps = {
   children: React.ReactNode
 }
 
-export const Layout: FC<LayoutProps> = ({ children }: { children: ReactNode }) => {
+export const Layout: FC<LayoutProps> = ({
+  children,
+}: {
+  children: ReactNode
+}) => {
   return (
     <>
       <Navbar />

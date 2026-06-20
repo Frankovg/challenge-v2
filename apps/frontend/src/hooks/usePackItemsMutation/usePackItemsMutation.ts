@@ -1,11 +1,11 @@
-import { useMutation, gql } from "@apollo/client"
+import { useMutation, gql } from '@apollo/client'
 
 import {
   type PackItemsMutationResponse,
   type UsePackItemsMutationType,
   type PackedPackage,
   type PackedPackages,
-} from "types"
+} from 'types'
 
 export const PACK_ITEMS_MUTATION = gql`
   mutation PackItems($data: PackItemsInput!) {
@@ -21,33 +21,34 @@ export const PACK_ITEMS_MUTATION = gql`
       }
     }
   }
-`;
+`
 
 export const usePackItemsMutation = (): UsePackItemsMutationType => {
   const [packItems, { data, loading, error }] = useMutation<
     PackItemsMutationResponse,
     { data: PackedPackages }
-  >(PACK_ITEMS_MUTATION);
+  >(PACK_ITEMS_MUTATION)
 
-  const execute = async (packages: PackedPackage[]): Promise<PackedPackages> => {
-
+  const execute = async (
+    packages: PackedPackage[],
+  ): Promise<PackedPackages> => {
     const response = await packItems({
       variables: {
         data: { packages },
       },
-    });
+    })
 
     if (!response.data) {
-      throw new Error("No data returned from pack_items mutation");
+      throw new Error('No data returned from pack_items mutation')
     }
 
-    return response.data.pack_items;
-  };
+    return response.data.pack_items
+  }
 
   return {
     packItems: execute,
     data,
     loading,
     error,
-  };
-};
+  }
+}

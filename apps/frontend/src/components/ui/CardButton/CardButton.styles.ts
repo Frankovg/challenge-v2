@@ -19,7 +19,7 @@ export const CardButtonContainer = styled.button`
     border-color var(--transition-fast),
     transform var(--transition-fast),
     box-shadow var(--transition-fast);
-    box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm);
 
   &:hover:not(:disabled) {
     background-color: var(--button-secondary-bg-hover);

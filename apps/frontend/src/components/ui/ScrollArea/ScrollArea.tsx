@@ -7,10 +7,11 @@ interface ScrollAreaProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   direction?: 'horizontal' | 'vertical'
 }
 
-export const ScrollArea: FC<ScrollAreaProps> = ({ children, direction = 'vertical' }): ReactNode => {
+export const ScrollArea: FC<ScrollAreaProps> = ({
+  children,
+  direction = 'vertical',
+}): ReactNode => {
   return (
-    <ScrollAreaContainer $direction={direction}>
-      {children}
-    </ScrollAreaContainer>
+    <ScrollAreaContainer $direction={direction}>{children}</ScrollAreaContainer>
   )
 }

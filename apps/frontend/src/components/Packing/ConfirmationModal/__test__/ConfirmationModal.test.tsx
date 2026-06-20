@@ -1,75 +1,73 @@
-import { render, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { render, screen } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
 
-import "@testing-library/jest-dom";
-import { ConfirmationModal } from "../ConfirmationModal";
+import '@testing-library/jest-dom'
+import { ConfirmationModal } from '../ConfirmationModal'
 
-describe("ConfirmationModal", () => {
+describe('ConfirmationModal', () => {
   const defaultProps = {
     close: jest.fn(),
     confirm: jest.fn(),
-    title: "Delete this item?",
-    description: "This action cannot be undone.",
-    variant: "delete" as const,
-    buttonLabel: "Delete",
+    title: 'Delete this item?',
+    description: 'This action cannot be undone.',
+    variant: 'delete' as const,
+    buttonLabel: 'Delete',
     isLoading: false,
-  };
+  }
 
   const setup = (props = {}) =>
-    render(<ConfirmationModal {...defaultProps} {...props} />);
+    render(<ConfirmationModal {...defaultProps} {...props} />)
 
-  test("renders title and description", () => {
-    setup();
-
-    expect(
-      screen.getByRole("heading", { name: /delete this item\?/i })
-    ).toBeInTheDocument();
+  test('renders title and description', () => {
+    setup()
 
     expect(
-      screen.getByText(/this action cannot be undone\./i)
-    ).toBeInTheDocument();
-  });
+      screen.getByRole('heading', { name: /delete this item\?/i }),
+    ).toBeInTheDocument()
 
-  test("renders correct button label", () => {
-    setup();
+    expect(
+      screen.getByText(/this action cannot be undone\./i),
+    ).toBeInTheDocument()
+  })
 
-    expect(screen.getByRole("button", { name: /delete/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
-  });
+  test('renders correct button label', () => {
+    setup()
 
-  test("calls close when clicking Cancel", async () => {
-    const user = userEvent.setup();
-    setup();
+    expect(screen.getByRole('button', { name: /delete/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument()
+  })
 
-    const cancelBtn = screen.getByRole("button", { name: /cancel/i });
-    await user.click(cancelBtn);
+  test('calls close when clicking Cancel', async () => {
+    const user = userEvent.setup()
+    setup()
 
-    expect(defaultProps.close).toHaveBeenCalledTimes(1);
-  });
+    const cancelBtn = screen.getByRole('button', { name: /cancel/i })
+    await user.click(cancelBtn)
 
-  test("calls confirm when clicking confirm button", async () => {
-    const user = userEvent.setup();
-    setup();
+    expect(defaultProps.close).toHaveBeenCalledTimes(1)
+  })
 
-    const confirmBtn = screen.getByRole("button", { name: /delete/i });
-    await user.click(confirmBtn);
+  test('calls confirm when clicking confirm button', async () => {
+    const user = userEvent.setup()
+    setup()
 
-    expect(defaultProps.confirm).toHaveBeenCalledTimes(1);
-  });
+    const confirmBtn = screen.getByRole('button', { name: /delete/i })
+    await user.click(confirmBtn)
 
-  test("sets button color based on variant", () => {
+    expect(defaultProps.confirm).toHaveBeenCalledTimes(1)
+  })
+
+  test('sets button color based on variant', () => {
     const { rerender } = render(
-      <ConfirmationModal {...defaultProps} variant="delete" />
-    );
+      <ConfirmationModal {...defaultProps} variant="delete" />,
+    )
 
-    let confirmBtn = screen.getByRole("button", { name: /delete/i });
-    expect(confirmBtn).toHaveAttribute("data-color", "warning");
+    let confirmBtn = screen.getByRole('button', { name: /delete/i })
+    expect(confirmBtn).toHaveAttribute('data-color', 'warning')
 
-    rerender(
-      <ConfirmationModal {...defaultProps} variant="ship" />
-    );
+    rerender(<ConfirmationModal {...defaultProps} variant="ship" />)
 
-    confirmBtn = screen.getByRole("button", { name: /delete/i });
-    expect(confirmBtn).toHaveAttribute("data-color", "success");
-  });
-});
+    confirmBtn = screen.getByRole('button', { name: /delete/i })
+    expect(confirmBtn).toHaveAttribute('data-color', 'success')
+  })
+})
