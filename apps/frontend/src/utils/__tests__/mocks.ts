@@ -5,20 +5,20 @@ export const mockLineItems: LineItemType[] = [
     id: 1,
     quantity: 10,
     sku: 'SKU-001',
-    location: 'A1'
+    location: 'A1',
   },
   {
     id: 2,
     quantity: 5,
     sku: 'SKU-002',
-    location: 'B2'
+    location: 'B2',
   },
   {
     id: 3,
     quantity: 8,
     sku: 'SKU-003',
-    location: 'C3'
-  }
+    location: 'C3',
+  },
 ]
 
 export const mockPackages: PackedItem[] = [
@@ -27,8 +27,8 @@ export const mockPackages: PackedItem[] = [
     label: 'Package 1',
     data: {
       id: 0,
-      line_items: []
-    }
+      line_items: [],
+    },
   },
   {
     value: 1,
@@ -40,16 +40,16 @@ export const mockPackages: PackedItem[] = [
           id: 2,
           quantity: 5,
           sku: 'EXISTING-SKU',
-          location: 'B2'
-        }
-      ]
-    }
-  }
+          location: 'B2',
+        },
+      ],
+    },
+  },
 ]
 
 export const mockItem: LineItemType = {
   id: 1,
   quantity: 10,
   sku: 'TEST-SKU-001',
-  location: 'A1'
+  location: 'A1',
 }
