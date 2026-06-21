@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 
+import { Barcode } from 'components/Packing/Barcode'
 import { useApp } from 'hooks/useApp'
 import { getProductByCode } from 'utils/lineItemOperations'
 
-import { Barcode } from './Barcode'
 
 jest.mock('hooks/useApp')
 jest.mock('utils/lineItemOperations')
@@ -13,11 +13,11 @@ describe('Barcode', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(useApp as jest.Mock).mockReturnValue({
-      lineItems: [{ id: 1, sku: 'ABC', quantity: 5 }],
-      selectedPackageData: { id: 10 },
-      packProduct: mockPackProduct,
-    })
+      ; (useApp as jest.Mock).mockReturnValue({
+        lineItems: [{ id: 1, sku: 'ABC', quantity: 5 }],
+        selectedPackageData: { id: 10 },
+        packProduct: mockPackProduct,
+      })
   })
 
   test('submits valid barcode and calls packProduct', async () => {

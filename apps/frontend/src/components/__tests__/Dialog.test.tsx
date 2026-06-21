@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 
-import { Dialog } from './Dialog'
+import { Dialog } from '../ui/Dialog'
 
 describe('Dialog', () => {
   it('renders children when open', () => {
     render(
-      <Dialog open onClose={() => {}}>
+      <Dialog open onClose={() => { }}>
         <div>Test Content</div>
       </Dialog>,
     )
@@ -15,7 +15,7 @@ describe('Dialog', () => {
 
   it('does not render children when closed', () => {
     render(
-      <Dialog open={false} onClose={() => {}}>
+      <Dialog open={false} onClose={() => { }}>
         <div>Test Content</div>
       </Dialog>,
     )

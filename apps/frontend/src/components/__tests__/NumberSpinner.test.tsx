@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 
-import { NumberSpinner } from './NumberSpinner'
+import { NumberSpinner } from '../ui/NumberSpinner'
 
 describe('NumberSpinner', () => {
   it('increments value when up button is clicked', () => {

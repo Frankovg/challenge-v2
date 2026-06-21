@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { default as userEvent } from '@testing-library/user-event'
 import React from 'react'
 
-import { DARK, LIGHT, MOON_ICON, SUN_ICON , ThemeToggle } from './ThemeToggle'
+import { DARK, LIGHT, MOON_ICON, SUN_ICON, ThemeToggle } from '../ThemeToggle'
 
 const mockSetTheme = jest.fn()
 const mockUseTheme = jest.fn()
