@@ -18,7 +18,7 @@ const NumberSpinnerContainer = styled.div<NumberSpinnerContainerProps>`
     font-size: 12px;
     font-weight: 500;
     color: ${({ $disabled }) =>
-      $disabled ? 'var(--text-disabled)' : 'var(--text-secondary)'};
+    $disabled ? 'var(--text-disabled)' : 'var(--text-secondary)'};
     transition: color var(--transition-base);
   }
 
@@ -36,12 +36,12 @@ const NumberSpinnerContainer = styled.div<NumberSpinnerContainerProps>`
     font-size: 13px;
     font-family: inherit;
     color: ${({ $disabled }) =>
-      $disabled ? 'var(--text-disabled)' : 'var(--text-primary)'};
+    $disabled ? 'var(--text-disabled)' : 'var(--text-primary)'};
     background-color: ${({ $disabled }) =>
-      $disabled ? 'var(--bg-tertiary)' : 'var(--bg-primary)'};
+    $disabled ? 'var(--bg-tertiary)' : 'var(--bg-primary)'};
     border: 1px solid
       ${({ $disabled }) =>
-        $disabled ? 'var(--border-tertiary)' : 'var(--border-secondary)'};
+    $disabled ? 'var(--border-tertiary)' : 'var(--border-secondary)'};
     border-radius: 6px;
     outline: none;
     transition: all var(--transition-base);
