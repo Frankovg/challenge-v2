@@ -12,6 +12,7 @@ const StyledTabs = styled.div<{ $scrollable?: boolean }>`
   min-height: 3rem;
   margin-bottom: var(--spacing-lg);
   overflow-x: ${({ $scrollable }) => ($scrollable ? 'auto' : 'visible')};
+  overflow-y: hidden;
 `
 
 const StyledTab = styled.button<{ $selected?: boolean }>`
@@ -37,7 +38,7 @@ const StyledTab = styled.button<{ $selected?: boolean }>`
     bottom: -1px;
     height: 2px;
     background-color: ${({ $selected }) =>
-      $selected ? 'var(--color-blue-600)' : 'transparent'};
+    $selected ? 'var(--color-blue-600)' : 'transparent'};
     transition: background-color var(--transition-base);
   }
 
@@ -65,7 +66,7 @@ const TabLabel = styled.span<TabLabelProps>`
   span {
     background-color: var(--status-info-bg);
     color: ${({ $isEmpty }) =>
-      $isEmpty ? 'var(--status-error-text)' : 'var(--status-info-text)'};
+    $isEmpty ? 'var(--status-error-text)' : 'var(--status-info-text)'};
     padding: var(--spacing-sm);
     border-radius: 100%;
     font-size: var(--font-size-xs);
