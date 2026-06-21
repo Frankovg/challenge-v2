@@ -1,5 +1,7 @@
 import {
   createPackage,
+  getPackedQuantityForId,
+  pickAvailableLocation,
   rebuildPackageTabs,
   selectPackage,
   updatePackageItemQuantity,
@@ -8,7 +10,7 @@ import {
 
 import { mockItem, mockLineItems, mockPackages } from './mocks'
 
-import type { PackedItem } from 'types'
+import type { LineItemType, PackedItem } from 'types'
 
 describe('createPackage', (): void => {
   it('should add a new package with incremented id and value', (): void => {
@@ -206,5 +208,80 @@ describe('updatePackageItemQuantity', () => {
 
     expect(result[0].data.line_items).toHaveLength(1)
     expect(result[0].data.line_items[0].id).toBe(2)
+  })
+})
+
+describe('getPackedQuantityForId', () => {
+  it('sums the packed quantity for a given item id', () => {
+    // mockPackages: package 1 holds item id 2 with quantity 5
+    expect(getPackedQuantityForId(mockPackages, 2)).toBe(5)
+  })
+
+  it('returns 0 when the id is not packed anywhere', () => {
+    expect(getPackedQuantityForId(mockPackages, 999)).toBe(0)
+  })
+
+  it('aggregates the same id packed across multiple packages', () => {
+    const packages: PackedItem[] = [
+      {
+        value: 0,
+        label: 'P1',
+        data: { id: 0, line_items: [{ id: 1, sku: 'X', quantity: 3, location: 'a' }] },
+      },
+      {
+        value: 1,
+        label: 'P2',
+        data: { id: 1, line_items: [{ id: 1, sku: 'X', quantity: 4, location: 'a' }] },
+      },
+    ]
+    expect(getPackedQuantityForId(packages, 1)).toBe(7)
+  })
+})
+
+describe('pickAvailableLocation', () => {
+  // Same SKU in two locations (like the mock's green-ball in a1 and a4).
+  const locations: LineItemType[] = [
+    { id: 1, sku: 'green-ball', quantity: 5, location: 'a1' },
+    { id: 99, sku: 'green-ball', quantity: 2, location: 'a4' },
+  ]
+
+  it('picks the first location while it still has stock', () => {
+    expect(pickAvailableLocation(locations, [])?.id).toBe(1)
+  })
+
+  it('falls through to the next location once the first is exhausted', () => {
+    const packages: PackedItem[] = [
+      {
+        value: 0,
+        label: 'P1',
+        // all 5 of id 1 already packed → location a1 is exhausted
+        data: {
+          id: 0,
+          line_items: [{ id: 1, sku: 'green-ball', quantity: 5, location: 'a1' }],
+        },
+      },
+    ]
+    expect(pickAvailableLocation(locations, packages)?.id).toBe(99)
+  })
+
+  it('returns null when every location is out of stock', () => {
+    const packages: PackedItem[] = [
+      {
+        value: 0,
+        label: 'P1',
+        data: {
+          id: 0,
+          line_items: [
+            { id: 1, sku: 'green-ball', quantity: 5, location: 'a1' },
+            { id: 99, sku: 'green-ball', quantity: 2, location: 'a4' },
+          ],
+        },
+      },
+    ]
+    expect(pickAvailableLocation(locations, packages)).toBeNull()
+  })
+
+  it('returns null when there are no locations', () => {
+    expect(pickAvailableLocation([], [])).toBeNull()
   })
 })

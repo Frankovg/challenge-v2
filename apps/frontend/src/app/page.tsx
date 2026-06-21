@@ -1,28 +1,11 @@
-import { gql } from '@apollo/client'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 
 import { Packing } from 'components/Packing/Packing'
 import { LineItemsProvider } from 'contexts/AppContext'
 import { APOLLO_CLIENT } from 'lib/apolloClient'
+import { LINE_ITEMS_QUERY } from 'lib/queries'
 import { LineItemsQueryType } from 'types'
-
-// SCALE: this query fetches the entire inventory in one shot. With thousands of
-// products this becomes the main bottleneck (payload size, parse, memory, and
-// rendering every row). To scale, add pagination args to the schema
-// (`line_items(limit: Int, offset: Int)` or cursor-based `first/after`) and
-// load incrementally with Apollo's `fetchMore` + an `offsetLimitPagination`
-// field policy, paired with list virtualization on the UI.
-const LINE_ITEMS_QUERY = gql`
-  query line_items {
-    line_items {
-      id
-      quantity
-      sku
-      location
-    }
-  }
-`
 
 export default async function HomePage(): Promise<ReactNode> {
   // Initial inventory is fetched server-side (RSC) and handed to the provider

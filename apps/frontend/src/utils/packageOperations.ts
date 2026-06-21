@@ -119,3 +119,52 @@ export const updatePackageItemQuantity = (
     }
   })
 }
+
+/**
+ * Sums how many units of a line item (by id) are already packed across every
+ * package. Keyed by `id`, not `sku`, on purpose: `packProduct`/the reducer
+ * mutate by `id`, so the availability check must speak about the same record
+ * the lookup resolved — otherwise non-unique SKUs (the mock has two `green-ball`
+ * rows) would mismatch the check against the mutation.
+ *
+ * SCALE: this reads the in-memory packed state on the client. Ideally the
+ * inventory and the reserved/packed amounts live in the DB and the backend
+ * returns the available quantity directly, so availability isn't recomputed
+ * client-side from a state the server doesn't actually know about.
+ */
+export const getPackedQuantityForId = (
+  packages: PackedItem[],
+  itemId: number,
+): number =>
+  packages.reduce(
+    (total, pkg) =>
+      total +
+      pkg.data.line_items
+        .filter((li) => li.id === itemId)
+        .reduce((sum, li) => sum + li.quantity, 0),
+    0,
+  )
+
+/**
+ * Multi-location pick. A SKU can live in several locations/bins, so a scan
+ * resolves to a list of records. This walks them in order and returns the first
+ * location that still has stock (inventory minus what's already packed for that
+ * id), falling through to the next once a location is exhausted. Returns null
+ * when every location is out of stock.
+ *
+ * DEMO-ONLY: the picking strategy lives on the client and is derived from
+ * in-memory state. In production the backend owns inventory-by-location and the
+ * real strategy (nearest bin, FIFO, pick path) and would return the target
+ * location directly — this is a stand-in so the demo behaves correctly.
+ */
+export const pickAvailableLocation = (
+  locations: LineItemType[],
+  packages: PackedItem[],
+): LineItemType | null => {
+  for (const location of locations) {
+    const available =
+      location.quantity - getPackedQuantityForId(packages, location.id)
+    if (available >= 1) return location
+  }
+  return null
+}

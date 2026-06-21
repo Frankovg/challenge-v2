@@ -1,18 +1,22 @@
 import type { LineItemType } from 'types'
 
 /**
- * Finds an unpacked product by its SKU.
+ * Returns every inventory record matching a SKU.
  *
- * SCALE: this is a linear scan over the full in-memory list. It's fine for the
- * current dataset, but with thousands of products a barcode scan should hit a
- * server-side lookup (`query line_item(sku: $sku)`) returning a single row,
- * instead of shipping the whole inventory to the client to filter it here.
+ * A SKU is NOT unique: the same product can live in several locations/bins
+ * (the mock has `green-ball` in both `a1` and `a4`). So a scan resolves to a
+ * list of locations, not a single row — the caller then picks which location
+ * to draw from.
+ *
+ * SCALE: linear scan over the in-memory list. With thousands of products this
+ * should be a server-side indexed lookup (`query line_items(sku: $sku)`)
+ * returning only the matching rows, not the whole inventory filtered here.
  */
-export const getProductByCode = (
+export const getProductsByCode = (
   items: LineItemType[],
   code: string,
-): LineItemType | undefined => {
-  return items.find((item) => item.sku === code)
+): LineItemType[] => {
+  return items.filter((item) => item.sku === code)
 }
 
 /** Subtracts a quantity from an item, dropping it when it reaches 0. */

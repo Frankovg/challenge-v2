@@ -1,6 +1,6 @@
 import {
   adjustLineItemsAfterUpdate,
-  getProductByCode,
+  getProductsByCode,
   reduceLineItemQuantity,
   restoreItems,
 } from '../lineItemOperations'
@@ -9,23 +9,28 @@ import { mockLineItems } from './mocks'
 
 import type { LineItemType } from 'types'
 
-describe('getProductByCode', () => {
-  it('should return the correct product when code matches', () => {
-    const result = getProductByCode(mockLineItems, 'SKU-002')
-    expect(result).toEqual({
-      id: 2,
-      quantity: 5,
-      sku: 'SKU-002',
-      location: 'B2',
-    })
+describe('getProductsByCode', () => {
+  it('returns the matching product(s) for a SKU', () => {
+    expect(getProductsByCode(mockLineItems, 'SKU-002')).toEqual([
+      { id: 2, quantity: 5, sku: 'SKU-002', location: 'B2' },
+    ])
   })
 
-  it('should return undefined when code does not match any product', () => {
-    expect(getProductByCode(mockLineItems, 'SKU-D000')).toBeUndefined()
+  it('returns every location when a SKU is not unique', () => {
+    const multi: LineItemType[] = [
+      { id: 1, quantity: 5, sku: 'green-ball', location: 'a1' },
+      { id: 2, quantity: 6, sku: 'red-ball', location: 'a2' },
+      { id: 99, quantity: 2, sku: 'green-ball', location: 'a4' },
+    ]
+    expect(getProductsByCode(multi, 'green-ball')).toEqual([
+      { id: 1, quantity: 5, sku: 'green-ball', location: 'a1' },
+      { id: 99, quantity: 2, sku: 'green-ball', location: 'a4' },
+    ])
   })
 
-  it('should return undefined when items array is empty', () => {
-    expect(getProductByCode([], 'SKU-002')).toBeUndefined()
+  it('returns an empty array when nothing matches', () => {
+    expect(getProductsByCode(mockLineItems, 'SKU-D000')).toEqual([])
+    expect(getProductsByCode([], 'SKU-002')).toEqual([])
   })
 })
 
