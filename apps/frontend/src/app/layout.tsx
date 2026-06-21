@@ -10,7 +10,7 @@ import { ApolloWrapper } from './ApolloWrapper'
 
 import type { Metadata } from 'next'
 
-import 'assets/globals/styles.css'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'UI challenge Franco Amoroso',
