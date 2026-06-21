@@ -5,21 +5,15 @@ import React, {
   useCallback,
   useMemo,
   useReducer,
-  useState,
   type ReactNode,
 } from 'react'
 
 import { useToast } from 'components/ui/Toast'
-import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
-import { sleep } from 'lib/sleep'
+import { useShipping } from 'hooks/useShipping'
 
 import { createInitialState, packingReducer } from './packingReducer'
 
-import type {
-  LineItemsContextType,
-  LineItemType,
-  PackedPackage,
-} from 'types'
+import type { LineItemsContextType, LineItemType } from 'types'
 
 const INVALID_QUANTITY = {
   title: 'Invalid quantity',
@@ -45,9 +39,7 @@ export const LineItemsProvider = ({
     initialLineItems,
     createInitialState,
   )
-  const [loading, setLoading] = useState(false)
-
-  const { packItems, error } = usePackItemsMutation()
+  const { shipPackages, loading } = useShipping(dispatch)
   const { add: addToast } = useToast()
 
   const selectedPackageData = useMemo(
@@ -132,53 +124,6 @@ export const LineItemsProvider = ({
       }
     },
     [addToast],
-  )
-
-  const shipPackages = useCallback(
-    async (items: PackedPackage[], ready: boolean): Promise<void> => {
-      if (!ready) {
-        addToast({
-          title: 'Shipping Error',
-          description: 'Complete or remove empty packages.',
-          type: 'error',
-        })
-        return
-      }
-
-      try {
-        setLoading(true)
-        if (process.env.NODE_ENV === 'development') {
-          await sleep(1000)
-        }
-
-        const result = await packItems(items)
-
-        dispatch({ type: 'CLEAR_PACKAGES' })
-
-        if (process.env.NODE_ENV === 'development')
-          console.log('Packed: ', result)
-
-        addToast({
-          title: 'Shipment created successfully',
-          description: `${items.length} package(s) ready to ship.`,
-          type: 'success',
-        })
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-          console.error(err)
-          console.error(error)
-        }
-
-        addToast({
-          title: 'Shipping Error',
-          description: 'Unable to process shipping.',
-          type: 'error',
-        })
-      } finally {
-        setLoading(false)
-      }
-    },
-    [addToast, packItems, error],
   )
 
   const resetDemo = useCallback((items: LineItemType[]): void => {
