@@ -19,6 +19,7 @@ const ScrollAreaContainer = styled.div<ScrollAreaContainerProps>`
     $direction === 'vertical' ? '0.5rem' : '0'};
   padding-bottom: ${({ $direction }) =>
     $direction === 'horizontal' ? '0.5rem' : '0'};
+  padding-top: var(--spacing-md);
 `
 
 interface ScrollAreaProps extends ButtonHTMLAttributes<HTMLButtonElement> {
