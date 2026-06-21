@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState, type Dispatch } from 'react'
+import { useCallback, type Dispatch } from 'react'
 
 import { useToast } from 'components/ui/Toast'
 import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
@@ -14,15 +14,15 @@ type UseShippingResult = {
 }
 
 /**
- * Encapsulates the ship flow: the async mutation, loading state, error
- * handling and the dev-only artificial latency. On success it clears the
- * packages through the reducer, keeping this concern out of the provider.
+ * Encapsulates the ship flow: the async mutation, loading state and error
+ * handling. On success it clears the packages through the reducer, keeping
+ * this concern out of the provider. The loading flag comes straight from
+ * Apollo's useMutation, so there's no separate local state to keep in sync.
  */
 export const useShipping = (
   dispatch: Dispatch<PackingAction>,
 ): UseShippingResult => {
-  const [loading, setLoading] = useState(false)
-  const { packItems, error } = usePackItemsMutation()
+  const { packItems, loading, error } = usePackItemsMutation()
   const { add: addToast } = useToast()
 
   const shipPackages = useCallback(
@@ -37,8 +37,6 @@ export const useShipping = (
       }
 
       try {
-        setLoading(true)
-
         const result = await packItems(items)
 
         dispatch({ type: 'CLEAR_PACKAGES' })
@@ -62,8 +60,6 @@ export const useShipping = (
           description: 'Unable to process shipping.',
           type: 'error',
         })
-      } finally {
-        setLoading(false)
       }
     },
     [dispatch, addToast, packItems, error],
