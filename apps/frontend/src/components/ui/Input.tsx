@@ -52,6 +52,7 @@ const Field = styled.div<{ $hasError?: boolean }>`
     color: var(--input-text);
     font-family: var(--font-family-base);
     font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
 
     &::placeholder {
       color: var(--input-placeholder);
