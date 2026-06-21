@@ -4,7 +4,7 @@ import { styled } from 'styled-components'
 import { SectionTitle } from 'components/Packing/SectionTitle'
 import { UnpackedItem } from 'components/Packing/UnpackedItem'
 import { ScrollArea } from 'components/ui/ScrollArea'
-import { useApp } from 'hooks/useApp'
+import { useApp } from 'contexts/AppContext'
 
 import type { AddToPackageButton, LineItemType } from 'types'
 

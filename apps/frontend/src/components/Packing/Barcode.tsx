@@ -6,7 +6,7 @@ import { styled } from 'styled-components'
 import { Button } from 'components/ui/Button'
 import { ScanBarcode } from 'components/ui/icons'
 import { Input } from 'components/ui/Input'
-import { useApp } from 'hooks/useApp'
+import { useApp } from 'contexts/AppContext'
 import { validateBarcode } from 'lib/validations'
 import { getProductByCode } from 'utils/lineItemOperations'
 

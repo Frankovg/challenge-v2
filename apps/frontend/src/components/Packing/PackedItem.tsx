@@ -4,7 +4,7 @@ import { styled } from 'styled-components'
 import { Card } from 'components/ui/Card'
 import { Trash2 } from 'components/ui/icons'
 import { NumberSpinner } from 'components/ui/NumberSpinner'
-import { useApp } from 'hooks/useApp'
+import { useApp } from 'contexts/AppContext'
 import { LineItemType } from 'types'
 
 const PackedItemContainer = styled.div`

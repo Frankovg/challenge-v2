@@ -67,7 +67,7 @@ export type LineItemsContextType = {
     newQuantity: number,
   ) => void
   shipPackages: (items: PackedPackage[], ready: boolean) => Promise<void>
-  resetDemo: (items: LineItemType[]) => void
+  resetDemo: () => void
   loading: boolean
 }
 

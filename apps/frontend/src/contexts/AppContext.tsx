@@ -3,6 +3,7 @@
 import React, {
   createContext,
   useCallback,
+  useContext,
   useMemo,
   useReducer,
   type ReactNode,
@@ -126,9 +127,12 @@ export const LineItemsProvider = ({
     [addToast],
   )
 
-  const resetDemo = useCallback((items: LineItemType[]): void => {
-    dispatch({ type: 'RESET', items })
-  }, [])
+  // `initialLineItems` is the immutable snapshot from the server fetch; the
+  // mutable `lineItems` in state shrinks as you pack, so reset replays the
+  // original. Using it here lets the demo reset without a second fetch.
+  const resetDemo = useCallback((): void => {
+    dispatch({ type: 'RESET', items: initialLineItems })
+  }, [initialLineItems])
 
   const value = useMemo<LineItemsContextType>(
     () => ({
@@ -164,4 +168,12 @@ export const LineItemsProvider = ({
   )
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
+}
+
+export const useApp = (): LineItemsContextType => {
+  const context = useContext(AppContext)
+  if (context === undefined) {
+    throw new Error('useLineItems must be used within a LineItemsProvider')
+  }
+  return context
 }

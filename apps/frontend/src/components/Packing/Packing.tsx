@@ -3,8 +3,8 @@
 import React, { type ReactNode } from 'react'
 import { styled } from 'styled-components'
 
-import { useApp } from 'hooks/useApp'
-import { useLineItemsQuery } from 'hooks/useLineItemsQuery'
+import { useApp } from 'contexts/AppContext'
+
 
 import { PackedSection } from './PackedSection'
 import { UnpackedSection } from './UnpackedSection'
@@ -38,20 +38,14 @@ const PackingWrapper = styled.div`
 `
 
 export const Packing = (): ReactNode => {
-  const { lineItems } = useLineItemsQuery()
   const { resetDemo } = useApp()
-
-  const handleResetDemo = () => {
-    if (lineItems.length === 0) return
-    resetDemo(lineItems)
-  }
 
   return (
     <PackingWrapper>
       <UnpackedSection />
       <PackedSection />
-      {process.env.NODE_ENV === 'development' && lineItems.length > 0 && (
-        <button className="reset-button" onClick={handleResetDemo}>
+      {process.env.NODE_ENV === 'development' && (
+        <button className="reset-button" onClick={resetDemo}>
           RESET DEMO
         </button>
       )}

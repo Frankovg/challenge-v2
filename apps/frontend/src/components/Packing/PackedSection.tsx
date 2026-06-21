@@ -11,7 +11,7 @@ import { Dialog } from 'components/ui/Dialog'
 import { Box } from 'components/ui/icons'
 import { ScrollArea } from 'components/ui/ScrollArea'
 import { Tabs } from 'components/ui/Tabs'
-import { useApp } from 'hooks/useApp'
+import { useApp } from 'contexts/AppContext'
 
 import type { PackedPackage } from 'types'
 

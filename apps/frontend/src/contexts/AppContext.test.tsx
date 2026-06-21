@@ -1,9 +1,8 @@
 import { render, screen, renderHook, act } from '@testing-library/react'
 
-import { useApp } from 'hooks/useApp'
+import { useApp , LineItemsProvider } from 'contexts/AppContext'
 import { LineItemType } from 'types'
 
-import { LineItemsProvider } from './AppContext'
 
 jest.mock('components/ui/Toast', () => ({
   useToast: () => ({ add: jest.fn(), remove: jest.fn(), toasts: [] }),

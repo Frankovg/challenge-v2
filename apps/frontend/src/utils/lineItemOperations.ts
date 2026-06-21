@@ -1,6 +1,13 @@
 import type { LineItemType } from 'types'
 
-/** Finds an unpacked product by its SKU. */
+/**
+ * Finds an unpacked product by its SKU.
+ *
+ * SCALE: this is a linear scan over the full in-memory list. It's fine for the
+ * current dataset, but with thousands of products a barcode scan should hit a
+ * server-side lookup (`query line_item(sku: $sku)`) returning a single row,
+ * instead of shipping the whole inventory to the client to filter it here.
+ */
 export const getProductByCode = (
   items: LineItemType[],
   code: string,

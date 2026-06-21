@@ -1,11 +1,11 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 
 import { Barcode } from 'components/Packing/Barcode'
-import { useApp } from 'hooks/useApp'
+import { useApp } from 'contexts/AppContext'
 import { getProductByCode } from 'utils/lineItemOperations'
 
 
-jest.mock('hooks/useApp')
+jest.mock('contexts/AppContext')
 jest.mock('utils/lineItemOperations')
 
 describe('Barcode', () => {
