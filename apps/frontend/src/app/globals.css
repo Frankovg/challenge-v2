@@ -187,19 +187,19 @@
   --input-text: #e3f2fd;
   --input-placeholder: #5a7a8f;
 
-  --status-success-bg: rgba(76, 175, 80, 0.12);
+  --status-success-bg: rgb(28, 66, 29);
   --status-success-text: #81c784;
   --status-success-border: var(--color-green-700);
 
-  --status-warning-bg: rgba(255, 152, 0, 0.12);
+  --status-warning-bg: rgb(105, 64, 3);
   --status-warning-text: #ffb74d;
   --status-warning-border: var(--color-orange-700);
 
-  --status-error-bg: rgba(244, 67, 54, 0.12);
+  --status-error-bg: rgba(71, 18, 14, 0.999);
   --status-error-text: #e57373;
   --status-error-border: var(--color-red-700);
 
-  --status-info-bg: rgba(33, 150, 243, 0.12);
+  --status-info-bg: rgba(11, 55, 91, 0.998);
   --status-info-text: #64b5f6;
   --status-info-border: #1976d2;
 
