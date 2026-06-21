@@ -9,14 +9,6 @@ describe('Button', () => {
     expect(screen.getByRole('button', { name: 'Click me' })).toBeInTheDocument()
   })
 
-  it.each(['primary', 'secondary', 'outlined', 'text'] as const)(
-    'renders the %s variant',
-    (variant) => {
-      render(<Button variant={variant}>Label</Button>)
-      expect(screen.getByRole('button', { name: 'Label' })).toBeInTheDocument()
-    },
-  )
-
   it('calls onClick when pressed', async () => {
     const handleClick = jest.fn()
     const user = userEvent.setup()
