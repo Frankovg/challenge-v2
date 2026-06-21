@@ -2,7 +2,7 @@
 
 import { useCallback, type Dispatch } from 'react'
 
-import { useToast } from 'components/ui/Toast'
+import { useToast } from 'components/ui/toast/ToastProvider'
 import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
 
 import type { PackingAction } from 'contexts/packingReducer'
@@ -13,12 +13,6 @@ type UseShippingResult = {
   loading: boolean
 }
 
-/**
- * Encapsulates the ship flow: the async mutation, loading state and error
- * handling. On success it clears the packages through the reducer, keeping
- * this concern out of the provider. The loading flag comes straight from
- * Apollo's useMutation, so there's no separate local state to keep in sync.
- */
 export const useShipping = (
   dispatch: Dispatch<PackingAction>,
 ): UseShippingResult => {

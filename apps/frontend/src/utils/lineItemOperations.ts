@@ -1,17 +1,7 @@
 import type { LineItemType } from 'types'
 
-/**
- * Returns every inventory record matching a SKU.
- *
- * A SKU is NOT unique: the same product can live in several locations/bins
- * (the mock has `green-ball` in both `a1` and `a4`). So a scan resolves to a
- * list of locations, not a single row — the caller then picks which location
- * to draw from.
- *
- * SCALE: linear scan over the in-memory list. With thousands of products this
- * should be a server-side indexed lookup (`query line_items(sku: $sku)`)
- * returning only the matching rows, not the whole inventory filtered here.
- */
+// This is just for the demo. Searching like this should really be the backend's
+// job, but right now it's not ready for that.
 export const getProductsByCode = (
   items: LineItemType[],
   code: string,
@@ -19,7 +9,7 @@ export const getProductsByCode = (
   return items.filter((item) => item.sku === code)
 }
 
-/** Subtracts a quantity from an item, dropping it when it reaches 0. */
+// Subtracts a quantity from an item, dropping it when it reaches 0.
 export const reduceLineItemQuantity = (
   lineItems: LineItemType[],
   itemId: number,
@@ -40,7 +30,7 @@ export const reduceLineItemQuantity = (
   }, [])
 }
 
-/** Returns items to the unpacked list, merging into existing entries. */
+// Returns items to the unpacked list.
 export const restoreItems = (
   items: LineItemType[],
   itemsToReturn: LineItemType[],
@@ -63,12 +53,7 @@ export const restoreItems = (
   return updatedItems
 }
 
-/**
- * Reconciles the unpacked list after a packed item's quantity changes.
- * - newQuantity 0: the whole packed amount returns to the unpacked list.
- * - quantityDiff > 0: the freed amount is added back.
- * - quantityDiff < 0: the extra packed amount is taken from the unpacked list.
- */
+// Reconciles the unpacked list after a packed item's quantity changes.
 export const adjustLineItemsAfterUpdate = (
   lineItems: LineItemType[],
   itemToUpdate: LineItemType,

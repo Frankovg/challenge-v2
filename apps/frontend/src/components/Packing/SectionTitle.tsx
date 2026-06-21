@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { styled } from 'styled-components'
 
 const SectionTitleContainer = styled.div`
@@ -15,7 +14,7 @@ type Props = {
   subtitle?: string
 }
 
-export const SectionTitle: FC<Props> = (props) => {
+export const SectionTitle = (props: Props) => {
   const { title, subtitle } = props
   return (
     <SectionTitleContainer>

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 
-import { PackageButtons } from 'components/Packing/PackageButtons'
+import { PackageButtons } from 'components/packing/PackageButtons'
 
 describe('PackageButtons', () => {
   const mockAdd = jest.fn()

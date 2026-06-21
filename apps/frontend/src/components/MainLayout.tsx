@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { styled } from 'styled-components'
 
 import { Footer } from 'components/ui/Footer'
@@ -23,14 +23,12 @@ const Main = styled.main`
 `
 
 type LayoutProps = {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-export const Layout: FC<LayoutProps> = ({
+export const MainLayout = ({
   children,
-}: {
-  children: ReactNode
-}) => {
+}: LayoutProps) => {
   return (
     <Root>
       <Navbar />

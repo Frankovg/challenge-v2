@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
-import { UnpackedItem } from 'components/Packing/UnpackedItem'
+import { UnpackedItem } from 'components/packing/UnpackedItem'
 
 describe('UnpackedItem', () => {
   const mockHandleClick = jest.fn()

@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { styled } from 'styled-components'
 
 const LogoSvg = styled.svg`
@@ -12,7 +12,7 @@ const LogoSvg = styled.svg`
   }
 `
 
-export const Logo: FC = (): ReactNode => {
+export const Logo = (): ReactNode => {
   return (
     <LogoSvg
       width="265"

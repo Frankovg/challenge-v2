@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { styled } from 'styled-components'
 
 const CardContainer = styled.div`
@@ -21,6 +21,6 @@ type Props = {
   content: ReactNode
 }
 
-export const Card: FC<Props> = (props) => {
+export const Card = (props: Props) => {
   return <CardContainer>{props.content}</CardContainer>
 }

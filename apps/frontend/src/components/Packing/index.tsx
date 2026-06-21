@@ -5,9 +5,9 @@ import { styled } from 'styled-components'
 
 import { useApp } from 'contexts/AppContext'
 
-
 import { PackedSection } from './PackedSection'
 import { UnpackedSection } from './UnpackedSection'
+
 
 const PackingWrapper = styled.div`
   display: flex;
@@ -44,6 +44,8 @@ export const Packing = (): ReactNode => {
     <PackingWrapper>
       <UnpackedSection />
       <PackedSection />
+
+      {/* // This is just for the demo so you can reset the state without reloading the page. */}
       {process.env.NODE_ENV === 'development' && (
         <button className="reset-button" onClick={resetDemo}>
           RESET DEMO

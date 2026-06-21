@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { styled } from 'styled-components'
 
 import { ChevronDown, ChevronUp } from 'components/ui/icons'
@@ -133,14 +133,14 @@ type NumberSpinnerProps = {
   onChange?: (value: number) => void
 }
 
-export const NumberSpinner: FC<NumberSpinnerProps> = ({
+export const NumberSpinner = ({
   label,
   value = 0,
   min = 0,
   max = Number.MAX_SAFE_INTEGER,
   disabled = false,
   onChange,
-}): ReactNode => {
+}: NumberSpinnerProps): ReactNode => {
   const handleIncrement = (): void => {
     if (disabled) return
     const newValue = Math.min(value + 1, max)

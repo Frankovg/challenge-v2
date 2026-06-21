@@ -1,6 +1,6 @@
 'use client'
 
-import { type FC, type ReactNode, useEffect } from 'react'
+import { type ReactNode, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { styled } from 'styled-components'
 
@@ -38,13 +38,13 @@ type Props = {
   ariaDescribedBy?: string
 }
 
-export const Dialog: FC<Props> = ({
+export const Dialog = ({
   open,
   onClose,
   children,
   ariaLabelledBy,
   ariaDescribedBy,
-}) => {
+}: Props) => {
   useEffect(() => {
     if (!open) return
 

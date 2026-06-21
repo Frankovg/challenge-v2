@@ -43,21 +43,17 @@ export type PackingAction =
   | { type: 'ADD_PACKAGE' }
   | { type: 'REMOVE_PACKAGE'; packageId: number; force?: boolean }
   | {
-      type: 'UPDATE_ITEM_QUANTITY'
-      packageId: number
-      itemId: number
-      newQuantity: number
-    }
+    type: 'UPDATE_ITEM_QUANTITY'
+    packageId: number
+    itemId: number
+    newQuantity: number
+  }
   | { type: 'SELECT_PACKAGE'; index: number }
   | { type: 'RESET'; items: LineItemType[] }
   | { type: 'CLEAR_PACKAGES' }
 
-/**
- * Single source of truth for packing state transitions. Pure and synchronous:
- * every case returns a fully-reconciled state so `packages` and `lineItems`
- * never drift out of sync. Validation and side effects (toasts, async ship)
- * live in the provider, not here.
- */
+
+// Single source of truth for packing state transitions.
 export const packingReducer = (
   state: PackingState,
   action: PackingAction,
@@ -91,7 +87,7 @@ export const packingReducer = (
       const hasItems = itemsToReturn.length > 0
       const isSinglePackage = state.packages.length === 1
 
-      // Never drop the only empty package, nor a non-empty one without force.
+      // Never drop the only empty package, or a non-empty one without force.
       if ((isSinglePackage && !hasItems) || (hasItems && !force)) return state
 
       const lineItems = hasItems

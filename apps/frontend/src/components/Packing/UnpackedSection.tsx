@@ -1,8 +1,8 @@
 import { useCallback, type ReactNode } from 'react'
 import { styled } from 'styled-components'
 
-import { SectionTitle } from 'components/Packing/SectionTitle'
-import { UnpackedItem } from 'components/Packing/UnpackedItem'
+import { SectionTitle } from 'components/packing/SectionTitle'
+import { UnpackedItem } from 'components/packing/UnpackedItem'
 import { ScrollArea } from 'components/ui/ScrollArea'
 import { useApp } from 'contexts/AppContext'
 

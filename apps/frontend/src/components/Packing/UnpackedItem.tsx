@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { styled } from 'styled-components'
 
 import { Card } from 'components/ui/Card'
@@ -62,7 +61,7 @@ type Props = {
   handleClick: (q: AddToPackageButton) => void
 }
 
-export const UnpackedItem: FC<Props> = (props) => {
+export const UnpackedItem = (props: Props) => {
   const { item, handleClick } = props
 
   return (

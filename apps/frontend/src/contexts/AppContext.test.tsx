@@ -4,7 +4,7 @@ import { useApp , LineItemsProvider } from 'contexts/AppContext'
 import { LineItemType } from 'types'
 
 
-jest.mock('components/ui/Toast', () => ({
+jest.mock('components/ui/toast/ToastProvider', () => ({
   useToast: () => ({ add: jest.fn(), remove: jest.fn(), toasts: [] }),
 }))
 

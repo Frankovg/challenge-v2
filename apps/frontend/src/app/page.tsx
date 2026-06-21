@@ -1,17 +1,15 @@
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 
-import { Packing } from 'components/Packing/Packing'
+import { Packing } from 'components/packing'
 import { LineItemsProvider } from 'contexts/AppContext'
 import { APOLLO_CLIENT } from 'lib/apolloClient'
 import { LINE_ITEMS_QUERY } from 'lib/queries'
 import { LineItemsQueryType } from 'types'
 
 export default async function HomePage(): Promise<ReactNode> {
-  // Initial inventory is fetched server-side (RSC) and handed to the provider
-  // as the single source. SCALE: this loads the whole inventory at once — for
-  // thousands of products, paginate via `searchParams` (limit/offset) here and
-  // stream pages. Reads stay in RSC/Apollo; Server Actions are for mutations.
+  // In a real app this would probably need pagination plus Apollo's or
+  // React Query's cache to avoid loading everything at once.
   const { data, error } = await APOLLO_CLIENT.query<LineItemsQueryType>({
     query: LINE_ITEMS_QUERY,
     fetchPolicy: 'network-only',

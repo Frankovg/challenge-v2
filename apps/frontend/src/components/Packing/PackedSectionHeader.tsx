@@ -1,9 +1,8 @@
-import { type FC } from 'react'
 import { styled } from 'styled-components'
 
-import { Barcode } from 'components/Packing/Barcode'
-import { PackageButtons } from 'components/Packing/PackageButtons'
-import { SectionTitle } from 'components/Packing/SectionTitle'
+import { Barcode } from 'components/packing/Barcode'
+import { PackageButtons } from 'components/packing/PackageButtons'
+import { SectionTitle } from 'components/packing/SectionTitle'
 import { Button } from 'components/ui/Button'
 
 
@@ -34,7 +33,7 @@ type Props = {
   handleRemovePackage: VoidFunction
 }
 
-export const PackedSectionHeader: FC<Props> = (props) => {
+export const PackedSectionHeader = (props: Props) => {
   const {
     quantityPackages,
     disabledShipping,

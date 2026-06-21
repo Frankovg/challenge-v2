@@ -1,13 +1,13 @@
 'use client'
 
-import { type FormEvent, useState } from 'react'
+import { type SubmitEvent, useState } from 'react'
 import { styled } from 'styled-components'
 
 import { findProductsBySku } from 'app/actions'
 import { Button } from 'components/ui/Button'
 import { ScanBarcode } from 'components/ui/icons'
 import { Input } from 'components/ui/Input'
-import { useToast } from 'components/ui/Toast'
+import { useToast } from 'components/ui/toast/ToastProvider'
 import { useApp } from 'contexts/AppContext'
 import { validateBarcode } from 'lib/validations'
 import { pickAvailableLocation } from 'utils/packageOperations'
@@ -33,20 +33,22 @@ const BarcodeForm = styled.form`
 export const Barcode = () => {
   const { packages, selectedPackageData, packProduct } = useApp()
   const { add: addToast } = useToast()
+
   const [barcode, setBarcode] = useState('')
+
+  // Error and loading states should be managed for Apollo mutations or React Query hooks,
+  // but in this demo the picking strategy lives on the client and is derived from
+  // in memory state.
   const [error, setError] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
 
   const selectedPackageId = selectedPackageData?.id ?? 0
 
   const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>,
+    event: SubmitEvent<HTMLFormElement>,
   ): Promise<void> => {
     event.preventDefault()
 
-    // Guard against double submit (fast scanners / double Enter): two in-flight
-    // lookups would both read the same pre-pack `packages` and bypass the
-    // availability check.
     if (pending) return
 
     const value = barcode.trim()
@@ -60,22 +62,20 @@ export const Barcode = () => {
 
     setPending(true)
     try {
-      // Server-side lookup: resolves the SKU to its location records on the
-      // server instead of filtering the whole inventory in the browser.
+      // In real life this filter should be done by the backend,
+      // but the mock doesn't track packed stock so availability
+      // is derived in-memory here.
       const locations = await findProductsBySku(value)
 
       if (locations.length === 0) {
-        // Unknown SKU — reuses the provider's "Product not found" toast.
         packProduct(undefined, selectedPackageId, 1)
         setBarcode('')
         setError(null)
         return
       }
 
-      // A SKU spans multiple locations: pick the first one with stock left
-      // (drawing down a location, then falling through to the next). The mock
-      // doesn't track packed stock, so availability is derived in-memory here;
-      // ideally the backend owns inventory-by-location and the pick strategy.
+      // If the SKU spans multiple locations, it picks the first one with stock left.
+      // Ideally the backend owns inventory-by-location and the pick strategy.
       const target = pickAvailableLocation(locations, packages)
 
       if (!target) {

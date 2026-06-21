@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { useMemo } from 'react'
 import { styled } from 'styled-components'
 
 import { Card } from 'components/ui/Card'
@@ -52,7 +52,7 @@ type Props = {
   item: LineItemType
 }
 
-export const PackedItem: FC<Props> = (props) => {
+export const PackedItem = (props: Props) => {
   const { item } = props
   const { lineItems, selectedPackageData, updateItemQuantity } = useApp()
 

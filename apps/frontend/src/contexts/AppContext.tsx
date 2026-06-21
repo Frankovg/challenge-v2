@@ -9,7 +9,7 @@ import React, {
   type ReactNode,
 } from 'react'
 
-import { useToast } from 'components/ui/Toast'
+import { useToast } from 'components/ui/toast/ToastProvider'
 import { useShipping } from 'hooks/useShipping'
 
 import { createInitialState, packingReducer } from './packingReducer'
@@ -127,9 +127,7 @@ export const LineItemsProvider = ({
     [addToast],
   )
 
-  // `initialLineItems` is the immutable snapshot from the server fetch; the
-  // mutable `lineItems` in state shrinks as you pack, so reset replays the
-  // original. Using it here lets the demo reset without a second fetch.
+  // Just an extra for a demo to reset back to the initial state without refetching.
   const resetDemo = useCallback((): void => {
     dispatch({ type: 'RESET', items: initialLineItems })
   }, [initialLineItems])

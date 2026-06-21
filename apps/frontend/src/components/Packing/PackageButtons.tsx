@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { styled } from 'styled-components'
 
 import { IconButton } from 'components/ui/IconButton'
@@ -16,11 +15,11 @@ type Props = {
   disabledRemove?: boolean
 }
 
-export const PackageButtons: FC<Props> = ({
+export const PackageButtons = ({
   add,
   remove,
   disabledRemove = false,
-}) => {
+}: Props) => {
   return (
     <PackageButtonsContainer>
       <Tooltip title="Add Package">

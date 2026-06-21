@@ -1,13 +1,13 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 
 import { findProductsBySku } from 'app/actions'
-import { Barcode } from 'components/Packing/Barcode'
+import { Barcode } from 'components/packing/Barcode'
 import { useApp } from 'contexts/AppContext'
 
 jest.mock('contexts/AppContext')
 jest.mock('app/actions')
 const mockAddToast = jest.fn()
-jest.mock('components/ui/Toast', () => ({
+jest.mock('components/ui/toast/ToastProvider', () => ({
   useToast: () => ({ add: mockAddToast }),
 }))
 

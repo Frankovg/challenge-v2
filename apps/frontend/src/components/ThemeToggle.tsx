@@ -1,7 +1,7 @@
 'use client'
 
 import { useTheme } from 'next-themes'
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { IconButton } from 'components/ui/IconButton'
 import { MoonIcon, SunIcon } from 'components/ui/icons'
@@ -12,7 +12,7 @@ export const LIGHT = 'light'
 export const MOON_ICON = 'Moon icon'
 export const SUN_ICON = 'Sun icon'
 
-export const ThemeToggle: FC = () => {
+export const ThemeToggle = () => {
   const [mounted, setMounted] = useState(false)
   const { resolvedTheme, setTheme } = useTheme()
 

@@ -1,6 +1,5 @@
 'use client'
 
-import { type FC } from 'react'
 import { styled } from 'styled-components'
 
 import type { PackedItem } from 'types'
@@ -86,13 +85,13 @@ type Props = {
   variant?: 'standard' | 'scrollable' | 'fullWidth'
 }
 
-export const Tabs: FC<Props> = ({
+export const Tabs = ({
   tabs,
   value,
   onChange,
   'aria-label': ariaLabel,
   variant = 'standard',
-}) => {
+}: Props) => {
   return (
     <StyledTabs
       role="tablist"

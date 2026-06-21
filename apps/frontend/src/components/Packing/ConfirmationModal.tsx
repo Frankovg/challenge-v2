@@ -1,4 +1,3 @@
-import { type FC } from 'react'
 import { styled } from 'styled-components'
 
 import { Button } from 'components/ui/Button'
@@ -34,7 +33,7 @@ type Props = {
   isLoading?: boolean
 }
 
-export const ConfirmationModal: FC<Props> = ({
+export const ConfirmationModal = ({
   close,
   confirm,
   title,
@@ -42,7 +41,7 @@ export const ConfirmationModal: FC<Props> = ({
   variant,
   buttonLabel = 'Confirm',
   isLoading = false,
-}) => {
+}: Props) => {
   const buttonColor = variant === 'delete' ? 'warning' : 'success'
 
   return (

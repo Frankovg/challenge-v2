@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
+import { ButtonHTMLAttributes, ReactNode } from 'react'
 import { styled } from 'styled-components'
 
 interface ScrollAreaContainerProps {
@@ -27,10 +27,10 @@ interface ScrollAreaProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   direction?: 'horizontal' | 'vertical'
 }
 
-export const ScrollArea: FC<ScrollAreaProps> = ({
+export const ScrollArea = ({
   children,
   direction = 'vertical',
-}): ReactNode => {
+}: ScrollAreaProps): ReactNode => {
   return (
     <ScrollAreaContainer $direction={direction}>{children}</ScrollAreaContainer>
   )

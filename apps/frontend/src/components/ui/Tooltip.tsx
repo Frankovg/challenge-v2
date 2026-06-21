@@ -1,6 +1,6 @@
 'use client'
 
-import { type FC, type ReactElement, type ReactNode, useState } from 'react'
+import { type ReactElement, type ReactNode, useState } from 'react'
 import { styled } from 'styled-components'
 
 const TooltipWrapper = styled.span`
@@ -47,7 +47,7 @@ type Props = {
   placement?: 'top' | 'bottom'
 }
 
-export const Tooltip: FC<Props> = ({ title, children, placement = 'top' }) => {
+export const Tooltip = ({ title, children, placement = 'top' }: Props) => {
   const [open, setOpen] = useState(false)
 
   const show = (): void => setOpen(true)

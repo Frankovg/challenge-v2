@@ -2,8 +2,9 @@ import { Readex_Pro as FontSans } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import React, { type ReactNode } from 'react'
 
-import { Layout } from 'components/Layout'
-import { Toast, ToastProvider } from 'components/ui/Toast'
+import { MainLayout } from 'components/MainLayout'
+import { Toast } from 'components/ui/toast'
+import { ToastProvider } from 'components/ui/toast/ToastProvider'
 import StyledComponentsRegistry from 'lib/StyledComponentsRegistry'
 
 import { ApolloWrapper } from './ApolloWrapper'
@@ -34,7 +35,7 @@ export default function RootLayout({
           <StyledComponentsRegistry>
             <ApolloWrapper>
               <ToastProvider>
-                <Layout>{children}</Layout>
+                <MainLayout>{children}</MainLayout>
                 <Toast />
               </ToastProvider>
             </ApolloWrapper>
