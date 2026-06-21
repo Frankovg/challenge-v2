@@ -18,10 +18,9 @@ const PackingWrapper = styled.div`
 
   .reset-button {
     position: fixed;
-    bottom: 0;
-    left: 0;
+    bottom: 1rem;
+    right: 2rem;
     padding: var(--spacing-md);
-    margin: 0 0 var(--spacing-md) var(--spacing-lg);
     border: none;
     border-radius: var(--radius-xl);
     background-color: var(--color-orange-500);
