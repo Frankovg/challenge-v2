@@ -4,6 +4,7 @@ import React, {
   createContext,
   useCallback,
   useMemo,
+  useReducer,
   useState,
   type ReactNode,
 } from 'react'
@@ -11,36 +12,20 @@ import React, {
 import { useToast } from 'components/ui/Toast'
 import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
 import { sleep } from 'lib/sleep'
-import {
-  adjustLineItemsAfterUpdate,
-  reduceLineItemQuantity,
-  restoreItems,
-} from 'utils/lineItemOperations'
-import {
-  createPackage,
-  rebuildPackageTabs,
-  selectPackage,
-  updatePackageItemQuantity,
-  updatePackagesWithItem,
-} from 'utils/packageOperations'
+
+import { createInitialState, packingReducer } from './packingReducer'
 
 import type {
   LineItemsContextType,
-  PackedItem,
   LineItemType,
   PackedPackage,
 } from 'types'
 
-const INITIAL_PACKAGE: PackedItem[] = [
-  {
-    value: 0,
-    label: 'Package 1',
-    data: {
-      id: 0,
-      line_items: [],
-    },
-  },
-]
+const INVALID_QUANTITY = {
+  title: 'Invalid quantity',
+  description: 'Please enter a valid amount.',
+  type: 'error',
+} as const
 
 export const AppContext = createContext<LineItemsContextType | undefined>(
   undefined,
@@ -55,13 +40,14 @@ export const LineItemsProvider = ({
   children,
   initialLineItems,
 }: LineItemsProviderProps): ReactNode => {
-  const [packages, setPackages] = useState<PackedItem[]>(INITIAL_PACKAGE)
-  const [lineItems, setLineItems] = useState<LineItemType[]>(initialLineItems)
-  const [selectedPackageIndex, setSelectedPackageIndex] = useState(0)
+  const [{ lineItems, packages, selectedPackageIndex }, dispatch] = useReducer(
+    packingReducer,
+    initialLineItems,
+    createInitialState,
+  )
   const [loading, setLoading] = useState(false)
 
   const { packItems, error } = usePackItemsMutation()
-
   const { add: addToast } = useToast()
 
   const selectedPackageData = useMemo(
@@ -76,6 +62,10 @@ export const LineItemsProvider = ({
     )
     return allItemsPacked && allPackagesCompleted
   }, [lineItems, packages])
+
+  const setSelectedPackageIndex = useCallback((index: number): void => {
+    dispatch({ type: 'SELECT_PACKAGE', index })
+  }, [])
 
   const packProduct = useCallback(
     (
@@ -93,18 +83,11 @@ export const LineItemsProvider = ({
       }
 
       if (quantity <= 0 || quantity > item.quantity) {
-        addToast({
-          title: 'Invalid quantity',
-          description: 'Please enter a valid amount.',
-          type: 'error',
-        })
+        addToast(INVALID_QUANTITY)
         return
       }
 
-      setPackages((prev) =>
-        updatePackagesWithItem(prev, item, packageId, quantity),
-      )
-      setLineItems((prev) => reduceLineItemQuantity(prev, item.id, quantity))
+      dispatch({ type: 'PACK_PRODUCT', item, packageId, quantity })
 
       addToast({
         title: 'Product packed',
@@ -116,7 +99,7 @@ export const LineItemsProvider = ({
   )
 
   const addPackage = useCallback((): void => {
-    setPackages((prev) => createPackage(prev))
+    dispatch({ type: 'ADD_PACKAGE' })
     addToast({
       title: 'Package created',
       description: 'New package created successfully.',
@@ -126,70 +109,19 @@ export const LineItemsProvider = ({
 
   const removePackage = useCallback(
     (packageId: number, force = false): void => {
-      const packageToRemove = packages.find((pkg) => pkg.data.id === packageId)
-      if (!packageToRemove) return
-
-      const itemsToReturn = [...packageToRemove.data.line_items]
-      const hasItems = itemsToReturn.length > 0
-      const isSinglePackage = packages.length === 1
-
-      if ((isSinglePackage && !hasItems) || (hasItems && !force)) return
-
-      if (isSinglePackage) {
-        setPackages(INITIAL_PACKAGE)
-        setSelectedPackageIndex(0)
-        if (hasItems) {
-          setLineItems((prevItems) => restoreItems(prevItems, itemsToReturn))
-        }
-        return
-      }
-
-      const removedPackageIndex = packages.findIndex(
-        (pkg) => pkg.data.id === packageId,
-      )
-
-      setPackages((prev) => rebuildPackageTabs(prev, packageId))
-      setSelectedPackageIndex((prevIndex) =>
-        selectPackage(removedPackageIndex, prevIndex, packages.length),
-      )
-
-      if (hasItems)
-        setLineItems((prevItems) => restoreItems(prevItems, itemsToReturn))
+      dispatch({ type: 'REMOVE_PACKAGE', packageId, force })
     },
-    [packages],
+    [],
   )
 
   const updateItemQuantity = useCallback(
     (packageId: number, itemId: number, newQuantity: number): void => {
       if (newQuantity < 0) {
-        addToast({
-          title: 'Invalid quantity',
-          description: 'Please enter a valid amount.',
-          type: 'error',
-        })
+        addToast(INVALID_QUANTITY)
         return
       }
 
-      const targetPackage = packages.find((pkg) => pkg.data.id === packageId)
-      const itemToUpdate = targetPackage?.data.line_items.find(
-        (li) => li.id === itemId,
-      )
-      if (!itemToUpdate) return
-
-      const quantityDiff = itemToUpdate.quantity - newQuantity
-
-      setPackages((prev) =>
-        updatePackageItemQuantity(prev, packageId, itemId, newQuantity),
-      )
-      setLineItems((prevItems) =>
-        adjustLineItemsAfterUpdate(
-          prevItems,
-          itemToUpdate,
-          itemId,
-          newQuantity,
-          quantityDiff,
-        ),
-      )
+      dispatch({ type: 'UPDATE_ITEM_QUANTITY', packageId, itemId, newQuantity })
 
       if (newQuantity === 0) {
         addToast({
@@ -199,11 +131,11 @@ export const LineItemsProvider = ({
         })
       }
     },
-    [packages, addToast],
+    [addToast],
   )
 
   const shipPackages = useCallback(
-    async (items: PackedPackage[], ready: boolean) => {
+    async (items: PackedPackage[], ready: boolean): Promise<void> => {
       if (!ready) {
         addToast({
           title: 'Shipping Error',
@@ -221,8 +153,7 @@ export const LineItemsProvider = ({
 
         const result = await packItems(items)
 
-        setPackages(INITIAL_PACKAGE)
-        setSelectedPackageIndex(0)
+        dispatch({ type: 'CLEAR_PACKAGES' })
 
         if (process.env.NODE_ENV === 'development')
           console.log('Packed: ', result)
@@ -250,31 +181,42 @@ export const LineItemsProvider = ({
     [addToast, packItems, error],
   )
 
-  const resetDemo = useCallback((items: LineItemType[]) => {
-    setLineItems(items)
-    setSelectedPackageIndex(0)
-    setPackages(INITIAL_PACKAGE)
+  const resetDemo = useCallback((items: LineItemType[]): void => {
+    dispatch({ type: 'RESET', items })
   }, [])
 
-  return (
-    <AppContext.Provider
-      value={{
-        lineItems,
-        packages,
-        selectedPackageIndex,
-        setSelectedPackageIndex,
-        selectedPackageData,
-        readyForShipping,
-        packProduct,
-        addPackage,
-        removePackage,
-        updateItemQuantity,
-        shipPackages,
-        resetDemo,
-        loading,
-      }}
-    >
-      {children}
-    </AppContext.Provider>
+  const value = useMemo<LineItemsContextType>(
+    () => ({
+      lineItems,
+      packages,
+      selectedPackageIndex,
+      setSelectedPackageIndex,
+      selectedPackageData,
+      readyForShipping,
+      packProduct,
+      addPackage,
+      removePackage,
+      updateItemQuantity,
+      shipPackages,
+      resetDemo,
+      loading,
+    }),
+    [
+      lineItems,
+      packages,
+      selectedPackageIndex,
+      setSelectedPackageIndex,
+      selectedPackageData,
+      readyForShipping,
+      packProduct,
+      addPackage,
+      removePackage,
+      updateItemQuantity,
+      shipPackages,
+      resetDemo,
+      loading,
+    ],
   )
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
