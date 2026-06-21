@@ -4,7 +4,6 @@ import { useCallback, useState, type Dispatch } from 'react'
 
 import { useToast } from 'components/ui/Toast'
 import { usePackItemsMutation } from 'hooks/usePackItemsMutation'
-import { sleep } from 'lib/sleep'
 
 import type { PackingAction } from 'contexts/packingReducer'
 import type { PackedPackage } from 'types'
@@ -39,9 +38,6 @@ export const useShipping = (
 
       try {
         setLoading(true)
-        if (process.env.NODE_ENV === 'development') {
-          await sleep(1000)
-        }
 
         const result = await packItems(items)
 
