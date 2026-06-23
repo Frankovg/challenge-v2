@@ -1,8 +1,6 @@
 <div align="center">
 
-# 📦 Packing System
-
-### A modern warehouse packing solution built for speed and efficiency
+# 📦 Packing Challenge v2
 
 <br />
 
@@ -10,11 +8,10 @@
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![GraphQL](https://img.shields.io/badge/GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
-![Testing](https://img.shields.io/badge/Coverage-86.7%25-success?style=for-the-badge)
 
 <br />
 
-[Features](#-features) · [Quick Start](#-quick-start) · [Architecture](#-architecture) · [Testing](#-testing) · [Roadmap](#-roadmap)
+[Features](#-features) · [What's New](#-whats-new-in-v2) · [Quick Start](#-quick-start) · [Testing](#-testing)
 
 </div>
 
@@ -24,10 +21,6 @@
 
 <br />
 
-## About
-
-This project is a **Frontend Developer Challenge** submission. It demonstrates proficiency in modern React development, state management, API integration, and UI/UX design principles.
-
 The application simulates a warehouse packing workflow where operators can efficiently pack products into packages using click interactions or barcode scanning.
 
 <br />
@@ -36,38 +29,37 @@ The application simulates a warehouse packing workflow where operators can effic
 
 ### Core Functionality
 
-| Feature                  | Description                                              |
-| ------------------------ | -------------------------------------------------------- |
-| **Split View Interface** | Unpacked items on the left, packed packages on the right |
-| **Package Management**   | Create, modify, and remove packages dynamically          |
-| **Click-to-Pack**        | Intuitive one-click packing experience                   |
-| **Barcode Scanner**      | Real-time barcode input with validation                  |
-| **Quantity Control**     | Granular control over packed item quantities             |
-| **Ship & Submit**        | GraphQL mutation to finalize and ship packages           |
+| Feature                | Description                                     |
+| ---------------------- | ----------------------------------------------- |
+| **Package Management** | Create, modify, and remove packages dynamically |
+| **Click-to-Pack**      | Intuitive one-click packing experience          |
+| **Barcode Scanner**    | Real-time barcode input with validation         |
+| **Quantity Control**   | Granular control over packed item quantities    |
 
 ### Extra Mile
 
-| Feature                 | Why It Matters                               |
-| ----------------------- | -------------------------------------------- |
-| **Dark/Light Theme**    | Persisted preference with `next-themes`      |
-| **Toast Notifications** | User feedback notifications                  |
-| **Confirmation Modals** | Prevents accidental actions                  |
-| **Bulk Actions**        | Pack entire stock with one click             |
-| **Empty Package State** | Always shows at least one package ready      |
-| **Type Safety**         | Strict TypeScript across the entire codebase |
+| Feature                 | Why It Matters                          |
+| ----------------------- | --------------------------------------- |
+| **Dark/Light Theme**    | Persisted preference with `next-themes` |
+| **Toast Notifications** | User feedback notifications             |
+| **Confirmation Modals** | Prevents accidental actions             |
+| **Bulk Actions**        | Pack entire stock with one click        |
+| **Empty Package State** | Always shows at least one package ready |
 
 <br />
 
-## 🛠 Tech Stack
+## 🆕 What's New in v2?
 
-```
-Frontend        Next.js 15 · React 19 · TypeScript · Styled Components
-State           React Context + Custom Hooks
-Data Layer      Apollo Client · GraphQL
-UI Components   MUI · Lucide Icons · Base UI
-Forms           React Hook Form · Zod validation
-Testing         Jest · React Testing Library
-```
+A senior-lens rework of the original solution — the theme is _removing_ layers, not adding them.
+
+| Area               | Change                                                                                              |
+| ------------------ | --------------------------------------------------------------------------------------------------- |
+| **Dependencies**   | 15 → 7 runtime deps — native UI instead of MUI/Emotion/base-ui/lucide/RHF/zod (bundle 164 → 139 kB) |
+| **State**          | Atomic updates in a pure reducer — `lineItems` + `packages` move in a single dispatch               |
+| **Domain + scale** | Barcode lookup moved to a Server Action + multi-location inventory; fixed an SKU-uniqueness bug     |
+| **Performance**    | Removed `useCallback`/`useMemo` that saved no re-renders, they were just noise                      |
+| **Architecture**   | Flattened to one file per component (156 → 76 files)                                                |
+| **Quality**        | Fixed an impure `setState` updater (StrictMode-safe); behavior-focused tests                        |
 
 <br />
 
@@ -94,49 +86,21 @@ yarn dev
 
 <br />
 
-## 📐 Architecture
-
-```
-apps/
-├── api/                 # GraphQL API server
-└── frontend/
-    └── src/
-        ├── app/         # Next.js App Router pages
-        ├── assets/      # Static assets
-        ├── components/  # Reusable UI components
-        ├── contexts/    # React Context providers
-        ├── hooks/       # Custom hooks
-        ├── lib/         # Apollo client & utilities
-        ├── types/       # TypeScript definitions
-        └── utils/       # Helper functions
-```
-
-<br />
-
 ## 🧪 Testing
 
-The project maintains **86.7% test coverage** with a focus on:
+Unit + integration tests (Jest · React Testing Library) keep **~86% coverage**, focused on:
 
-- Component rendering and interactions
-- User workflows (pack, unpack, ship)
-- Edge cases and error states
+- Business logic — stock/package transforms and the pure reducer
+- Orchestration — context actions and the shipping flow
+- Component logic where it matters — barcode lookup, edge cases and error states
 
 ```bash
 yarn test
 ```
 
-<br />
+### End-to-end
 
-## 🗺 Recommended Improvements
-
-| Priority | Enhancement                 | Rationale                                           |
-| -------- | --------------------------- | --------------------------------------------------- |
-| High     | **Tailwind CSS Migration**  | Better SSR performance, smaller bundle              |
-| High     | **React Query Integration** | Caching, optimistic updates, stale-while-revalidate |
-| Medium   | **Responsive Design**       | Tablet and mobile support                           |
-| Medium   | **Zustand for State**       | Reduce re-renders at scale                          |
-| Low      | **Product Search**          | MeiliSearch integration for large catalogs          |
-| Low      | **Database Persistence**    | Store packages via GraphQL schema                   |
+The E2E suite it's a reproducible playbook meant to be **driven by an AI agent locally**. Install the [Playwright CLI](https://playwright.dev) (or the Playwright MCP server) and run the scenarios in [`apps/frontend/src/qa/E2E.md`](apps/frontend/src/qa/E2E.md) with an agent against a running app (`yarn dev`): it walks the full pack → ship → reset flow plus the barcode Server Action lookup.
 
 <br />
 
@@ -146,7 +110,7 @@ yarn test
 
 <div align="center">
 
-### Built by Franco Amoroso
+### Built by Franco Gabriel Amoroso
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/francoamoroso/)
 [![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://www.franamoroso.com/)
