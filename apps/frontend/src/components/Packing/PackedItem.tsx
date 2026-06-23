@@ -36,6 +36,7 @@ const PackedItemContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    width: fit-content
   }
 
   .trash-icon {
