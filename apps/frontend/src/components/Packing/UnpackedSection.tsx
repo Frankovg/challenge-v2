@@ -1,4 +1,4 @@
-import { useCallback, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { styled } from 'styled-components'
 
 import { SectionTitle } from 'components/packing/SectionTitle'
@@ -22,13 +22,10 @@ export const UnpackedSection = (): ReactNode => {
 
   const selectedPackageId = selectedPackageData?.id ?? 0
 
-  const handlePack = useCallback(
-    (item: LineItemType, q: AddToPackageButton): void => {
-      const quantity = q === 'one' ? 1 : item.quantity
-      packProduct(item, selectedPackageId, quantity)
-    },
-    [packProduct, selectedPackageId],
-  )
+  const handlePack = (item: LineItemType, q: AddToPackageButton): void => {
+    const quantity = q === 'one' ? 1 : item.quantity
+    packProduct(item, selectedPackageId, quantity)
+  }
 
   return (
     <UnpackedSectionContainer>

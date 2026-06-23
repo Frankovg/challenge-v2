@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { styled } from 'styled-components'
 
 import { Card } from 'components/ui/Card'
@@ -57,14 +56,13 @@ export const PackedItem = (props: Props) => {
   const { item } = props
   const { lineItems, selectedPackageData, updateItemQuantity } = useApp()
 
-  const maxQuantity = useMemo(() => {
-    const unpackedItem = lineItems.find((li) => li.id === item.id)
-    const unpackedQuantity = unpackedItem?.quantity ?? 0
-    return unpackedQuantity === 0
-      ? item.quantity
-      : unpackedQuantity + item.quantity
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lineItems, item.id])
+  // Cheap derivation (a find + a sum), recomputed every render on purpose.
+  // If this were an expensive aggregation over a large list, useMemo would
+  // earn its place — here it'd only add a deps array to keep in sync.
+  const unpackedItem = lineItems.find((li) => li.id === item.id)
+  const unpackedQuantity = unpackedItem?.quantity ?? 0
+  const maxQuantity =
+    unpackedQuantity === 0 ? item.quantity : unpackedQuantity + item.quantity
 
   const handleQuantityChange = (newQuantity: number): void => {
     if (!selectedPackageData) return
