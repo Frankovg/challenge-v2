@@ -140,6 +140,7 @@ The UI **has no `data-testid`**. Select by role and accessible text (it's robust
 ## Notes for the agent
 
 - If a text selector fails, try by role (`getByRole('button', { name: '...' })`) before falling back to CSS.
+- **Toasts are ephemeral and async — assert them with retry, not a single immediate read.** Toasts auto-dismiss, and the ones that follow the barcode flow appear only after the Server Action resolves (it's async). A single check right after the submit can race the lookup and yield a false negative. Use `waitFor`/`expect.poll` (or poll the DOM a few times) so you catch the toast in its visible window. This was hit in practice: "Product not found" read as absent on the first immediate check and showed up on retry.
 - Between scenarios, use **RESET DEMO** to go back to the initial state without reloading (faster and doesn't re-fetch).
 - The backend is a **no-op mock**: `pack_items` echoes the input back as the response, it doesn't persist. Don't expect the inventory to "drop" on the server side between shipments — the client owns the state after the initial fetch.
 - Assert **0 console errors** as a cross-cutting criterion for the whole run.
